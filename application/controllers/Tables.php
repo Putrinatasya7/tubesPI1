@@ -20,7 +20,9 @@ class Tables extends CI_Controller {
 	 */
 	public function index()
 	{
+		$this->load->view('templates/header');
 		$this->load->view('tables');
+		$this->load->view('templates/footer');
 	}
 
 }
