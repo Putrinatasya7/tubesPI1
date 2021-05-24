@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Tables extends CI_Controller {
+class Supplier extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -21,8 +21,8 @@ class Tables extends CI_Controller {
 	public function index()
 	{
 		$this->load->view('templates/header');
-		$this->load->view('tables');
-		$this->load->view('templates/footer');
+		$this->load->view('supplier');
+		// $this->load->view('templates/footer');
 	}
 
 }

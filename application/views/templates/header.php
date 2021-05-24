@@ -21,6 +21,9 @@
   <link href="<?php echo base_url('asset/bootstrap/css/nucleo-svg.css') ?>" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="<?php echo base_url('asset/bootstrap/css/soft-ui-dashboard.css?v=1.0.2') ?>" rel="stylesheet" />
+  <!-- for Modal -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 </head>
 
 <!-- Sidebar -->
@@ -58,7 +61,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo base_url('Tables') ?>">
+          <a class="nav-link" href="<?php echo base_url('Supplier') ?>">
             <!-- <a class="nav-link  " href="../pages/tables.html"> -->
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -75,7 +78,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Tables</span>
+            <span class="nav-link-text ms-1">Supplier</span>
           </a>
         </li>
         <li class="nav-item">
