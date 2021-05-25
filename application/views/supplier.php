@@ -30,7 +30,7 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Add Supplier</button>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Supplier</button>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -74,7 +74,6 @@
   
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Add Supplier</h5>
-                <button type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             </div>
   
             <div class="modal-body">
@@ -100,7 +99,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="submit" class="btn btn-round bg-gradient-primary">Submit</button>
         </div>
         </form>
       </div>
@@ -113,7 +112,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Edit Supplier</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
   
         <form role="form" action="<?php echo base_url('Controller_Warehouse/update') ?>" method="post" id="updateForm">
@@ -140,7 +138,7 @@
   
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-round bg-gradient-primary">Save changes</button>
           </div>
   
         </form>
