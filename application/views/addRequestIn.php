@@ -135,10 +135,10 @@
 
         <div class="card-body p-3">
           <button type="button" class="btn btn-icon btn-outline-info btn-tooltip btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Add more item" data-container="body" data-animation="true">
-            <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
+            <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
           </button>
           <button type="button" class="btn btn-icon btn-outline-danger btn-tooltip btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove selected item" data-container="body" data-animation="true">
-            <span class="btn-inner--icon"><i class="ni ni-fat-remove"></i></span>
+            <span class="btn-inner--icon"><i class="fa fa-times"></i></span>
           </button>
 
           <form action="" method="post">
