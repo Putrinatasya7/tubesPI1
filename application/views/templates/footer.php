@@ -2,7 +2,7 @@
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-left">
+              <!-- <div class="copyright text-center text-sm text-muted text-lg-left">
                 © <script>
                   document.write(new Date().getFullYear())
                 </script>,
@@ -26,7 +26,7 @@
                   <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
                 </li>
               </ul>
-            </div>
+            </div> -->
           </div>
         </div>
       </footer>
@@ -206,6 +206,29 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="<?php echo base_url();?>asset/bootstrap/js/soft-ui-dashboard.min.js?v=1.0.2"></script>
+
+<!--===============================================================================================-->
+<script type="text/javascript" src="<?php echo base_url();?>/asset/bootstrap/css/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+  <script type="text/javascript" src="<?php echo base_url();?>/asset/bootstrap/css/animsition.min.js"></script>
+<!--===============================================================================================-->
+  <script type="text/javascript" src="<?php echo base_url();?>/asset/bootstrap/css/popper.js"></script>
+  <script type="text/javascript" src="<?php echo base_url();?>/asset/bootstrap/css/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+  <script type="text/javascript" src="<?php echo base_url();?>/asset/bootstrap/css/select2.min.js"></script>
+  <script type="text/javascript">
+    $(".selection-1").select2({
+      minimumResultsForSearch: 20,
+      dropdownParent: $('#dropDownSelect1')
+    });
+
+    $(".selection-2").select2({
+      minimumResultsForSearch: 20,
+      dropdownParent: $('#dropDownSelect2')
+    });
+  </script>
+<!--===============================================================================================-->
+  <script src="../assets/css/main.js"></script>
 </body>
 
 </html>
