@@ -100,24 +100,34 @@
             <div class="card card-plain mt-8">
               <div class="card-header pb-0 text-left bg-transparent">
                 <h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
-                <p class="mb-0">Enter your email and password to sign in</p>
+                <p class="mb-0">Enter your username and password to sign in</p>
               </div>
               <div class="card-body">
-                <form role="form text-left">
-                  <label>Email</label>
+
+                <?php if ($this->session->flashdata('message_wrong')) : ?>
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span class="alert-text text-white text-sm"><?= $this->session->flashdata('message_wrong'); ?></span>
+                    <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                <?php endif; ?>
+
+                <form role="form text-left" action="" method="POST">
+                  <label>Username</label>
                   <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
+                    <input type="text" name="uname" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="uname-addon" value="<?= set_value("uname") ?>">
+                    <?= form_error('uname', '<small class="text-danger">', '</small>'); ?>
                   </div>
                   <label>Password</label>
                   <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                    <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                    <?= form_error('password', '<small class="text-danger">', '</small>'); ?>
                   </div>
                   <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
                     <label class="form-check-label" for="rememberMe">Remember me</label>
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
+                    <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
                   </div>
                 </form>
               </div>
@@ -167,9 +177,9 @@
   </footer>
   <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="<?= base_url(); ?>/asset/bootstrap/js/core/popper.min.js"></script>
+  <script src="<?= base_url(); ?>/asset/bootstrap/js/core/bootstrap.min.js"></script>
+  <script src="<?= base_url(); ?>/asset/bootstrap/js/plugins/smooth-scrollbar.min.js"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -182,7 +192,7 @@
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.2"></script>
+  <script src="<?= base_url(); ?>/asset/bootstrap/js/soft-ui-dashboard.min.js?v=1.0.2"></script>
 </body>
 
 </html>
