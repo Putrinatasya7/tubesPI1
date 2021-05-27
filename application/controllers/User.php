@@ -20,9 +20,13 @@ class User extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('templates/header');
+
+		$data['title'] = "User";
+		$data['subtitle'] = "Manage User";
+
+		$this->load->view('templates/header', $data);
 		$this->load->view('user');
-        $this->load->view('templates/footer');
+    $this->load->view('templates/footer');
 	}
 
 }

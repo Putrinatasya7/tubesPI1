@@ -20,7 +20,10 @@ class Barang extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('templates/header');
+		$data['title'] = "Barang";
+		$data['subtitle'] = "Manage Barang";
+
+		$this->load->view('templates/header', $data);
 		$this->load->view('add_barang');
 		// $this->load->view('templates/footer');
 	}

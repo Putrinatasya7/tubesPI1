@@ -20,7 +20,11 @@ class Supplier extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('templates/header');
+
+		$data['title'] = "Supplier";
+		$data['subtitle'] = "Manage Supplier";
+
+		$this->load->view('templates/header', $data);
 		$this->load->view('supplier');
 		$this->load->view('templates/footer');
 	}
