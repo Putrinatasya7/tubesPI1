@@ -7,10 +7,10 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Barang</li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="<?php echo base_url('Auth') ?>">Home</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">User</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Manage Barang</h6>
+          <h6 class="font-weight-bolder mb-0">Manage User</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -29,6 +29,7 @@
                 </div>
               </a>
             </li>
+            </li>
           </ul>
         </div>
       </div>
@@ -39,27 +40,28 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Barang</button>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add User</button>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-secondary text-s">Nama Barang</th>
-                      <th class="align-middle text-center text-secondary text-s ps-2">Kode Barang</th>
-                      <th class="align-middle text-center text-secondary text-s">Jumlah Barang</th>
-                      <th class="align-middle text-center text-secondary text-s">Kategori</th>
+                      <th class="text-secondary text-s">username</th>
+                      <th class="align-middle text-center text-secondary text-s ps-2">Email</th>
+                      <th class="align-middle text-center text-secondary text-s">Nama</th>
+                      <th class="align-middle text-center text-secondary text-s">Role</th>
                       <th class="align-middle text-center text-secondary text-s" colspan="2">Action</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
+                    <!-- baru ditambah -->
                     <tr>
-                      <td class="text-xs font-weight-bold"><h7 class="mx-3 mb-0 text-sm ">Bangku</h7></td>
-                      <td class="align-middle text-center text-xs font-weight-bold">001</td>
-                      <td class="align-middle text-center text-sm">10</span></td>
-                      <td class="align-middle text-center text-sm">perabot</span></td>
+                      <td class="text-sm"><h7 class="mx-3 mb-0">tester1</h7></td>
+                      <td class="align-middle text-center text-sm">tester@gmail.com</td>
+                      <td class="align-middle text-center text-sm">Tester Aja</td>
+                      <td class="align-middle text-center text-sm">testing</td>
                       
                       <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#editModal">Edit</button></td>
                       <td class="align-middle text-center" ><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal">Delete</button></td>
@@ -67,6 +69,7 @@
                       <!-- <td><a href="<?= base_url(); ?>admin/update/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-info">Edit</span></a></td>
                       <td><a href="<?= base_url(); ?>admin/delete/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-danger" onclick="return confirm('Anda yakin ingin menghapus akun ini?')">Delete</span></a></td> -->
                     </tr>
+                    <!-- baru ditambah -->  
                   </tbody>
                 </table>
               </div>
@@ -77,40 +80,48 @@
 
       <!-- Modal -->
               <!-- Add Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
               <div class="modal-dialog"  role="document">
                 <div class="modal-content">
   
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add Barang</h5>
-                <button type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+              <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
             </div>
   
             <div class="modal-body">
                 <form action="<?= base_url(); ?>admin/insert" method="post">
-  
+            
             <div class="form-group">
-              <label for="name">Nama Barang</label>
-              <input type="text" class="form-control" name="name" id="name" placeholder="Enter name ..." required>
+              <label for="active">Role</label>
+              <select class="form-control" id="active" name="active">
+                <option value="1">Pilih Role</option>
+              </select>
             </div>
   
             <div class="form-group">
-              <label for="kode">Kode Barang</label>
-              <input type="text" class="form-control" name="kode" id="kode" placeholder="Enter kode ..." required>
+              <label for="name">Nama</label>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama ..." required>
             </div>
 
             <div class="form-group">
-              <label for="jumlah">Jumlah Barang</label>
-              <input type="text" class="form-control" name="jumlah" id="jumlah" placeholder="Enter jumlah ..." required>
+              <label for="name">username</label>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan username ..." required>
             </div>
+
             <div class="form-group">
-              <label for="kategori">Kategori Barang</label>
-              <input type="text" class="form-control" name="kategori" id="kategori" placeholder="Enter kategori ..." required>
+              <label for="email">Email</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan email ..." required>
             </div>
+
+            <div class="form-group">
+              <label for="email">Password</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan password ..." required>
+            </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="submit" class="btn btn-round bg-gradient-primary">Submit</button>
         </div>
         </form>
       </div>
@@ -122,8 +133,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Edit Detail Barang</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h5 class="modal-title">Edit Supplier</h5>
         </div>
   
         <form role="form" action="<?php echo base_url('Controller_Warehouse/update') ?>" method="post" id="updateForm">
@@ -132,27 +142,36 @@
             <div id="messages"></div>
   
             <div class="form-group">
-              <label for="edit_brand_name">Nama Barang</label>
-              <input type="text" class="form-control" id="edit_store_name" name="edit_store_name" placeholder="Enter nama barang" autocomplete="off">
+              <label for="active">Role</label>
+              <select class="form-control" id="active" name="active">
+                <option value="1">Pilih Role</option>
+              </select>
             </div>
+  
             <div class="form-group">
-              <label for="kode">Kode Barang</label>
-              <input type="text" class="form-control" name="kode" id="kode" placeholder="Enter kode ..." required>
-            </div>
-            <div class="form-group">
-              <label for="jumlah">Jumlah Barang</label>
-              <input type="text" class="form-control" name="jumlah" id="jumlah" placeholder="Enter jumlah ..." required>
-            <div class="form-group">
-              <label for="kategori">Kategori Barang</label>
-              <input type="text" class="form-control" name="kategori" id="kategori" placeholder="Enter kategori ..." required>
+              <label for="name">Nama</label>
+              <input type="text" class="form-control" name="name" id="name" required>
             </div>
 
+            <div class="form-group">
+              <label for="name">username</label>
+              <input type="text" class="form-control" name="name" id="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" name="email" id="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Password</label>
+              <input type="email" class="form-control" name="email" id="email" required>
             </div>
           </div>
   
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-round bg-gradient-primary">Save changes</button>
           </div>
   
         </form>
@@ -167,8 +186,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Remove Barang</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h5 class="modal-title">Hapus User</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
         </div>
   
         <form role="form" action="<?php echo base_url('Controller_Warehouse/remove') ?>" method="post" id="removeForm">
