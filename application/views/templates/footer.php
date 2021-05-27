@@ -228,7 +228,7 @@
     });
   </script>
 <!--===============================================================================================-->
-  <script src="../assets/css/main.js"></script>
+  <script src="<?php echo base_url();?>/assets/css/main.js"></script>
 </body>
 
 </html>

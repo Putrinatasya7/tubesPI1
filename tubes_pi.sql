@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2021 at 08:21 AM
+-- Generation Time: May 27, 2021 at 12:50 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -35,7 +35,6 @@ CREATE TABLE `barang` (
   `pict` varchar(255) NOT NULL,
   `stock` int(6) NOT NULL,
   `minimum_stock` int(6) NOT NULL,
-  `satuan` varchar(100) NOT NULL,
   `harga` int(11) NOT NULL,
   `qr_code` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
@@ -107,7 +106,8 @@ CREATE TABLE `req_item_in` (
   `request_no` varchar(100) NOT NULL,
   `barang_id` varchar(10) NOT NULL,
   `qty` int(6) NOT NULL,
-  `harga_satuan` int(11) NOT NULL
+  `harga_satuan` int(11) NOT NULL,
+  `supplier_id` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -119,7 +119,8 @@ CREATE TABLE `req_item_in` (
 CREATE TABLE `req_item_out` (
   `request_no` varchar(100) NOT NULL,
   `barang_id` varchar(10) NOT NULL,
-  `qty` int(6) NOT NULL
+  `qty` int(6) NOT NULL,
+  `supplier_id` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -156,13 +157,23 @@ INSERT INTO `role` (`role_id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `satuan`
+-- Table structure for table `supplier`
 --
 
-CREATE TABLE `satuan` (
-  `satuan_id` int(2) NOT NULL,
-  `satuan` varchar(100) NOT NULL
+CREATE TABLE `supplier` (
+  `supplier_id` int(3) NOT NULL,
+  `supplier` varchar(200) NOT NULL,
+  `contact` varchar(100) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`supplier_id`, `supplier`, `contact`, `status`) VALUES
+(1, 'PT Makmur Jaya', 'makmurjaya@gmail.com', 'Inactive'),
+(2, 'PT Bersama Maju', 'bersamamajupt@ptbersama.com', 'Active');
 
 -- --------------------------------------------------------
 
@@ -174,18 +185,20 @@ CREATE TABLE `user` (
   `uid` varchar(4) NOT NULL,
   `name` varchar(50) NOT NULL,
   `uname` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `modified_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `role_id` int(1) NOT NULL
+  `role_id` int(1) NOT NULL,
+  `is_active` enum('Active','Inactive') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`uid`, `name`, `uname`, `password`, `created_at`, `modified_at`, `role_id`) VALUES
-('A001', 'Jessica Wong', 'jessiwong', '........', '2021-05-25 22:10:25', '2021-05-25 22:10:25', 1);
+INSERT INTO `user` (`uid`, `name`, `uname`, `email`, `password`, `created_at`, `modified_at`, `role_id`, `is_active`) VALUES
+('A001', 'Jessica Wong', 'jessiwong', 'jessicawong@mail.com', '........', '2021-05-25 22:10:25', '2021-05-25 22:10:25', 1, 'Active');
 
 --
 -- Indexes for dumped tables
@@ -234,14 +247,16 @@ ALTER TABLE `request`
 --
 ALTER TABLE `req_item_in`
   ADD PRIMARY KEY (`request_no`,`barang_id`),
-  ADD KEY `brgiditemin` (`barang_id`);
+  ADD KEY `brgiditemin` (`barang_id`),
+  ADD KEY `fk_supid_itemin` (`supplier_id`);
 
 --
 -- Indexes for table `req_item_out`
 --
 ALTER TABLE `req_item_out`
   ADD PRIMARY KEY (`request_no`,`barang_id`),
-  ADD KEY `brgiditemout` (`barang_id`);
+  ADD KEY `brgiditemout` (`barang_id`),
+  ADD KEY `supplier_id` (`supplier_id`);
 
 --
 -- Indexes for table `req_out_reason`
@@ -256,10 +271,10 @@ ALTER TABLE `role`
   ADD PRIMARY KEY (`role_id`);
 
 --
--- Indexes for table `satuan`
+-- Indexes for table `supplier`
 --
-ALTER TABLE `satuan`
-  ADD PRIMARY KEY (`satuan_id`,`satuan`);
+ALTER TABLE `supplier`
+  ADD PRIMARY KEY (`supplier_id`);
 
 --
 -- Indexes for table `user`
@@ -291,10 +306,10 @@ ALTER TABLE `role`
   MODIFY `role_id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `satuan`
+-- AUTO_INCREMENT for table `supplier`
 --
-ALTER TABLE `satuan`
-  MODIFY `satuan_id` int(2) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `supplier`
+  MODIFY `supplier_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -328,6 +343,7 @@ ALTER TABLE `request`
 --
 ALTER TABLE `req_item_in`
   ADD CONSTRAINT `brgiditemin` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`barang_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_supid_itemin` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `reqnoitemin` FOREIGN KEY (`request_no`) REFERENCES `request` (`request_no`) ON UPDATE CASCADE;
 
 --
@@ -335,6 +351,7 @@ ALTER TABLE `req_item_in`
 --
 ALTER TABLE `req_item_out`
   ADD CONSTRAINT `brgiditemout` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`barang_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `req_item_out_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `reqnoitemout` FOREIGN KEY (`request_no`) REFERENCES `request` (`request_no`) ON UPDATE CASCADE;
 
 --
