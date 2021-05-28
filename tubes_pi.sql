@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2021 at 12:50 PM
+-- Generation Time: May 28, 2021 at 06:20 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -68,6 +68,32 @@ CREATE TABLE `invoice` (
   `received_at` datetime DEFAULT NULL,
   `status` enum('received','waiting for delivery','to be ordered','sent') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu`
+--
+
+CREATE TABLE `menu` (
+  `menuid` int(2) NOT NULL,
+  `menu` varchar(50) NOT NULL,
+  `url` varchar(100) NOT NULL,
+  `icon` varchar(50) NOT NULL,
+  `collapse` enum('y','n') NOT NULL DEFAULT 'n',
+  `is_active` enum('1','2') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `menu`
+--
+
+INSERT INTO `menu` (`menuid`, `menu`, `url`, `icon`, `collapse`, `is_active`) VALUES
+(1, 'Dashboard', 'Auth', 'fas fa-home', 'n', '1'),
+(2, 'Barang', 'Barang', 'ni ni-app', 'n', '1'),
+(3, 'Supplier', 'Supplier', 'ni ni-delivery-fast', 'n', '1'),
+(4, 'Request', '#collapseExample', 'ni ni-bullet-list-67', 'y', '1'),
+(5, 'User', 'User', 'ni ni-single-02', 'n', '1');
 
 -- --------------------------------------------------------
 
@@ -157,6 +183,29 @@ INSERT INTO `role` (`role_id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sub_menu`
+--
+
+CREATE TABLE `sub_menu` (
+  `submenuid` int(2) NOT NULL,
+  `menuid` int(2) NOT NULL,
+  `submenu` varchar(50) NOT NULL,
+  `url` varchar(100) NOT NULL,
+  `icon` varchar(50) DEFAULT NULL,
+  `is_active` enum('1','2') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sub_menu`
+--
+
+INSERT INTO `sub_menu` (`submenuid`, `menuid`, `submenu`, `url`, `icon`, `is_active`) VALUES
+(1, 4, 'Permintaan Masuk', 'Request/addIn', '', '1'),
+(2, 4, 'Permintaan Keluar', 'Request/addOut', '', '1');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `supplier`
 --
 
@@ -187,6 +236,7 @@ CREATE TABLE `user` (
   `uname` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `pict` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `modified_at` datetime NOT NULL DEFAULT current_timestamp(),
   `role_id` int(1) NOT NULL,
@@ -197,8 +247,11 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`uid`, `name`, `uname`, `email`, `password`, `created_at`, `modified_at`, `role_id`, `is_active`) VALUES
-('A001', 'Jessica Wong', 'jessiwong', 'jessicawong@mail.com', '........', '2021-05-25 22:10:25', '2021-05-25 22:10:25', 1, 'Active');
+INSERT INTO `user` (`uid`, `name`, `uname`, `email`, `password`, `pict`, `created_at`, `modified_at`, `role_id`, `is_active`) VALUES
+('A001', 'Jessica Wong', 'jessiwong', 'jessicawong@mail.com', '........', '', '2021-05-25 22:10:25', '2021-05-25 22:10:25', 1, 'Active'),
+('A002', 'Putri Natasya', 'punat', 'putrinatasya@gmail.com', '$2y$10$uqqACchko3qRn5FHiZ4LC.nU6QwqZCF3.X/I8IM68fI8XOEfZs8wS', 'defaultusrpict.jpg', '2021-05-28 11:09:21', '2021-05-28 11:09:21', 1, 'Active'),
+('M001', 'Patrisia Tambunan', 'patty', 'patrisia@gmail.com', '$2y$10$AbjVvlitpxR/DiBeXUqYuOjqLh.PqMjV2tqMIVF8/kfvtzSppX.3C', 'defaultusrpict.jpg', '2021-05-28 01:27:51', '2021-05-28 01:27:51', 2, 'Active'),
+('S001', 'Mita Amelia', 'mita', 'mitaamelia@gmail.com', '$2y$10$tpxwesVPE2AQFcpyEtaiauxjxSyI6Db21fzZXRDfWPwSg0xQ3Kply', 'defaultusrpict.jpg', '2021-05-28 11:08:18', '2021-05-28 11:08:18', 3, 'Active');
 
 --
 -- Indexes for dumped tables
@@ -227,6 +280,12 @@ ALTER TABLE `invoice`
   ADD PRIMARY KEY (`invoice_no`),
   ADD KEY `fk_invoicereqno` (`request_no`),
   ADD KEY `fk_invoicercvby` (`received_by`);
+
+--
+-- Indexes for table `menu`
+--
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`menuid`);
 
 --
 -- Indexes for table `merk`
@@ -271,6 +330,13 @@ ALTER TABLE `role`
   ADD PRIMARY KEY (`role_id`);
 
 --
+-- Indexes for table `sub_menu`
+--
+ALTER TABLE `sub_menu`
+  ADD PRIMARY KEY (`submenuid`),
+  ADD KEY `fk_menuid` (`menuid`);
+
+--
 -- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
@@ -294,6 +360,12 @@ ALTER TABLE `category`
   MODIFY `category_id` int(2) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `menuid` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `merk`
 --
 ALTER TABLE `merk`
@@ -304,6 +376,12 @@ ALTER TABLE `merk`
 --
 ALTER TABLE `role`
   MODIFY `role_id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `sub_menu`
+--
+ALTER TABLE `sub_menu`
+  MODIFY `submenuid` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `supplier`
@@ -359,6 +437,12 @@ ALTER TABLE `req_item_out`
 --
 ALTER TABLE `req_out_reason`
   ADD CONSTRAINT `fk_reqnoout` FOREIGN KEY (`request_no`) REFERENCES `request` (`request_no`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `sub_menu`
+--
+ALTER TABLE `sub_menu`
+  ADD CONSTRAINT `fk_menuid` FOREIGN KEY (`menuid`) REFERENCES `menu` (`menuid`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user`
