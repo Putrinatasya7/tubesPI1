@@ -3,24 +3,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Signin extends CI_Controller
 {
-
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
+	
 	public function index()
 	{
+		// cek apakah user sudah login atau belum
 		// if ($this->session->userdata('uname')) {
 			// redirect('auth');
 		// } else {
@@ -48,8 +34,9 @@ class Signin extends CI_Controller
 			// jika form yang diisi sudah sesuai rules
 			else {
 				// get input
-				$uname = $this->input->post('uname');
-				$password = $this->input->post('password');
+				
+				$uname = htmlspecialchars($this->input->post('uname'));
+				$password = htmlspecialchars($this->input->post('password'));
 
 				$user = $this->db->get_where('user', ['uname' => $uname])->row_array();			//retrieve user data from db
 
@@ -57,6 +44,7 @@ class Signin extends CI_Controller
 				if ($user) {
 					//check password
 					if ($user['password'] == $password) {
+					// if (password_verify($password, $user['password'])) {
 						$data = [
 							'uname' => $user['uname'],
 							'role_id' => $user['role_id']
@@ -93,4 +81,5 @@ class Signin extends CI_Controller
 		$this->session->set_flashdata('message_success', 'Berhasil Logout');
 		redirect('Signin');
 	}		//end logout()
-}
+
+}		//END CLASS

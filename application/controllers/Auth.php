@@ -20,7 +20,10 @@ class Auth extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('templates/header');
+		$data['title'] = "Dashboard";
+		$data['subtitle'] = "Dashboard";
+
+		$this->load->view('templates/header', $data);
 		$this->load->view('dashboard');
 		$this->load->view('templates/footer');
 		// $this->template->load('dashboard','template');
