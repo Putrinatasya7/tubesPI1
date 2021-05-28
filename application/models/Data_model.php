@@ -35,4 +35,24 @@ class Data_model extends CI_Model {
     $this->db->delete('supplier');
   }
 
+  // USER SECTION
+  public function getUser() {
+    return $this->db->get('user')->result_array();
+  }
+
+  public function insertUser() {
+    
+    $data = [
+      // 'uid' => $uid,
+      'name' => htmlspecialchars($this->input->post('name')),
+      'uname' => htmlspecialchars($this->input->post('uname')),
+      'email' => htmlspecialchars($this->input->post('email')),
+      'password' => password_hash(htmlspecialchars($this->input->post('password')), PASSWORD_DEFAULT),
+      'pict' => "defaultusrpict.jpg",
+      'role_id' => $this->input->post('role')
+    ];
+
+    $this->db->insert('user', $data);
+  }
+
 }

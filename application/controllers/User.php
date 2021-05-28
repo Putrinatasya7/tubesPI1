@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class User extends CI_Controller {
+class User extends CI_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -18,11 +19,26 @@ class User extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index()
+	public function __construct()
 	{
-		$this->load->view('templates/header');
-		$this->load->view('user');
-        $this->load->view('templates/footer');
+		parent::__construct();
+
+		$this->load->model('Admin_model');
 	}
 
+	public function index()
+	{
+		$data['role'] = $this->Admin_model->getRole();
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('user');
+		$this->load->view('templates/footer');
+	}
+
+	public function addUser()
+	{
+		$this->data_model->insertUser();
+		$this->session->set_flashdata('message', 'User berhasil ditambahkan!');
+		redirect('User');
+	}
 }
