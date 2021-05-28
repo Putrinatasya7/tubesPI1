@@ -21,10 +21,12 @@ class Supplier extends CI_Controller
 	 */
 	public function index()
 	{
+		$data['title'] = "Supplier";
+		$data['subtitle'] = "Manage Supplier";
 		$data['supplier'] = $this->data_model->getSupplier();
 
-		$this->load->view('templates/header');
-		$this->load->view('supplier', $data);
+		$this->load->view('templates/header', $data);
+		$this->load->view('supplier');
 		$this->load->view('templates/footer');
 	}
 
@@ -34,19 +36,19 @@ class Supplier extends CI_Controller
 		$this->session->set_flashdata('message', 'Supplier berhasil ditambahkan!');
 		redirect('Supplier');
 	}
-	
-	public function editSupplier() {
+
+	public function editSupplier()
+	{
 		$supplier_id = $this->input->post('supplier_id');
 		$this->data_model->updateSupplier($supplier_id);
 		$this->session->set_flashdata('message', 'Data supplier berhasil diperbarui');
 		redirect('Supplier');
-		
 	}
-	
-	public function remove() {
+
+	public function remove()
+	{
 		$this->data_model->deleteSupplier();
 		$this->session->set_flashdata('message', 'Data supplier berhasil dihapus');
 		redirect('Supplier');
 	}
-
 }

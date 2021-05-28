@@ -28,6 +28,8 @@ class User extends CI_Controller
 
 	public function index()
 	{
+		$data['title'] = "User";
+		$data['subtitle'] = "Manage User";
 		$data['role'] = $this->Admin_model->getRole();
 
 		$this->load->view('templates/header', $data);
