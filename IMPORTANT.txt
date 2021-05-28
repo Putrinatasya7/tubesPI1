@@ -1,0 +1,17 @@
+Ini merupakan file yang berisi hal-hal penting untuk sistem inventori yang sedang dibangun
+
+Berikut ini merupakan user-user untuk login sistem
+1.  Administrator
+    uname    : jessiwong
+    password : ........
+
+    uname    : punat
+    password : punatpunatpunat
+
+2.  Manager
+    uname    : patty
+    password : patty123
+
+3.  Staff
+    uname    : mita
+    password : mitamitamita
