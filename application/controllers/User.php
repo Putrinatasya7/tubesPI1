@@ -31,6 +31,7 @@ class User extends CI_Controller
 		$data['title'] = "User";
 		$data['subtitle'] = "Manage User";
 		$data['role'] = $this->Admin_model->getRole();
+		$data['users'] = $this->Admin_model->getUser();
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('user');

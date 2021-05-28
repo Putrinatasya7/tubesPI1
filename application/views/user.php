@@ -19,12 +19,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- baru ditambah -->
+                  <!-- perubahan baru untuk menampilkan user dari db -->
+                  <?php foreach($users as $user): ?>
                   <tr>
-                    <td class="text-sm"><h7 class="mx-3 mb-0">tester1</h7></td>
-                    <td class="align-middle text-center text-sm">tester@gmail.com</td>
-                    <td class="align-middle text-center text-sm">Tester Aja</td>
-                    <td class="align-middle text-center text-sm">testing</td>
+                    <td class="text-sm"><h7 class="mx-3 mb-0"><?= $user['uname']; ?></h7></td>
+                    <td class="align-middle text-center text-sm"><?= $user['email']; ?></td>
+                    <td class="align-middle text-center text-sm"><?= $user['name']; ?></td>
+                    <td class="align-middle text-center text-sm"><?= $user['role']; ?></td>
 
                     <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#editModal">Edit</button></td>
                     <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal">Delete</button></td>
@@ -32,7 +33,8 @@
                     <!-- <td><a href="<?= base_url(); ?>admin/update/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-info">Edit</span></a></td>
                       <td><a href="<?= base_url(); ?>admin/delete/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-danger" onclick="return confirm('Anda yakin ingin menghapus akun ini?')">Delete</span></a></td> -->
                   </tr>
-                  <!-- baru ditambah -->
+                  <?php endforeach; ?>
+                  <!-- perubahan baru untuk menampilkan user dari db -->
                 </tbody>
               </table>
             </div>
