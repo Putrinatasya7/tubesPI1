@@ -151,7 +151,6 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    </main>
 
     <script>
       // untuk menampilkan data pada form edit
