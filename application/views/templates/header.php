@@ -40,6 +40,7 @@
     </div>
     <hr class="horizontal dark mt-0">
 
+    <!-- dari sini adalah pengambilan menunya dari database -->
     <!-- QUERY MENU -->
     <?php
     $menu = $this->db->get('menu')->result_array();
@@ -47,31 +48,33 @@
 
     <div class="collapse navbar-collapse  w-auto" id="sidenav-collapse-main">
       <ul class="navbar-nav">
+      <!-- ini permulaan tampilan permulaan menu yang di loop sesuai banyak menu yang ada -->
         <!-- LOOPING MENU -->
         <?php foreach ($menu as $m) : ?>
           <li class="nav-item">
-            <?php if($m['collapse'] == 'y'): ?>
-              <?php if($m['menu'] == $title): ?>
-                <a class="nav-link active" data-bs-toggle="collapse" href="<?= $m['url']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <?php if($m['collapse'] == 'y'): ?>     <!--collapse ini untuk mengecek dropdown menu karena pada menu kami ada dropdownnya kalau menu kalian gak ada dropdown ini gak usah dibuat lewatkan aja langsung cek ke baris 87 else untuk menu yang bukan dropdown-->
+              <?php if($m['menu'] == $title): ?>    <!-- ini kondisi untuk ngecek apakah sebuah menu itu sedang aktif atau tidak -->
+                <a class="nav-link active" data-bs-toggle="collapse" href="<?= $m['url']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample">    <!--kalau aktif maka dia dikasih class active kayak gini-->
                   <div class="icon icon-shape icon-sm bg-gradient-primary shadow text-center me-2 border-radius-md">
                     <!-- <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"> -->
                     <i class="<?= $m['icon']; ?>"></i>
                   </div>
               
               <?php else: ?>
-                <a class="nav-link " data-bs-toggle="collapse" href="<?= $m['url']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <a class="nav-link " data-bs-toggle="collapse" href="<?= $m['url']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample">    <!-- dan ini kalau menunya gak aktif-->
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="<?= $m['icon']; ?> text-dark"></i>
                   </div>
-              <?php endif; ?>
+              <?php endif; ?>   <!--akhir dari pengecekan menu dropdown yang aktif dan tidak aktif-->
 
                 <span class="nav-link-text ms-1"><?= $m['menu']; ?></span>
               </a>
+              <!-- ini query untuk ngambil submenu dari menu dropdown yang ada -->
               <?php
                 $menuid = $m['menuid'];
                 $submenu = $this->db->get_where('sub_menu',['menuid'=>$menuid])->result_array();
               ?>
-              <div class="collapse" id="collapseExample">
+              <div class="collapse" id="collapseExample">   <!-- ini buat nampilin menunya -->
                 <!-- <div class="col-xl-6 col-sm-6 mb-xl-5 mb-0"> -->
                 <div class="card-body">
                   <?php foreach($submenu as $sm): ?>
@@ -81,28 +84,29 @@
                 <!-- </div> -->
               </div>
             
-            <?php else: ?>
-              <?php if ($m['menu'] == $title) : ?>
-                <a class="nav-link active" href="<?php echo base_url().$m['url']; ?>">
+            <?php else: ?>    <!-- ini else untuk menu yang bukan dropdown jadi dia menu biasa aja gitu gak ada anaknya -->
+              <?php if ($m['menu'] == $title) : ?>    <!-- ini kondisi untuk ngecek apakah sebuah menu itu sedang aktif atau tidak -->
+                <a class="nav-link active" href="<?php echo base_url().$m['url']; ?>">    <!--kalau aktif maka dia dikasih class active kayak gini-->
                   <div class="icon icon-shape icon-sm bg-gradient-primary shadow text-center me-2 border-radius-md">
                     <!-- <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"> -->
                     <i class="<?= $m['icon']; ?>"></i>
                   </div>
 
               <?php else : ?>
-                <a class="nav-link  " href="<?php echo base_url().$m['url']; ?>">
+                <a class="nav-link  " href="<?php echo base_url().$m['url']; ?>">   <!-- dan ini kalau menunya gak aktif-->
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center text-dark">
                     <i class="<?= $m['icon']; ?> text-dark"></i>
                   </div>
-              <?php endif; ?>
+              <?php endif; ?>   <!-- akhir dari pengecekan apakah sebuah menu sedang aktif atau tidak -->
                   <span class="nav-link-text ms-1"><?= $m['menu']; ?></span>
                 </a>
-            <?php endif; ?>
+            <?php endif; ?>     <!-- akhir dari pengecekan dropdown menu -->
           </li>
         <?php endforeach; ?>
       </ul>
     </div>
   </aside>
+  <!-- END SIDEBAR -->
 
   <!-- CONTENT -->
   <main class="main-content mt-1 border-radius-lg">
