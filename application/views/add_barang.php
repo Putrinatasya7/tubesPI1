@@ -83,7 +83,7 @@
   
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Add Barang</h5>
-                <button type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button> -->
             </div>
   
             <div class="modal-body">
@@ -123,7 +123,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Edit Detail Barang</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
         </div>
   
         <form role="form" action="<?php echo base_url('Controller_Warehouse/update') ?>" method="post" id="updateForm">
@@ -168,7 +168,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Remove Barang</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
         </div>
   
         <form role="form" action="<?php echo base_url('Controller_Warehouse/remove') ?>" method="post" id="removeForm">
