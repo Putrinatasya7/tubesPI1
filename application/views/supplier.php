@@ -4,7 +4,19 @@
         <div class="card mb-4">
           <div class="card-header pb-0">
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Supplier</button>
+              <!-- alert -->
+              <?php if($this->session->flashdata('message')) : ?>
+                <div class="alert alert-success col-md-6 alert-dismissible fade show" role="alert">
+                  <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                  <span class="alert-text"><strong>Success!</strong> <?= $this->session->flashdata('message'); ?>!</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              <?php endif; ?>
+              <!-- alert -->
           </div>
+
           <div class="card-body px-0 pt-0 pb-2">
             <div class="table-responsive p-0">
               <table class="table align-items-center mb-0">
