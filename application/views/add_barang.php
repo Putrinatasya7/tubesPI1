@@ -5,7 +5,7 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Barang</button>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Barang</button>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -48,7 +48,7 @@
                 <div class="modal-content">
   
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add Barang</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
                 <!-- <button type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button> -->
             </div>
   
@@ -56,27 +56,44 @@
                 <form action="<?= base_url(); ?>admin/insert" method="post">
   
             <div class="form-group">
-              <label for="name">Nama Barang</label>
+              <label for="name">Item names</label>
               <input type="text" class="form-control" name="name" id="name" placeholder="Enter name ..." required>
             </div>
   
             <div class="form-group">
-              <label for="kode">Kode Barang</label>
-              <input type="text" class="form-control" name="kode" id="kode" placeholder="Enter kode ..." required>
-            </div>
-
-            <div class="form-group">
-              <label for="jumlah">Jumlah Barang</label>
-              <input type="text" class="form-control" name="jumlah" id="jumlah" placeholder="Enter jumlah ..." required>
+              <label for="code">Item Code</label>
+              <input type="text" class="form-control" disabled>
             </div>
             <div class="form-group">
-              <label for="kategori">Kategori Barang</label>
-              <input type="text" class="form-control" name="kategori" id="kategori" placeholder="Enter kategori ..." required>
+              <label for="total">Total</label>
+              <input type="text" class="form-control" name="total" id="total" placeholder="Enter jumlah ..." required>
+            </div>
+            <div class="form-group">
+              <label for="caregory">Category</label>
+              <select class="form-control" id="active" name="active">
+                  <option value="Active">Kategory 1</option>
+                  <option value="Inactive">Kategori 2</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="brand">Brand</label>
+              <select class="form-control" id="active" name="active">
+                  <option value="Active">Merk 1</option>
+                  <option value="Inactive">Merk 2</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="text" class="form-control" name="price" id="price" placeholder="Enter kategori ..." required>
+            </div>
+            <div class="form-group">
+              <label for="picture">Upload picture</label>
+              <input type="file" class="form-control" name="gambar" id="gambar" name="foto[]" required/>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="submit" class="btn btn-round bg-gradient-primary">Submit</button>
         </div>
         </form>
       </div>
@@ -88,7 +105,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Edit Detail Barang</h5>
+          <h5 class="modal-title">Edit Items Detail</h5>
           <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
         </div>
   
@@ -98,27 +115,45 @@
             <div id="messages"></div>
   
             <div class="form-group">
-              <label for="edit_brand_name">Nama Barang</label>
-              <input type="text" class="form-control" id="edit_store_name" name="edit_store_name" placeholder="Enter nama barang" autocomplete="off">
+              <label for="edit_item_name">Item names</label>
+              <input type="text" class="form-control" id="edit_item_name" name="edit_item_name" placeholder="Enter nama barang" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="kode">Kode Barang</label>
-              <input type="text" class="form-control" name="kode" id="kode" placeholder="Enter kode ..." required>
+              <label for="code">Item code</label>
+              <input type="text" class="form-control" disabled>
             </div>
             <div class="form-group">
-              <label for="jumlah">Jumlah Barang</label>
-              <input type="text" class="form-control" name="jumlah" id="jumlah" placeholder="Enter jumlah ..." required>
+              <label for="edit_total">Total</label>
+              <input type="text" class="form-control" name="edit_total" id="edit_total" placeholder="Enter jumlah ..." required>
+            </div>
             <div class="form-group">
-              <label for="kategori">Kategori Barang</label>
-              <input type="text" class="form-control" name="kategori" id="kategori" placeholder="Enter kategori ..." required>
+              <label for="category">Category</label>
+              <select class="form-control" id="active" name="active">
+                  <option value="Active">Kategory 1</option>
+                  <option value="Inactive">Kategori 2</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="edit_brand">Brand</label>
+                <select class="form-control" id="active" name="active">
+                  <option value="Active">Merk 1</option>
+                  <option value="Inactive">Merk 2</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="edit_price">Price</label>
+              <input type="text" class="form-control" id="edit_price" name="edit_price" placeholder="Enter nama barang" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="edit_picture">Edit Picture</label>
+              <input type="file" class="form-control" name="gambar" id="gambar" name="foto[]" required/>
             </div>
 
-            </div>
           </div>
   
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-round bg-gradient-primary">Save Changes</button>
           </div>
   
         </form>
