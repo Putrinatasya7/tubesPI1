@@ -17,7 +17,7 @@ class Admin_model extends CI_Model {
   public function insertUser() {
     
     $data = [
-      // 'uid' => $uid,
+      'uid' => generateuid($this->input->post('role')),
       'name' => htmlspecialchars($this->input->post('name')),
       'uname' => htmlspecialchars($this->input->post('uname')),
       'email' => htmlspecialchars($this->input->post('email')),
