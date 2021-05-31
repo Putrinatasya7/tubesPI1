@@ -34,7 +34,7 @@ class Data_model extends CI_Model {
     $this->db->where('supplier_id', $supplier_id);
     $this->db->delete('supplier');
   }
-  
+
   /**DATA MERK */
   public function getMerk() {
     return $this->db->get('merk')->result_array();
