@@ -68,4 +68,18 @@ class Data_model extends CI_Model {
 
   }
 
+  /**CHANGE PASSWORD ZONE */
+  public function getPass() {
+    
+    return $this->db->select('password')->get('user')->row()->password;
+  }
+
+  public function updatePassword() {
+    $uid = $this->session->userdata('uid');
+    $new_password = password_hash($this->input->post('new_password', true), PASSWORD_DEFAULT);
+    $this->db->set('password', $new_password)->where('uid',$uid)->update('user');
+    // $this->db->where('uid', $uid);
+    // $this->db->update('user');
+  }
+
 }     //END CLASS

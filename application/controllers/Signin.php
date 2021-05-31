@@ -43,8 +43,7 @@ class Signin extends CI_Controller
 				//check username
 				if ($user) {
 					//check password
-					if ($user['password'] == $password) {
-					// if (password_verify($password, $user['password'])) {
+					if (password_verify($password, $user['password'])) {
 						$data = [
 							'uid' => $user['uid'],
 							'uname' => $user['uname'],
