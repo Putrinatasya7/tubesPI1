@@ -23,6 +23,8 @@ class User extends CI_Controller
 	{
 		parent::__construct();
 
+		// is_logged_in();
+
 		$this->load->model('Admin_model');
 	}
 

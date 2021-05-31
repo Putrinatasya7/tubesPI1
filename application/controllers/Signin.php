@@ -8,7 +8,7 @@ class Signin extends CI_Controller
 	{
 		// cek apakah user sudah login atau belum
 		// if ($this->session->userdata('uname')) {
-			// redirect('auth');
+			// redirect('Auth');
 		// } else {
 
 			// RULES
@@ -46,6 +46,7 @@ class Signin extends CI_Controller
 					if ($user['password'] == $password) {
 					// if (password_verify($password, $user['password'])) {
 						$data = [
+							'uid' => $user['uid'],
 							'uname' => $user['uname'],
 							'role_id' => $user['role_id']
 						];
@@ -74,6 +75,7 @@ class Signin extends CI_Controller
 	{
 
 		$this->session->unset_userdata('uname');
+		$this->session->unset_userdata('uid');
 		$this->session->unset_userdata('role_id');
 
 		$this->session->sess_destroy();
