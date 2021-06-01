@@ -89,8 +89,33 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
-  <!-- Detail Modal -->
-  <div class="modal fade" tabindex="-1" aria-labelledby="detailrequest" role="dialog" id="detailRequest">
+  <!-- Detele Modal -->
+  <div class="modal fade" tabindex="-1" aria-labelledby="deleteModalLabel" role="dialog" id="deleteModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Remove Item</h5>
+            <a type="button" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times top-0"></i></span></a>
+          </div>
+
+          <form role="form" action="<?php echo base_url('Supplier/remove') ?>" method="post" id="removeForm">
+            <div class="modal-body">
+              <input type="hidden" name="supplier_id" id="supplier_id">
+              <p>Do you really want to remove this request?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </div>
+          </form>
+
+
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Items Detail -->
+  <div class="modal fade" tabindex="-1" aria-labelledby="detailRequestLabel" role="dialog" id="detailRequest">
     <div class="modal-dialog modal-xl"  role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -98,40 +123,63 @@
           <a type="button" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times top-0"></i></span></a>
         </div>
   
-        <form role="form" action="<?php echo base_url('Request/addReqIn') ?>" method="post" id="updateForm">
+        <form role="form" action="<?php echo base_url('Controller_Warehouse/update') ?>" method="post" id="updateForm">
   
           <div class="modal-body">
           <div class="col-md-12">
           <div class="row">
-          <div class="col-md-2">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="edit_item_name">xx</label>
+              <input type="text" class="form-control" id="edit_item_name" name="edit_item_name" placeholder="Enter nama barang" autocomplete="off">
+            </div>
+            
+            <div class="form-group">
+              <label for="code">xx</label>
+              <input type="text" class="form-control" disabled>
+            </div>
+            
+            <div class="form-group">
+              <label for="edit_total">xx</label>
+              <input type="text" class="form-control" name="edit_total" id="edit_total" placeholder="Enter total ..." required>
+            </div>
+            </div>
+
+            <div class="col-md-6">
+            <div class="form-group">
+              <label for="category">xx</label>
+              <select class="form-control" id="active" name="active">
+                  <option value="Active">xx 1</option>
+                  <option value="Inactive">xx 2</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="edit_brand">xx</label>
+                <select class="form-control" id="active" name="active">
+                  <option value="Active">xx 1</option>
+                  <option value="Inactive">x 2</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="edit_price">xx</label>
+              <input type="text" class="form-control" id="edit_price" name="edit_price" placeholder="Harga barang" autocomplete="off">
+            </div>
+          </div>
+          </div>
+          </div>
+         
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
   
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
-  <!-- Delete Modal -->
-  <div class="modal fade" tabindex="-1" aria-labelledby="deleteModalLabel" role="dialog" id="deleteModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Remove Request</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-  
-        <form role="form" action="<?php echo base_url('Controller_Warehouse/remove') ?>" method="post" id="removeForm">
-          <div class="modal-body">
-            <p>Do you really want to remove?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-danger">Delete</button>
-          </div>
-        </form>
-  
-  
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+      
+      
+  </main>
 
 
  
