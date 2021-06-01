@@ -7,9 +7,9 @@ class Signin extends CI_Controller
 	public function index()
 	{
 		// cek apakah user sudah login atau belum
-		// if ($this->session->userdata('uname')) {
-			// redirect('auth');
-		// } else {
+		if ($this->session->userdata('uname')) {
+			redirect('Auth');
+		} else {
 
 			// RULES
 			$this->form_validation->set_rules(
@@ -43,15 +43,15 @@ class Signin extends CI_Controller
 				//check username
 				if ($user) {
 					//check password
-					if ($user['password'] == $password) {
-					// if (password_verify($password, $user['password'])) {
+					if (password_verify($password, $user['password'])) {
 						$data = [
+							'uid' => $user['uid'],
 							'uname' => $user['uname'],
 							'role_id' => $user['role_id']
 						];
 
 						$this->session->set_userdata($data);
-						redirect('auth');
+						redirect('Auth');
 					}
 
 					//jika password salah
@@ -67,13 +67,14 @@ class Signin extends CI_Controller
 					redirect('Signin');
 				}
 			}
-		// }
+		}
 	}			//end index()
 
 	public function logout()
 	{
 
 		$this->session->unset_userdata('uname');
+		$this->session->unset_userdata('uid');
 		$this->session->unset_userdata('role_id');
 
 		$this->session->sess_destroy();

@@ -1,102 +1,108 @@
-
-  
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Barang</button>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-secondary text-s">Nama Barang</th>
-                      <th class="align-middle text-center text-secondary text-s ps-2">Kode Barang</th>
-                      <th class="align-middle text-center text-secondary text-s">Jumlah Barang</th>
-                      <th class="align-middle text-center text-secondary text-s">Kategori</th>
-                      <th class="align-middle text-center text-secondary text-s" colspan="3">Action</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="text-xs font-weight-bold"><h7 class="mx-3 mb-0 text-sm ">Bangku</h7></td>
-                      <td class="align-middle text-center text-xs font-weight-bold">001</td>
-                      <td class="align-middle text-center text-sm">10</span></td>
-                      <td class="align-middle text-center text-sm">perabot</span></td>
-                      
-                      <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-warning" data-toggle="modal" data-target="#editModal"><i class="fa fa-pen top-0" title="Edit"></i></button></td>
-                      <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#detailBarang"><i class="fa fa-search top-0" title="Detail"></i></button></td>
-                      <td class="align-middle text-center" ><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash top-0" title="Delete"></i></button></td>
-                      <td></td>
-                      <!-- <td><a href="<?= base_url(); ?>admin/update/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-info">Edit</span></a></td>
-                      <td><a href="<?= base_url(); ?>admin/delete/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-danger" onclick="return confirm('Anda yakin ingin menghapus akun ini?')">Delete</span></a></td> -->
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Barang</button>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-secondary text-s">Nama Barang</th>
+                  <th class="align-middle text-center text-secondary text-s ps-2">Kode Barang</th>
+                  <th class="align-middle text-center text-secondary text-s">Jumlah Barang</th>
+                  <th class="align-middle text-center text-secondary text-s">Kategori</th>
+                  <th class="align-middle text-center text-secondary text-s" colspan="3">Action</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($barang as $b) : ?>
+                  <tr>
+                    <td class="text-xs font-weight-bold">
+                      <h7 class="mx-3 mb-0 text-sm "><?= $b['barang']; ?></h7>
+                    </td>
+                    <td class="align-middle text-center text-xs font-weight-bold"><?= $b['barang_id']; ?></td>
+                    <td class="align-middle text-center text-sm"><?= $b['stock']; ?></span></td>
+                    <td class="align-middle text-center text-sm"><?= $b['category']; ?></span></td>
+        
+                    <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-warning" data-toggle="modal" data-target="#editModal" data-id="<?= $b['barang_id']; ?>">Edit</button></td>
+                    <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#detailBarang"><i class="fa fa-search top-0" title="Detail"></i></button></td>
+                    <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $b['barang_id']; ?>">Delete</button></td>
+                    <td></td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!-- Modal -->
-    <!-- Add Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
+
+  <!-- Modal -->
+  <!-- Add Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
 
         <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
-                <a type="button" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times top-0"></i></span></a>
-            </div>
-  
-            <div class="modal-body">
-                <form action="<?= base_url(); ?>admin/insert" method="post">
-  
-            <div class="form-group input-group-sm">
-              <label for="name">Item names</label>
-              <input type="text" class="form-control" name="name" id="name" placeholder="Enter name ..." required>
-            </div>
-  
-            <div class="form-group input-group-sm">
-              <label for="code">Item Code</label>
-              <input type="text" class="form-control" disabled>
-            </div>
-            <div class="form-group input-group-sm">
-              <label for="total">Total</label>
-              <input type="text" class="form-control" name="total" id="total" placeholder="Enter jumlah ..." required>
-            </div>
-            <div class="form-group input-group-sm">
-              <label for="caregory">Category</label>
-              <select class="form-control" id="active" name="active">
-                  <option value="Active">Kategory 1</option>
-                  <option value="Inactive">Kategori 2</option>
-                </select>
-            </div>
-            <div class="form-group input-group-sm">
-              <label for="brand">Brand</label>
-              <select class="form-control" id="active" name="active">
-                  <option value="Active">Merk 1</option>
-                  <option value="Inactive">Merk 2</option>
-                </select>
-            </div>
-            <div class="form-group input-group-sm">
-              <label for="price">Price</label>
-              <input type="text" class="form-control" name="price" id="price" placeholder="Enter kategori ..." required>
-            </div>
-            <div class="form-group">
-              <label for="picture">Upload picture</label>
-              <input type="file" class="form-control" name="gambar" id="gambar" name="foto[]" required/>
-            </div>
+          <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+          <!-- <button type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button> -->
+        </div>
+
+        <div class="modal-body">
+          <!-- <form action="<?= base_url(); ?>Barang/addBarang" method="post"> -->
+          <?= form_open_multipart('Barang/addBarang'); ?>
+
+          <div class="form-group input-group-sm">
+            <label for="barang_id">Item Code</label>
+            <input type="text" name="barang_id" class="form-control" value="<?= generateKodeBarang(); ?>" readonly>
+          </div>
+
+          <div class="form-group input-group-sm">
+            <label for="name">Item names</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name ..." required>
+          </div>
+
+          <div class="form-group input-group-sm">
+            <label for="total">Stock</label>
+            <input type="text" class="form-control" name="total" id="total" placeholder="Enter jumlah ..." required>
+          </div>
+          <div class="form-group input-group-sm">
+            <label for="caregory">Category</label>
+            <select class="form-control" id="category" name="category">
+              <?php foreach ($category as $c) : ?>
+                <option value="<?= $c['category_id']; ?>"><?= $c['category']; ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="form-group input-group-sm">
+            <label for="brand">Brand</label>
+            <select class="form-control" id="brand" name="brand">
+              <?php foreach ($merk as $m) : ?>
+                <option value="<?= $m['merk_id']; ?>"><?= $m['merk']; ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="form-group input-group-sm">
+            <label for="price">Price</label>
+            <input type="text" class="form-control" name="price" id="price" placeholder="Enter kategori ..." required>
+          </div>
+          <div class="form-group">
+            <label for="picture">Upload picture</label>
+            <input type="file" class="form-control" name="picture" id="picture" required />
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-round bg-gradient-primary">Submit</button>
         </div>
-        </form>
+        <!-- </form> -->
+        <?= form_close(); ?>
         </div>
       </div>
     </div>
@@ -109,12 +115,12 @@
           <h5 class="modal-title">Edit Items Detail</h5>
           <a type="button" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times top-0"></i></span></a>
         </div>
-  
+
         <form role="form" action="<?php echo base_url('Controller_Warehouse/update') ?>" method="post" id="updateForm">
-  
+
           <div class="modal-body">
             <div id="messages"></div>
-  
+            
             <div class="form-group input-group-sm">
               <label for="edit_item_name">Item names</label>
               <input type="text" class="form-control" id="edit_item_name" name="edit_item_name" placeholder="Enter nama barang" autocomplete="off">
@@ -130,16 +136,16 @@
             <div class="form-group input-group-sm">
               <label for="category">Category</label>
               <select class="form-control" id="active" name="active">
-                  <option value="Active">Kategory 1</option>
-                  <option value="Inactive">Kategori 2</option>
-                </select>
+                <option value="Active">Kategory 1</option>
+                <option value="Inactive">Kategori 2</option>
+              </select>
             </div>
             <div class="form-group input-group-sm">
               <label for="edit_brand">Brand</label>
-                <select class="form-control" id="active" name="active">
-                  <option value="Active">Merk 1</option>
-                  <option value="Inactive">Merk 2</option>
-                </select>
+              <select class="form-control" id="active" name="active">
+                <option value="Active">Merk 1</option>
+                <option value="Inactive">Merk 2</option>
+              </select>
             </div>
             <div class="form-group input-group-sm">
               <label for="edit_price">Price</label>
@@ -147,18 +153,17 @@
             </div>
             <div class="form-group">
               <label for="edit_picture">Edit Picture</label>
-              <input type="file" class="form-control" name="gambar" id="gambar" name="foto[]" required/>
+              <input type="file" class="form-control" name="gambar" id="gambar" name="foto[]" required />
             </div>
 
           </div>
-  
+
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-round bg-gradient-primary">Save Changes</button>
           </div>
-  
-        </form>
 
+        </form>
 
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -197,9 +202,8 @@
           <h5 class="modal-title">Items Detail</h5>
           <a type="button" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times top-0"></i></span></a>
         </div>
-  
+
         <form role="form" action="<?php echo base_url('Controller_Warehouse/update') ?>" method="post" id="updateForm">
-  
           <div class="modal-body">
           <div class="col-md-12">
           <div class="row">
@@ -252,11 +256,7 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </form>
-  
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-
       
-      
-  </main>
