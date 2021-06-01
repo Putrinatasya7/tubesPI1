@@ -19,20 +19,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="text-xs font-weight-bold">
-                    <h7 class="mx-3 mb-0 text-sm ">Bangku</h7>
-                  </td>
-                  <td class="align-middle text-center text-xs font-weight-bold">001</td>
-                  <td class="align-middle text-center text-sm">10</span></td>
-                  <td class="align-middle text-center text-sm">perabot</span></td>
+                <?php foreach ($barang as $b) : ?>
+                  <tr>
+                    <td class="text-xs font-weight-bold">
+                      <h7 class="mx-3 mb-0 text-sm "><?= $b['barang']; ?></h7>
+                    </td>
+                    <td class="align-middle text-center text-xs font-weight-bold"><?= $b['barang_id']; ?></td>
+                    <td class="align-middle text-center text-sm"><?= $b['stock']; ?></span></td>
+                    <td class="align-middle text-center text-sm"><?= $b['category']; ?></span></td>
 
-                  <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#editModal">Edit</button></td>
-                  <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal">Delete</button></td>
-                  <td></td>
-                  <!-- <td><a href="<?= base_url(); ?>admin/update/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-info">Edit</span></a></td>
-                      <td><a href="<?= base_url(); ?>admin/delete/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-danger" onclick="return confirm('Anda yakin ingin menghapus akun ini?')">Delete</span></a></td> -->
-                </tr>
+                    <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#editModal" data-id="<?= $b['barang_id']; ?>">Edit</button></td>
+                    <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $b['barang_id']; ?>">Delete</button></td>
+                    <td></td>
+                  </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>
@@ -53,51 +53,54 @@
         </div>
 
         <div class="modal-body">
-          <form action="<?= base_url(); ?>Barang/addBarang" method="post">
+          <!-- <form action="<?= base_url(); ?>Barang/addBarang" method="post"> -->
+          <?= form_open_multipart('Barang/addBarang'); ?>
 
-            <div class="form-group">
-              <label for="name">Item names</label>
-              <input type="text" class="form-control" name="name" id="name" placeholder="Enter name ..." required>
-            </div>
+          <div class="form-group">
+            <label for="barang_id">Item Code</label>
+            <input type="text" name="barang_id" class="form-control" value="<?= generateKodeBarang(); ?>" readonly>
+          </div>
 
-            <div class="form-group">
-              <label for="code">Item Code</label>
-              <input type="text" name="barang_id" class="form-control" value="<?= generateKodeBarang(); ?>" disabled>
-            </div>
-            <div class="form-group">
-              <label for="total">Total</label>
-              <input type="text" class="form-control" name="total" id="total" placeholder="Enter jumlah ..." required>
-            </div>
-            <div class="form-group">
-              <label for="caregory">Category</label>
-              <select class="form-control" id="category" name="category">
-                <?php foreach ($category as $c) : ?>
-                  <option value="<?= $c['category_id']; ?>"><?= $c['category']; ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="brand">Brand</label>
-              <select class="form-control" id="brand" name="brand">
-                <?php foreach ($merk as $m) : ?>
-                  <option value="<?= $m['merk_id']; ?>"><?= $m['merk']; ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="price">Price</label>
-              <input type="text" class="form-control" name="price" id="price" placeholder="Enter kategori ..." required>
-            </div>
-            <div class="form-group">
-              <label for="picture">Upload picture</label>
-              <input type="file" class="form-control" name="picture" id="picture" name="foto[]" required />
-            </div>
+          <div class="form-group">
+            <label for="name">Item names</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name ..." required>
+          </div>
+
+          <div class="form-group">
+            <label for="total">Stock</label>
+            <input type="text" class="form-control" name="total" id="total" placeholder="Enter jumlah ..." required>
+          </div>
+          <div class="form-group">
+            <label for="caregory">Category</label>
+            <select class="form-control" id="category" name="category">
+              <?php foreach ($category as $c) : ?>
+                <option value="<?= $c['category_id']; ?>"><?= $c['category']; ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="brand">Brand</label>
+            <select class="form-control" id="brand" name="brand">
+              <?php foreach ($merk as $m) : ?>
+                <option value="<?= $m['merk_id']; ?>"><?= $m['merk']; ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" class="form-control" name="price" id="price" placeholder="Enter kategori ..." required>
+          </div>
+          <div class="form-group">
+            <label for="picture">Upload picture</label>
+            <input type="file" class="form-control" name="picture" id="picture" required />
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-round bg-gradient-primary">Submit</button>
         </div>
-        </form>
+        <!-- </form> -->
+        <?= form_close(); ?>
       </div>
     </div>
   </div>

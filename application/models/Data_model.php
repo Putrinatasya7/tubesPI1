@@ -42,26 +42,26 @@ class Data_model extends CI_Model {
   
   /**DATA KATEGORI */
   public function getCategory() {
-    return $this->db->get('merk')->result_array();
+    return $this->db->get('category')->result_array();
   }
   
-  /** SUPPLIER ZONE */
+  /** ITEM/GOODS ZONE */
   public function getBarang() {
-    return $this->db->get('barang')->result_array();
+    return $this->db->get('barang_detail')->result_array();
   }
 
-  public function insertBarang() {
+  public function insertBarang($filename) {
     $data = [
       'barang_id' => $this->input->post('barang_id'),
       'category_id' => $this->input->post('category'),
       'barang' => $this->input->post('name', true),
       'merk_id' => $this->input->post('brand'),
-      'pict' => $this->input->post('picture'),
+      'pict' => $filename,
       'stock' => $this->input->post('total'),
       'minimum_stock' => 25,
-      'harga' => $this->input->post('price')
-      // 'created_by' => $this->session->userdata('uid'),
-      // 'modified_by' => $this->session->userdata('uid')
+      'harga' => $this->input->post('price'),
+      'created_by' => $this->session->userdata('uid'),
+      'modified_by' => $this->session->userdata('uid')
     ];
 
     $this->db->insert('barang',$data);
