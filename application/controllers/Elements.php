@@ -20,12 +20,23 @@ class Elements extends CI_Controller {
 	 */
 	public function index()
 	{
-		$data['title'] = "Barang";
-		$data['subtitle'] = "Manage Barang";
+		$data['title'] = "Elements";
+		$data['subtitle'] = "Manage Elements";
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('elements');
 		$this->load->view('templates/footer');
 	}
+
+    // public function addValue()
+	// {
+	// 	$data['title'] = "Elements";
+	// 	$data['subtitle'] = "Manage Elements";
+
+	// 	$this->load->view('templates/header', $data);
+	// 	$this->load->view('addValue');
+	// 	$this->load->view('templates/footer');
+	// }
+
 
 }
