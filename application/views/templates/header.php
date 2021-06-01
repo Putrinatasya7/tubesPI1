@@ -43,7 +43,7 @@
     <!-- dari sini adalah pengambilan menunya dari database -->
     <!-- QUERY MENU -->
     <?php
-    $menu = $this->db->get('menu')->result_array();
+    $menu = $this->db->like('role_access',$this->session->userdata('role_id'))->get('menu')->result_array();
     ?>
 
     <div class="collapse navbar-collapse  w-auto" id="sidenav-collapse-main">

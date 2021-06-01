@@ -8,6 +8,7 @@ function is_logged_in() {
 
 	///mengecek sudah login atau belum, jika belum login maka tidak dapat mengakses halaman admin dan diredirect ke halaman login
 	if(!$ci->session->userdata('uname')) {
+    $ci->session->set_flashdata('message_wrong','Sorry, you must sign in first!');
 		redirect('Signin');
 	}
 }

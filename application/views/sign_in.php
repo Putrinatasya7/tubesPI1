@@ -45,6 +45,7 @@
                     <span class="alert-text text-white text-sm"><?= $this->session->flashdata('message_wrong'); ?></span>
                     <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
+                  <?php $this->session->unset_userdata('message_wrong'); ?>
                 <?php endif; ?>
 
                 <form role="form text-left" action="" method="POST">
