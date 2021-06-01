@@ -43,19 +43,25 @@ class User extends CI_Controller
 	public function addUser()
 	{
 		$this->Admin_model->insertUser();
-		$this->session->set_flashdata('message', 'User berhasil ditambahkan!');
+		$this->session->set_flashdata('message', 'User added successfully!');
 		redirect('User');
 	}
 
 	public function editUser() {
 		$this->Admin_model->updateUser();
-		$this->session->set_flashdata('message','Data user berhasil diperbarui!');
+		$this->session->set_flashdata('message','User data has been successfully updated!');
+		redirect('User');
+	}
+	
+	public function editPassword() {
+		$this->Admin_model->updatePassword();
+		$this->session->set_flashdata('message','User password has been succesfully updated!');
 		redirect('User');
 	}
 	
 	public function removeUser() {
 		$this->Admin_model->deleteUser();
-		$this->session->set_flashdata('message','User berhasil dihapus');
+		$this->session->set_flashdata('message','User deleted successfully!');
 		redirect('User');
 	}
 }

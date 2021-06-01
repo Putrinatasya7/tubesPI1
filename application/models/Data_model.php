@@ -68,7 +68,11 @@ class Data_model extends CI_Model {
 
   }
 
-  /**CHANGE PASSWORD ZONE */
+  /**USER PROFILE ZONE */
+  public function getUserWhere($uid) {
+    return $this->db->get_where('user',['uid' => $uid])->row_array();
+  }
+
   public function getPass() {
     
     return $this->db->select('password')->get('user')->row()->password;

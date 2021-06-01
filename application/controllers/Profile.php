@@ -15,6 +15,7 @@ class Profile extends CI_Controller {
 	{
 		$data['title'] = "Profile";
 		$data['subtitle'] = "Profile";
+		$data['user'] = $this->data_model->getUserWhere($this->session->userdata('uid'));
 
 		
 		if($this->input->post('new_password')) {

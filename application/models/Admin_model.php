@@ -35,12 +35,18 @@ class Admin_model extends CI_Model {
       'name' => htmlspecialchars($this->input->post('name')),
       'uname' => htmlspecialchars($this->input->post('uname')),
 			'email' => htmlspecialchars($this->input->post('email')),
-			'password' => password_hash(htmlspecialchars($this->input->post('password')), PASSWORD_DEFAULT),
 			'role_id' => htmlspecialchars($this->input->post('role_id'))
     ];
-
+    
     $this->db->where('uid', $uid);
     $this->db->update('user', $data);
+  }
+  
+  public function updatePassword() {
+    $uid = $this->input->post('uid');
+    $new_password = password_hash(htmlspecialchars($this->input->post('new_password')), PASSWORD_DEFAULT);
+    
+    $this->db->set('password', $new_password)->where('uid', $uid)->update('user');
   }
 
   public function deleteUser() {

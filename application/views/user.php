@@ -20,19 +20,22 @@
                 </thead>
                 <tbody>
                   <!-- perubahan baru untuk menampilkan user dari db -->
-                  <?php foreach($users as $user): ?>
-                  <tr>
-                    <td class="text-sm"><h7 class="mx-3 mb-0"><?= $user['uname']; ?></h7></td>
-                    <td class="align-middle text-center text-sm"><?= $user['email']; ?></td>
-                    <td class="align-middle text-center text-sm"><?= $user['name']; ?></td>
-                    <td class="align-middle text-center text-sm"><?= $user['role']; ?></td>
+                  <?php foreach ($users as $user) : ?>
+                    <tr>
+                      <td class="text-sm">
+                        <h7 class="mx-3 mb-0"><?= $user['uname']; ?></h7>
+                      </td>
+                      <td class="align-middle text-center text-sm"><?= $user['email']; ?></td>
+                      <td class="align-middle text-center text-sm"><?= $user['name']; ?></td>
+                      <td class="align-middle text-center text-sm"><?= $user['role']; ?></td>
 
-                    <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info"  data-toggle="modal" data-target="#editModal" id="editbutton" data-uid="<?= $user['uid']; ?>" data-uname="<?= $user['uname']; ?>" data-email="<?= $user['email']; ?>" data-name="<?= $user['name']; ?>" data-password="<?= $user['password']; ?>" data-roleid ="<?= $user['role_id']; ?>">Edit</button></td>
-                    <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" id="deletebutton" data-uid="<?= $user['uid']; ?>">Delete</button></td>
-                    <td></td>
-                    <!-- <td><a href="<?= base_url(); ?>admin/update/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-info">Edit</span></a></td>
+                      <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#editModal" id="editbutton" data-uid="<?= $user['uid']; ?>" data-uname="<?= $user['uname']; ?>" data-email="<?= $user['email']; ?>" data-name="<?= $user['name']; ?>" data-password="<?= $user['password']; ?>" data-roleid="<?= $user['role_id']; ?>">Edit</button></td>
+                      <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-warning" data-toggle="modal" data-target="#editPasswordModal" id="editPassword" data-uid="<?= $user['uid']; ?>">Change Password</button></td>
+                      <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" id="deletebutton" data-uid="<?= $user['uid']; ?>">Delete</button></td>
+                      <td></td>
+                      <!-- <td><a href="<?= base_url(); ?>admin/update/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-info">Edit</span></a></td>
                       <td><a href="<?= base_url(); ?>admin/delete/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-danger" onclick="return confirm('Anda yakin ingin menghapus akun ini?')">Delete</span></a></td> -->
-                  </tr>
+                    </tr>
                   <?php endforeach; ?>
                   <!-- perubahan baru untuk menampilkan user dari db -->
                 </tbody>
@@ -108,13 +111,13 @@
 
             <div class="modal-body">
               <div id="messages"></div>
-              
+
               <input type="hidden" class="form-control" id="uid" name="uid">
               <div class="form-group">
                 <label for="role_id">Role</label>
                 <select class="form-control" id="role_id" name="role_id">
                   <option value="">Pilih Role</option>
-                  <?php foreach($role as $r): ?>
+                  <?php foreach ($role as $r) : ?>
                     <option value="<?= $r['role_id']; ?>"><?= $r['role']; ?></option>
                   <?php endforeach; ?>
                 </select>
@@ -134,11 +137,6 @@
                 <label for="email">Email</label>
                 <input type="email" class="form-control" name="email" id="email" required>
               </div>
-
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" id="password" required>
-              </div>
             </div>
 
             <div class="modal-footer">
@@ -149,6 +147,39 @@
           </form>
 
 
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Change Password Modal -->
+    <div class="modal fade" tabindex="-1" aria-labelledby="editPasswordLabel" role="dialog" id="editPasswordModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Change User Password</h5>
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+          </div>
+
+          <form role="form" action="<?php echo base_url() ?>User/editPassword" method="post" id="removeForm">
+            <div class="modal-body">
+              <input type="hidden" id="uid" name="uid">
+
+              <div class="form-group">
+                <label for="new_password">New Password</label>
+                <input type="password" class="form-control" name="new_password" id="new_password" required>
+              </div>
+
+              <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" class="form-control" name="confirm_password" id="confirm_password" required>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-round bg-gradient-primary">Save changes</button>
+            </div>
+          </form>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -164,7 +195,7 @@
 
           <form role="form" action="<?php echo base_url() ?>User/removeUser" method="post" id="removeForm">
             <div class="modal-body">
-            <input type="hidden" id="uid" name="uid">
+              <input type="hidden" id="uid" name="uid">
               <p>Do you really want to remove?</p>
             </div>
             <div class="modal-footer">
@@ -172,8 +203,6 @@
               <button type="submit" class="btn btn-danger">Delete</button>
             </div>
           </form>
-
-
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -198,6 +227,11 @@
       });
 
       $(document).on("click", "#deletebutton", function() {
+        let uid = $(this).data('uid');
+        $(".modal-body #uid").val(uid);
+      });
+
+      $(document).on("click", "#editPassword", function() {
         let uid = $(this).data('uid');
         $(".modal-body #uid").val(uid);
       });
