@@ -1,4 +1,3 @@
-
     <div class="container-fluid py-4">
       <div class="card">
         <div class="card-header pb-0">
@@ -23,29 +22,34 @@
           </button>
 
           <form action="" method="post">
-            <div class="row">
-              <div class="col-md-1">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group input-group-sm">
-                  <select class="form-control" id="exampleFormControlSelect1">
-                    <option>Pilih Barang</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-2">
-                <div class="form-group input-group-sm">
-                  <input type="number" class="form-control" id="exampleFormControlInput1">
-                </div>
-              </div>
-
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0">
+                <thead>
+                  <th class="text-secondary opacity-7 w-5"></th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 w-75">Item</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Qty</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="align-middle text-center">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fcustomCheck1">
+                      </div>
+                    </td>
+                    <td class="align-middle text-center form-group input-group-sm">
+                      <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Pilih Barang</option>
+                      </select>
+                    </td>
+                    <td class="align-middle text-center form-group input-group-sm">
+                      <input type="number" class="form-control" id="exampleFormControlInput1">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            <div class="row">
+            <div class="row mt-3">
               <div class="col-md">
                 <div class="form-group">
                   <label for="exampleFormControlTextarea1">Alasan Pengambilan</label>
@@ -61,4 +65,4 @@
     </div>
 
 
-  </main>
+    </main>
