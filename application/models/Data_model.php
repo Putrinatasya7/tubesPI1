@@ -126,7 +126,7 @@ class Data_model extends CI_Model {
 
   public function getPass() {
     
-    return $this->db->select('password')->get('user')->row()->password;
+    return $this->db->select('password')->where('uid', $this->session->userdata('uid'))->get('user')->row()->password;
   }
 
   public function updatePassword() {

@@ -3,17 +3,19 @@
       <div class="col-12">
         <div class="card mb-4">
           <div class="card-header pb-0">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Supplier</button>
-              <!-- alert -->
-              <?php if($this->session->flashdata('message')) : ?>
-                <div class="alert alert-success col-md-6 alert-dismissible fade show text-white" role="alert">
-                  <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-                  <span class="alert-text"><strong>Success!</strong> <?= $this->session->flashdata('message'); ?>!</span>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-              <?php endif; ?>
-              <?php $this->session->unset_userdata('message'); ?>
-              <!-- alert -->
+            <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Supplier</button>
+            <?php endif; ?>
+            <!-- alert -->
+            <?php if ($this->session->flashdata('message')) : ?>
+              <div class="alert alert-success col-md-6 alert-dismissible fade show text-white" role="alert">
+                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                <span class="alert-text"><strong>Success!</strong> <?= $this->session->flashdata('message'); ?>!</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <?php endif; ?>
+            <?php $this->session->unset_userdata('message'); ?>
+            <!-- alert -->
           </div>
 
           <div class="card-body px-0 pt-0 pb-2">
@@ -24,8 +26,9 @@
                     <th class="text-secondary text-s">Supplier Name</th>
                     <th class="align-middle text-center text-secondary text-s ps-2">Contact</th>
                     <th class="align-middle text-center text-secondary text-s">Status</th>
-                    <th class="align-middle text-center text-secondary text-s" colspan="2">Action</th>
-                    <th></th>
+                    <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
+                      <th class="align-middle text-center text-secondary text-s" colspan="2">Action</th>
+                    <?php endif; ?>
                   </tr>
                 </thead>
                 <tbody>
@@ -37,12 +40,10 @@
                       </td>
                       <td class="align-middle text-center text-xs font-weight-bold"><?= $s['contact']; ?></td>
                       <td class="align-middle text-center text-sm"><span class="badge badge-sm bg-gradient-success"><?= $s['status']; ?></span></td>
-
-                      <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#editModal" id="editbutton" data-id="<?= $s['supplier_id']; ?>" data-supplier="<?= $s['supplier']; ?>" data-contact="<?= $s['contact']; ?>" data-status="<?= $s['status']; ?>">Edit</button></td>
-                      <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" id="deletebutton" data-id="<?= $s['supplier_id']; ?>">Delete</button></td>
-                      <td></td>
-                      <!-- <td><a href="<?= base_url(); ?>admin/update/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-info">Edit</span></a></td>
-                      <td><a href="<?= base_url(); ?>admin/delete/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-danger" onclick="return confirm('Anda yakin ingin menghapus akun ini?')">Delete</span></a></td> -->
+                      <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
+                        <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#editModal" id="editbutton" data-id="<?= $s['supplier_id']; ?>" data-supplier="<?= $s['supplier']; ?>" data-contact="<?= $s['contact']; ?>" data-status="<?= $s['status']; ?>">Edit</button></td>
+                        <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" id="deletebutton" data-id="<?= $s['supplier_id']; ?>">Delete</button></td>
+                      <?php endif; ?>
                     </tr>
                   <?php endforeach; ?>
                   <!-- baru ditambah -->

@@ -23,11 +23,11 @@ class Profile extends CI_Controller {
 			$current_pass = $this->data_model->getPass();
 
 			if(!password_verify($input_curr_pass,$current_pass)) {
-				$this->session->set_flashdata('message', 'Your current password is wrong!');
+				$this->session->set_flashdata('message_wrong', 'Your current password is wrong!');
 				redirect('Profile');
 			}
 			else if($this->input->post('new_password') == $input_curr_pass) {
-				$this->session->set_flashdata('message', 'Sorry, new password can not be the same as current password!');
+				$this->session->set_flashdata('message_wrong', 'New password can not be the same as current password!');
 				redirect('Profile');
 			}
 			else {

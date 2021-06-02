@@ -7,7 +7,7 @@
     <div class="row gx-4">
       <div class="col-auto">
         <div class="avatar avatar-xl position-relative">
-          <img src="<?php echo base_url('asset/pict/user/'.$user['pict']); ?>" alt="..." class="w-100 border-radius-lg shadow-sm">
+          <img src="<?php echo base_url('asset/pict/user/' . $user['pict']); ?>" alt="..." class="w-100 border-radius-lg shadow-sm">
         </div>
       </div>
       <div class="col-auto my-auto">
@@ -15,8 +15,11 @@
           <h5 class="mb-1">
             <?= ucfirst($user['name']); ?>
           </h5>
-          <p class="mb-0 font-weight-bold text-sm">
+          <p class="mb-1 font-weight-bold text-sm">
             <?= ($user['uname']); ?> / <?= $user['role']; ?>
+          </p>
+          <p class="mb-0 font-weight-bold text-sm">
+            <?= ($user['email']); ?>
           </p>
         </div>
       </div>
@@ -38,7 +41,24 @@
       </div>
     </div>
   </div>
+  <!-- alert -->
+  <?php if ($this->session->flashdata('message')) : ?>
+    <div class="alert alert-success col-md-auto alert-dismissible fade show text-white mt-4" role="alert">
+      <span class="alert-icon"><i class="fas fa-smile"></i></span>
+      <span class="alert-text"><strong>Success!</strong> <?= $this->session->flashdata('message'); ?>!</span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php elseif ($this->session->flashdata('message_wrong')) : ?>
+    <div class="alert alert-danger col-md-auto alert-dismissible fade show text-white mt-4" role="alert">
+      <span class="alert-icon"><i class="fas fa-frown"></i></span>
+      <span class="alert-text"><strong>Sorry!</strong> <?= $this->session->flashdata('message_wrong'); ?>!</span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php endif; ?>
+  <?php $this->session->unset_userdata('message'); ?>
+  <!-- alert -->
 </div>
+
 
 
 <!-- Konten Profile Information -->
@@ -55,23 +75,10 @@
               <div class="col-md-8 d-flex align-items-center">
                 <h6 class="mb-0">Edit Profile</h6>
               </div>
-              <div class="form-group">
-                <label for="picture">Upload picture</label>
-                <input type="file" class="form-control" name="gambar" id="gambar" name="foto[]" required />
-              </div>
-              <div class="form-group ">
-                <label for="name">Description</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama ..." required>
-              </div>
 
               <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama ..." required>
-              </div>
-
-              <div class="form-group">
-                <label for="uname">Username</label>
-                <input type="text" class="form-control" name="uname" id="uname" placeholder="Masukkan username ..." required>
               </div>
 
               <div class="form-group">
@@ -80,9 +87,10 @@
               </div>
 
               <div class="form-group">
-                <label for="location">Location</label>
-                <input type="location" class="form-control" name="location" id="email" placeholder="Masukkan lokasi ..." required>
+                <label for="picture">Upload picture</label>
+                <input type="file" class="form-control" name="gambar" id="gambar" name="foto[]" required />
               </div>
+
             </div>
             <div class="card-footer pb-0 p-3">
               <button type="submit" class="btn btn-round bg-gradient-primary">Save Change</button>

@@ -3,7 +3,9 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Barang</button>
+          <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Barang</button>
+          <?php endif; ?>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
@@ -14,7 +16,11 @@
                   <th class="align-middle text-center text-secondary text-s ps-2">Kode Barang</th>
                   <th class="align-middle text-center text-secondary text-s">Jumlah Barang</th>
                   <th class="align-middle text-center text-secondary text-s">Kategori</th>
-                  <th class="align-middle text-center text-secondary text-s" colspan="3">Action</th>
+                  <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
+                    <th class="align-middle text-center text-secondary text-s" colspan="3">Action</th>
+                  <?php else : ?>
+                    <th class="align-middle text-center text-secondary text-s">Action</th>
+                  <?php endif; ?>
                   <th></th>
                 </tr>
               </thead>
@@ -28,12 +34,63 @@
                     <td class="align-middle text-center text-sm"><?= $b['stock']; ?></span></td>
                     <td class="align-middle text-center text-sm"><?= $b['category']; ?></span></td>
 
-                    <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-warning" data-toggle="modal" data-target="#editModal" data-id="<?= $b['barang_id']; ?>"><i class="fa fa-pen top-0" title="Edit"></i></button></td>
-                    <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#detailBarang"><i class="fa fa-search top-0" title="Detail"></i></button></td>
-                    <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $b['barang_id']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button></td>
+                    <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
+                      <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-warning" data-toggle="modal" data-target="#editModal" data-id="<?= $b['barang_id']; ?>"><i class="fa fa-pen top-0" title="Edit"></i></button></td>
+                    <?php endif; ?>
+                    <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#detailBarang<?= $b['barang_id']; ?>"><i class="fa fa-search top-0" title="Detail"></i></button></td>
+                    <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
+                      <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $b['barang_id']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button></td>
+                    <?php endif; ?>
                     <td></td>
                   </tr>
-                <?php endforeach; ?>
+
+
+                  <!-- Items Detail -->
+                  <div class="modal fade" tabindex="-1" aria-labelledby="detailBarangLabel" role="dialog" id="detailBarang<?= $b['barang_id'];?>">
+                    <div class="modal-dialog modal-xl" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Items Detail</h5>
+                          <a type="button" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times top-0"></i></span></a>
+                        </div>
+
+                        <div class="modal-body">
+                          <div class="col-md-12">
+                            <div class="row p-4">
+                              <div class="col-md-4">
+                                <img src="<?php echo base_url(); ?>asset/pict/barang/<?= $b['pict']; ?>" alt="..." class="w-100 position-relative z-index-2 border-radius-lg shadow-sm">
+                              </div>
+                              <div class="col-md-8">
+                                <h6 class="font-weight-bolder"><?= $b['barang_id']; ?></h6>
+                                <h5 class="font-weight-bolder text-info text-gradient"><?= $b['barang']; ?></h5>
+                                <h6><?= $b['merk']; ?> <span class="font-weight-normal">| <?= $b['category']; ?></span></h6>
+                                <h6>Rp <?= $b['harga']; ?></h6>
+                                <h6 class="font-weight-normal">Stock : <?= $b['stock']; ?></h6>
+                                <img src="<?php echo base_url(); ?>asset\pict\qrcode\qrcode_contoh.png" alt="..." class="w-15 position-relative z-index-2 border-radius-lg shadow-sm">
+                                <?php if ($this->session->userdata('role_id') == 1) : ?>
+                                  <div class="row mt-5">
+                                    <div class="col-md-6">
+                                      <h6>Date Created</h6>
+                                      <h6 class="font-weight-normal">Selasa, 2 Juni 2021</h6>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <h6>Date Modified</h6>
+                                      <h6 class="font-weight-normal">Selasa, 2 Juni 2021</h6>
+                                    </div>
+                                  </div> <!-- /row mt-5-->
+                                <?php endif; ?>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+
+                        </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                  <?php endforeach; ?>
               </tbody>
             </table>
           </div>
@@ -190,72 +247,6 @@
         </form>
 
 
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-
-  <!-- Items Detail -->
-  <div class="modal fade" tabindex="-1" aria-labelledby="detailBarangLabel" role="dialog" id="detailBarang">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Items Detail</h5>
-          <a type="button" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times top-0"></i></span></a>
-        </div>
-
-        <form role="form" action="<?php echo base_url('Controller_Warehouse/update') ?>" method="post" id="updateForm">
-          <div class="modal-body">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-2">
-                  <div class="avatar avatar-xxl position-relative">
-                    <img src="<?php echo base_url(); ?>asset/bootstrap/img/bruce-mars.jpg" alt="..." class="w-100 position-relative z-index-2 border-radius-lg shadow-sm">
-                  </div>
-                </div>
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label for="edit_item_name">Item names</label>
-                    <input type="text" class="form-control" id="edit_item_name" name="edit_item_name" placeholder="Enter nama barang" autocomplete="off">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="code">Item code</label>
-                    <input type="text" class="form-control" disabled>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="edit_total">Total</label>
-                    <input type="text" class="form-control" name="edit_total" id="edit_total" placeholder="Enter total ..." required>
-                  </div>
-                </div>
-
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label for="category">Category</label>
-                    <select class="form-control" id="active" name="active">
-                      <option value="Active">Kategory 1</option>
-                      <option value="Inactive">Kategori 2</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="edit_brand">Brand</label>
-                    <select class="form-control" id="active" name="active">
-                      <option value="Active">Merk 1</option>
-                      <option value="Inactive">Merk 2</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="edit_price">Price</label>
-                    <input type="text" class="form-control" id="edit_price" name="edit_price" placeholder="Harga barang" autocomplete="off">
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </form>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->

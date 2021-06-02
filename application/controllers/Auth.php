@@ -24,7 +24,7 @@ class Auth extends CI_Controller {
 
 	public function staff()
 	{
-		$data['title'] = "Staff";
+		$data['title'] = "Dashboard";
 		$data['subtitle'] = "Dashboard";
 
 		$this->load->view('templates/header', $data);
@@ -34,7 +34,7 @@ class Auth extends CI_Controller {
 
 	public function manager()
 	{
-		$data['title'] = "Staff";
+		$data['title'] = "Dashboard";
 		$data['subtitle'] = "Dashboard";
 
 		$this->load->view('templates/header', $data);

@@ -52,7 +52,15 @@ class Signin extends CI_Controller
 						];
 
 						$this->session->set_userdata($data);
-						redirect('Auth');
+						if($user['role_id'] == 1) {
+							redirect('Auth');
+						}
+						else if($user['role_id'] == 2) {
+							redirect('Auth/manager');
+						}
+						else if($user['role_id'] == 3) {
+							redirect('Auth/staff');
+						}
 					}
 
 					//jika password salah
