@@ -44,5 +44,21 @@ class Request extends CI_Controller {
     $this->load->view('addRequestOut');
     $this->load->view('templates/footer');
   }
+  public function detailsIn() {
+    $data['title'] = "Request";
+    $data['subtitle'] = "Detail Request Barang Masuk";
+
+    $this->load->view('templates/header', $data);
+    $this->load->view('detailsIn');
+    $this->load->view('templates/footer');
+  }
+  public function detailsOut() {
+    $data['title'] = "Request";
+    $data['subtitle'] = "Detail Request Barang Keluar";
+
+    $this->load->view('templates/header', $data);
+    $this->load->view('detailsOut');
+    $this->load->view('templates/footer');
+  }
 }
 
