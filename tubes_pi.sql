@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2021 at 05:16 AM
+-- Generation Time: Jun 02, 2021 at 03:42 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -143,7 +143,8 @@ INSERT INTO `menu` (`menuid`, `menu`, `url`, `icon`, `collapse`, `is_active`, `r
 (2, 'Barang', 'Barang', 'ni ni-app', 'n', '1', '1,2,3'),
 (3, 'Supplier', 'Supplier', 'ni ni-delivery-fast', 'n', '1', '1,2,3'),
 (4, 'Request', '#collapseExample', 'ni ni-bullet-list-67', 'y', '1', '1,2,3'),
-(5, 'User', 'User', 'ni ni-single-02', 'n', '1', '1');
+(5, 'User', 'User', 'ni ni-single-02', 'n', '1', '1'),
+(6, 'Elements', 'Elements', 'ni ni-tag', 'n', '1', '1,2,3');
 
 -- --------------------------------------------------------
 
@@ -305,11 +306,31 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`uid`, `name`, `uname`, `email`, `password`, `pict`, `created_at`, `modified_at`, `role_id`, `is_active`) VALUES
-('A001', 'Jessica Wong', 'jessiwong', 'jessicawong@mail.com', '$2y$10$PSddpuQGDS0AbCtDbriDWe2jSyUA9P.DYG6oRCJ/z/czDpgb1y5Tm', '', '2021-05-25 22:10:25', '2021-05-25 22:10:25', 1, 'Active'),
+('A001', 'Jessica Wong', 'jessiwong', 'jessicawong@mail.com', '$2y$10$PSddpuQGDS0AbCtDbriDWe2jSyUA9P.DYG6oRCJ/z/czDpgb1y5Tm', 'defaultusrpict.jpg', '2021-05-25 22:10:25', '2021-05-25 22:10:25', 1, 'Active'),
 ('A002', 'Putri Natasya', 'punat', 'putrinatasya@gmail.com', '$2y$10$uqqACchko3qRn5FHiZ4LC.nU6QwqZCF3.X/I8IM68fI8XOEfZs8wS', 'defaultusrpict.jpg', '2021-05-28 11:09:21', '2021-05-28 11:09:21', 1, 'Active'),
 ('M001', 'Patrisia Tambunan', 'patty', 'patrisia@gmail.com', '$2y$10$dVLY/jHsBHtzj8tTmGzp.OxtSxZnz6iQJn1mCxO2eH4.3b40jpfmm', 'defaultusrpict.jpg', '2021-05-28 01:27:51', '2021-05-28 01:27:51', 2, 'Active'),
 ('S001', 'Mita Amelia', 'mita', 'mitaamelia@gmail.com', '$2y$10$tpxwesVPE2AQFcpyEtaiauxjxSyI6Db21fzZXRDfWPwSg0xQ3Kply', 'defaultusrpict.jpg', '2021-05-28 11:08:18', '2021-05-28 11:08:18', 3, 'Active'),
 ('S002', 'Ruhami Sukma Putri', 'puti', 'puti@gmail.com', '$2y$10$FXpuJLovoksjUoxlREbL.OI.Y39jGw3Bv04YR78bU2Q8VJ8ACk6t2', 'defaultusrpict.jpg', '2021-05-29 20:15:31', '2021-05-29 20:15:31', 3, 'Active');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `user_detail`
+-- (See below for the actual view)
+--
+CREATE TABLE `user_detail` (
+`uid` varchar(4)
+,`name` varchar(50)
+,`uname` varchar(50)
+,`email` varchar(100)
+,`password` varchar(255)
+,`pict` varchar(255)
+,`created_at` datetime
+,`modified_at` datetime
+,`role_id` int(1)
+,`role` varchar(50)
+,`is_active` enum('Active','Inactive')
+);
 
 -- --------------------------------------------------------
 
@@ -319,6 +340,15 @@ INSERT INTO `user` (`uid`, `name`, `uname`, `email`, `password`, `pict`, `create
 DROP TABLE IF EXISTS `barang_detail`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `barang_detail`  AS SELECT `b`.`barang_id` AS `barang_id`, `c`.`category` AS `category`, `b`.`barang` AS `barang`, `m`.`merk` AS `merk`, `b`.`pict` AS `pict`, `b`.`stock` AS `stock`, `b`.`minimum_stock` AS `minimum_stock`, `b`.`harga` AS `harga`, `b`.`qr_code` AS `qr_code`, `b`.`created_at` AS `created_at`, `b`.`created_by` AS `created_by`, `b`.`modified_at` AS `modified_at`, `b`.`modified_by` AS `modified_by` FROM ((`barang` `b` join `category` `c` on(`c`.`category_id` = `b`.`category_id`)) join `merk` `m` on(`m`.`merk_id` = `b`.`merk_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `user_detail`
+--
+DROP TABLE IF EXISTS `user_detail`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_detail`  AS SELECT `u`.`uid` AS `uid`, `u`.`name` AS `name`, `u`.`uname` AS `uname`, `u`.`email` AS `email`, `u`.`password` AS `password`, `u`.`pict` AS `pict`, `u`.`created_at` AS `created_at`, `u`.`modified_at` AS `modified_at`, `u`.`role_id` AS `role_id`, `r`.`role` AS `role`, `u`.`is_active` AS `is_active` FROM (`user` `u` join `role` `r` on(`r`.`role_id` = `u`.`role_id`)) ;
 
 --
 -- Indexes for dumped tables
@@ -437,7 +467,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `menuid` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `menuid` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `merk`

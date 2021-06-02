@@ -26,8 +26,8 @@
                       <td class="align-middle text-center text-xs font-weight-bold">1 juli 2020</td>
                       <td class="align-middle text-center text-sm"><span class="badge badge-sm bg-gradient-success">In</span></td>
                       <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-warning" data-toggle="modal" data-target="#editModal"><i class="fa fa-pen top-0" title="Edit"></i></button></td>
-                      <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" ><a href=" <?php echo base_url('Request/detailsIn') ?>"> <i class="fa fa-search top-0" title="Detail"></i></button></td>
-                      <td class="align-middle text-center" ><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash top-0" title="Delete"></i></button></td>
+                      <td class="align-middle text-center"><a href=" <?php echo base_url('Request/detailsIn') ?>"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" > <i class="fa fa-search top-0" title="Detail"></i></button></a></td>
+                      <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash top-0" title="Delete"></i></button></td>
                       <td></td>
                       <!-- <td><a href="<?= base_url(); ?>admin/update/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-info">Edit</span></a></td>
                       <td><a href="<?= base_url(); ?>admin/delete/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-danger" onclick="return confirm('Anda yakin ingin menghapus akun ini?')">Delete</span></a></td> -->
