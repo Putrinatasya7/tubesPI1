@@ -143,7 +143,7 @@
             </li>
             <li class="nav-item dropdown pe-2 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-user cursor-pointer"></i>&nbsp;&nbsp;<span class="d-sm-inline d-none">Administrator</span>
+                <i class="fa fa-user cursor-pointer"></i>&nbsp;&nbsp;<span class="d-sm-inline d-none"><?= $this->session->userdata('name'); ?></span>
               </a>
               <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
@@ -154,7 +154,7 @@
                       </div>
                     </div>
                   </a>
-                  <a class="dropdown-item border-radius-md" href="<?php echo base_url('#') ?>">
+                  <a class="dropdown-item border-radius-md" href="<?php echo base_url('Signin/logout') ?>">
                     <div class="d-flex py-1">
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-sm font-weight-normal mb-1"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Logout</h6>

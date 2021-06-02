@@ -147,7 +147,7 @@
                         </h5>
                       </div>
                       <div class="d-flex align-items-center justify-content-between">
-                        <button type="button" class="btn btn-outline-primary btn-sm mb-0">Add Stock</button>
+                        <a href="<?php echo base_url('Request/addReqIn') ?>"><button type="button" class="btn btn-outline-primary btn-sm mb-0">Add Stock</button></a>
                       </div>
                       <p></p>
                     </div>

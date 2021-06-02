@@ -70,7 +70,7 @@ class Data_model extends CI_Model {
 
   /**USER PROFILE ZONE */
   public function getUserWhere($uid) {
-    return $this->db->get_where('user',['uid' => $uid])->row_array();
+    return $this->db->get_where('user_detail',['uid' => $uid])->row_array();
   }
 
   public function getPass() {

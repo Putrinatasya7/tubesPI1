@@ -47,6 +47,7 @@ class Signin extends CI_Controller
 						$data = [
 							'uid' => $user['uid'],
 							'uname' => $user['uname'],
+							'name' => $user['name'],
 							'role_id' => $user['role_id']
 						];
 
@@ -74,6 +75,7 @@ class Signin extends CI_Controller
 	{
 
 		$this->session->unset_userdata('uname');
+		$this->session->unset_userdata('name');
 		$this->session->unset_userdata('uid');
 		$this->session->unset_userdata('role_id');
 

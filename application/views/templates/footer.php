@@ -38,6 +38,13 @@
   <script src="<?php echo base_url();?>asset/bootstrap/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="<?php echo base_url();?>asset/bootstrap/js/plugins/chartjs.min.js"></script>
   <script src="<?php echo base_url();?>asset/bootstrap/js/plugins/Chart.extension.js"></script>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+
   <script>
     var ctx = document.getElementById("chart-bars").getContext("2d");
 
