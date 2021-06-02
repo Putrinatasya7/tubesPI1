@@ -87,8 +87,8 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-sm mt-4">Submit</button>
         <button type="button" onclick="goBack()" class="btn btn-secondary btn-sm mt-4">Back</button>
+        <button type="submit" class="btn btn-primary btn-sm mt-4">Submit</button>
       </form>
     </div>
   </div>

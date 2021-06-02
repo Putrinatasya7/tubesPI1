@@ -35,7 +35,7 @@
         </thead>
         <div class="card-footer pb-0 p-3">
 
-          <div class="card">
+          <div class="card card-plain">
             <div class="card-header pb-0 p-3">
               <div class="row">
                 <div class="row mt-2">
@@ -62,7 +62,12 @@
                   </div>
                 </div>
                 <div class="card-footer pb-2 p-3">
-                  <button type="button" onclick="goBack()" class="btn btn-secondary btn-sm mt-4">Back</button>
                 </div>
               </div>
             </div>
+          </div>
+        </div> <!-- /card-footer -->
+        <button type="button" onclick="goBack()" class="btn btn-secondary btn-sm mt-4">Back</button>
+      </div>
+    </div>
+  </div>

@@ -6,14 +6,13 @@
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Supplier</button>
               <!-- alert -->
               <?php if($this->session->flashdata('message')) : ?>
-                <div class="alert alert-success col-md-6 alert-dismissible fade show" role="alert">
+                <div class="alert alert-success col-md-6 alert-dismissible fade show text-white" role="alert">
                   <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                   <span class="alert-text"><strong>Success!</strong> <?= $this->session->flashdata('message'); ?>!</span>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               <?php endif; ?>
+              <?php $this->session->unset_userdata('message'); ?>
               <!-- alert -->
           </div>
 

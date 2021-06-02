@@ -34,15 +34,66 @@ class Data_model extends CI_Model {
     $this->db->where('supplier_id', $supplier_id);
     $this->db->delete('supplier');
   }
-
+  
+  /**ELEMENTS ZONE */
   /**DATA MERK */
   public function getMerk() {
     return $this->db->get('merk')->result_array();
   }
   
+  public function insertMerk() {
+    $data = [
+      'merk' => $this->input->post('name_brand', true),
+      'status' => $this->input->post('status_brand')
+    ];
+    $this->db->insert('merk', $data);
+  }
+  
+  public function updateMerk() {
+    $merk_id = $this->input->post('merk_id');
+    $data = [
+      'merk' => $this->input->post('merk', true),
+      'status' => $this->input->post('status_brand')
+    ];
+    
+    $this->db->where('merk_id', $merk_id);
+    $this->db->update('merk', $data);
+  }
+  
+    public function deleteMerk() {
+      $merk_id = $this->input->post('merk_id');
+  
+      $this->db->where('merk_id',$merk_id)->delete('merk');
+    }
+  
   /**DATA KATEGORI */
   public function getCategory() {
     return $this->db->get('category')->result_array();
+  }
+  
+  public function insertCategory() {
+    $data = [
+      'category' => $this->input->post('name_category', true),
+      'status' => $this->input->post('status_category')
+    ];
+    $this->db->insert('category', $data);
+  }
+
+  public function updateCategory() {
+    $category_id = $this->input->post('category_id');
+    $data = [
+      'category' => $this->input->post('category', true),
+      'status' => $this->input->post('status_category')
+    ];
+    
+    $this->db->where('category_id', $category_id);
+    $this->db->update('category', $data);
+  }
+
+  public function deleteCategory() {
+    $category_id = $this->input->post('category_id');
+
+    $this->db->where('category_id',$category_id)->delete('category');
   }
   
   /** ITEM/GOODS ZONE */
