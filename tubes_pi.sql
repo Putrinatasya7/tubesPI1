@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 28, 2021 at 06:20 AM
+-- Generation Time: Jun 02, 2021 at 05:16 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -36,12 +36,42 @@ CREATE TABLE `barang` (
   `stock` int(6) NOT NULL,
   `minimum_stock` int(6) NOT NULL,
   `harga` int(11) NOT NULL,
-  `qr_code` varchar(255) NOT NULL,
+  `qr_code` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `created_by` varchar(4) NOT NULL,
   `modified_at` datetime NOT NULL DEFAULT current_timestamp(),
   `modified_by` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `barang`
+--
+
+INSERT INTO `barang` (`barang_id`, `category_id`, `barang`, `merk_id`, `pict`, `stock`, `minimum_stock`, `harga`, `qr_code`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
+('B001', 1, 'Dunlop SP Sport LM705 185/70 R14 Ban Mobil [Tahun 2021]', 1, 'dunlopban1.jpg', 50, 25, 560000, NULL, '2021-06-01 22:07:00', 'A001', '2021-06-01 22:07:00', 'A001'),
+('B002', 1, 'Dunlop Direzza DZ101 195/50 R16 - Produksi 2021', 1, 'dunlop-dz101.jpg', 50, 25, 630000, NULL, '2021-06-01 22:14:07', 'A001', '2021-06-01 22:14:07', 'A001');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `barang_detail`
+-- (See below for the actual view)
+--
+CREATE TABLE `barang_detail` (
+`barang_id` varchar(10)
+,`category` varchar(100)
+,`barang` varchar(200)
+,`merk` varchar(100)
+,`pict` varchar(255)
+,`stock` int(6)
+,`minimum_stock` int(6)
+,`harga` int(11)
+,`qr_code` varchar(255)
+,`created_at` datetime
+,`created_by` varchar(4)
+,`modified_at` datetime
+,`modified_by` varchar(4)
+);
 
 -- --------------------------------------------------------
 
@@ -53,6 +83,13 @@ CREATE TABLE `category` (
   `category_id` int(2) NOT NULL,
   `category` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`category_id`, `category`) VALUES
+(1, 'Suku Cadang');
 
 -- --------------------------------------------------------
 
@@ -72,6 +109,18 @@ CREATE TABLE `invoice` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invoice_out`
+--
+
+CREATE TABLE `invoice_out` (
+  `invoice_no` varchar(100) NOT NULL,
+  `request_no` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `menu`
 --
 
@@ -81,19 +130,20 @@ CREATE TABLE `menu` (
   `url` varchar(100) NOT NULL,
   `icon` varchar(50) NOT NULL,
   `collapse` enum('y','n') NOT NULL DEFAULT 'n',
-  `is_active` enum('1','2') DEFAULT NULL
+  `is_active` enum('1','2') DEFAULT NULL,
+  `role_access` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `menu`
 --
 
-INSERT INTO `menu` (`menuid`, `menu`, `url`, `icon`, `collapse`, `is_active`) VALUES
-(1, 'Dashboard', 'Auth', 'fas fa-home', 'n', '1'),
-(2, 'Barang', 'Barang', 'ni ni-app', 'n', '1'),
-(3, 'Supplier', 'Supplier', 'ni ni-delivery-fast', 'n', '1'),
-(4, 'Request', '#collapseExample', 'ni ni-bullet-list-67', 'y', '1'),
-(5, 'User', 'User', 'ni ni-single-02', 'n', '1');
+INSERT INTO `menu` (`menuid`, `menu`, `url`, `icon`, `collapse`, `is_active`, `role_access`) VALUES
+(1, 'Dashboard', 'Auth', 'fas fa-home', 'n', '1', '1,2,3'),
+(2, 'Barang', 'Barang', 'ni ni-app', 'n', '1', '1,2,3'),
+(3, 'Supplier', 'Supplier', 'ni ni-delivery-fast', 'n', '1', '1,2,3'),
+(4, 'Request', '#collapseExample', 'ni ni-bullet-list-67', 'y', '1', '1,2,3'),
+(5, 'User', 'User', 'ni ni-single-02', 'n', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -105,6 +155,13 @@ CREATE TABLE `merk` (
   `merk_id` int(2) NOT NULL,
   `merk` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `merk`
+--
+
+INSERT INTO `merk` (`merk_id`, `merk`) VALUES
+(1, 'Dunlop');
 
 -- --------------------------------------------------------
 
@@ -248,10 +305,20 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`uid`, `name`, `uname`, `email`, `password`, `pict`, `created_at`, `modified_at`, `role_id`, `is_active`) VALUES
-('A001', 'Jessica Wong', 'jessiwong', 'jessicawong@mail.com', '........', '', '2021-05-25 22:10:25', '2021-05-25 22:10:25', 1, 'Active'),
+('A001', 'Jessica Wong', 'jessiwong', 'jessicawong@mail.com', '$2y$10$PSddpuQGDS0AbCtDbriDWe2jSyUA9P.DYG6oRCJ/z/czDpgb1y5Tm', '', '2021-05-25 22:10:25', '2021-05-25 22:10:25', 1, 'Active'),
 ('A002', 'Putri Natasya', 'punat', 'putrinatasya@gmail.com', '$2y$10$uqqACchko3qRn5FHiZ4LC.nU6QwqZCF3.X/I8IM68fI8XOEfZs8wS', 'defaultusrpict.jpg', '2021-05-28 11:09:21', '2021-05-28 11:09:21', 1, 'Active'),
-('M001', 'Patrisia Tambunan', 'patty', 'patrisia@gmail.com', '$2y$10$AbjVvlitpxR/DiBeXUqYuOjqLh.PqMjV2tqMIVF8/kfvtzSppX.3C', 'defaultusrpict.jpg', '2021-05-28 01:27:51', '2021-05-28 01:27:51', 2, 'Active'),
-('S001', 'Mita Amelia', 'mita', 'mitaamelia@gmail.com', '$2y$10$tpxwesVPE2AQFcpyEtaiauxjxSyI6Db21fzZXRDfWPwSg0xQ3Kply', 'defaultusrpict.jpg', '2021-05-28 11:08:18', '2021-05-28 11:08:18', 3, 'Active');
+('M001', 'Patrisia Tambunan', 'patty', 'patrisia@gmail.com', '$2y$10$dVLY/jHsBHtzj8tTmGzp.OxtSxZnz6iQJn1mCxO2eH4.3b40jpfmm', 'defaultusrpict.jpg', '2021-05-28 01:27:51', '2021-05-28 01:27:51', 2, 'Active'),
+('S001', 'Mita Amelia', 'mita', 'mitaamelia@gmail.com', '$2y$10$tpxwesVPE2AQFcpyEtaiauxjxSyI6Db21fzZXRDfWPwSg0xQ3Kply', 'defaultusrpict.jpg', '2021-05-28 11:08:18', '2021-05-28 11:08:18', 3, 'Active'),
+('S002', 'Ruhami Sukma Putri', 'puti', 'puti@gmail.com', '$2y$10$FXpuJLovoksjUoxlREbL.OI.Y39jGw3Bv04YR78bU2Q8VJ8ACk6t2', 'defaultusrpict.jpg', '2021-05-29 20:15:31', '2021-05-29 20:15:31', 3, 'Active');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `barang_detail`
+--
+DROP TABLE IF EXISTS `barang_detail`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `barang_detail`  AS SELECT `b`.`barang_id` AS `barang_id`, `c`.`category` AS `category`, `b`.`barang` AS `barang`, `m`.`merk` AS `merk`, `b`.`pict` AS `pict`, `b`.`stock` AS `stock`, `b`.`minimum_stock` AS `minimum_stock`, `b`.`harga` AS `harga`, `b`.`qr_code` AS `qr_code`, `b`.`created_at` AS `created_at`, `b`.`created_by` AS `created_by`, `b`.`modified_at` AS `modified_at`, `b`.`modified_by` AS `modified_by` FROM ((`barang` `b` join `category` `c` on(`c`.`category_id` = `b`.`category_id`)) join `merk` `m` on(`m`.`merk_id` = `b`.`merk_id`)) ;
 
 --
 -- Indexes for dumped tables
@@ -280,6 +347,13 @@ ALTER TABLE `invoice`
   ADD PRIMARY KEY (`invoice_no`),
   ADD KEY `fk_invoicereqno` (`request_no`),
   ADD KEY `fk_invoicercvby` (`received_by`);
+
+--
+-- Indexes for table `invoice_out`
+--
+ALTER TABLE `invoice_out`
+  ADD PRIMARY KEY (`invoice_no`),
+  ADD KEY `fk_invreqnoout` (`request_no`);
 
 --
 -- Indexes for table `menu`
@@ -357,7 +431,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(2) NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `menu`
@@ -369,7 +443,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `merk`
 --
 ALTER TABLE `merk`
-  MODIFY `merk_id` int(2) NOT NULL AUTO_INCREMENT;
+  MODIFY `merk_id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -387,7 +461,7 @@ ALTER TABLE `sub_menu`
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `supplier_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `supplier_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -408,6 +482,12 @@ ALTER TABLE `barang`
 ALTER TABLE `invoice`
   ADD CONSTRAINT `fk_invoicercvby` FOREIGN KEY (`received_by`) REFERENCES `user` (`uid`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_invoicereqno` FOREIGN KEY (`request_no`) REFERENCES `request` (`request_no`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `invoice_out`
+--
+ALTER TABLE `invoice_out`
+  ADD CONSTRAINT `fk_invreqnoout` FOREIGN KEY (`request_no`) REFERENCES `request` (`request_no`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `request`
