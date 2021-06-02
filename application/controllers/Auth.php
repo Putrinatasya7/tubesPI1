@@ -22,4 +22,15 @@ class Auth extends CI_Controller {
 		// $this->template->load('dashboard','template');
 	}
 
+	public function staff()
+	{
+		$data['title'] = "Staff";
+		$data['subtitle'] = "Dashboard";
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('staff');
+		$this->load->view('templates/footer');
+		// $this->template->load('dashboard','template');
+	}
+
 }
