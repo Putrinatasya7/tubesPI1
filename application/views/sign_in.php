@@ -51,7 +51,7 @@
                 <form role="form text-left" action="" method="POST">
                   <label>Username</label>
                   <div class="mb-3">
-                    <input type="text" name="uname" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="uname-addon" value="<?= set_value("uname") ?>">
+                    <input type="text" name="uname" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="uname-addon" value="<?= set_value("uname") ?>" autocomplete="off">
                     <?= form_error('uname', '<small class="text-danger">', '</small>'); ?>
                   </div>
                   <label>Password</label>

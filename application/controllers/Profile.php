@@ -36,6 +36,38 @@ class Profile extends CI_Controller {
 				redirect('Profile');
 			}
 		}
+
+		elseif($this->input->post('editProfile')) {
+			$upload_image = $_FILES['picture']['name'];
+			$new_pict = '';
+			
+			if($upload_image) {
+				$config['upload_path']          = './asset/pict/user/';
+				$config['allowed_types']        = 'jpg|png|jpeg';
+				$config['max_size']             = 5120;
+
+				$this->load->library('upload',$config);
+
+				if($this->upload->do_upload('picture')) {
+					//untuk menghapus gambar lama ketika user mengganti gambarnya
+					$old_pict = $data['user']['pict'];
+					if($old_pict != 'defaultusrpict.jpg') {
+						unlink(FCPATH . 'asset/pict/user/' . $old_pict);
+					}
+
+					//mengambil nama file yang baru
+					$new_pict = $this->upload->data('file_name');
+				}
+				else {
+					$this->session->set_flashdata('message',"There's something wrong with your picture file!");
+					redirect('Profile');
+				}
+			}
+			$this->data_model->updateProfile($new_pict);
+			$this->session->set_flashdata('message','Your profile has been changed successfully');
+			redirect('Profile');
+		}
+
 		else {
 			$this->load->view('templates/header', $data);
 			$this->load->view('profile');

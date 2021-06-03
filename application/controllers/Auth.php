@@ -8,32 +8,38 @@ class Auth extends CI_Controller {
 		
 		//fungsi pengecekan login dan akses menu pada helper
 		is_logged_in();
-
+		
 	}		//END __construct()
-
+	
 	public function index()
 	{
+		roleManager();
+		roleStaff();
 		$data['title'] = "Dashboard";
 		$data['subtitle'] = "Dashboard";
-
+		
 		$this->load->view('templates/header', $data);
 		$this->load->view('dashboard');
 		$this->load->view('templates/footer');
 		// $this->template->load('dashboard','template');
 	}
-
+	
 	public function staff()
 	{
+		roleAdmin();
+		roleManager();
 		$data['title'] = "Dashboard";
 		$data['subtitle'] = "Dashboard";
-
+		
 		$this->load->view('templates/header', $data);
 		$this->load->view('staff');
 		$this->load->view('templates/footer');
 	}
-
+	
 	public function manager()
 	{
+		roleStaff();
+		roleAdmin();
 		$data['title'] = "Dashboard";
 		$data['subtitle'] = "Dashboard";
 

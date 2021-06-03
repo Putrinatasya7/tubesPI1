@@ -51,3 +51,31 @@ function generateKodeBarang() {
 
   return $new_kodebarang;
 }
+
+
+function roleAdmin() {
+  $ci = get_instance();
+  
+  if($ci->session->userdata('role_id') == 1) {
+    redirect('Auth');
+  }
+
+}   //end roleAdmin()
+
+function roleManager() {
+  $ci = get_instance();
+  
+ if($ci->session->userdata('role_id') == 2) {
+    redirect('Auth/manager');
+  }
+
+}   //end roleManager()
+
+function roleStaff() {
+  $ci = get_instance();
+  
+  if($ci->session->userdata('role_id') == 3) {
+    redirect('Auth/staff');
+  }
+
+}   //end roleStaff()

@@ -24,6 +24,7 @@ class Elements extends CI_Controller {
 		
 		//fungsi pengecekan login dan akses menu pada helper
 		is_logged_in();
+		roleManager();
 
 	}		//END __construct()
 

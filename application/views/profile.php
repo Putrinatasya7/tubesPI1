@@ -69,73 +69,73 @@
 
     <div class="container-fluid py-4">
       <div class="col-12 col-xl-6 ">
+        <?php echo form_open_multipart(); ?>
+        <div class="card">
+          <div class="card-header pb-0 p-3">
+            <div class="col-md-8 d-flex align-items-center">
+              <h6 class="mb-0">Edit Profile</h6>
+            </div>
+
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama ..." value="<?= $user['name']; ?>" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan email ..." value="<?= $user['email']; ?>" required>
+            </div>
+
+            <div class="form-group">
+              <label for="picture">Upload picture</label>
+              <input type="file" accept=".png, .jpg, .jpeg" class="form-control" name="picture" id="picture" />
+            </div>
+
+          </div>
+          <div class="card-footer pb-0 p-3">
+            <input type="submit" name="editProfile" class="btn btn-round bg-gradient-primary" value="Save Change">
+          </div>
+          <?php echo form_close(); ?>
+        </div>
+      </div>
+    </div>
+    <!-- ..... -->
+  </div>
+
+  <!-- Konten change password -->
+  <div id="change-password" class="tab-pane fade">
+    <!-- ..... -->
+
+    <div class="container-fluid py-4">
+      <div class="col-12 col-xl-6 ">
         <form action="" method="post">
           <div class="card">
             <div class="card-header pb-0 p-3">
               <div class="col-md-8 d-flex align-items-center">
-                <h6 class="mb-0">Edit Profile</h6>
+                <h6 class="mb-0">Change Password</h6>
+              </div>
+              <div class="form-group">
+                <label for="curr_pass">Current Password</label>
+                <input type="password" class="form-control" name="curr_pass" id="curr_pass" placeholder="Enter current password ..." required minlength="8">
               </div>
 
               <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama ..." required>
+                <label for="new_password">New Password</label>
+                <input type="password" class="form-control" name="new_password" id="new_password" placeholder="Enter new password ..." required>
               </div>
 
               <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan email ..." required>
+                <label for="confirm_pass">Confirm Password</label>
+                <input type="password" class="form-control" name="confirm_pass" id="confirm_pass" placeholder="Confirm password ..." required>
               </div>
-
-              <div class="form-group">
-                <label for="picture">Upload picture</label>
-                <input type="file" class="form-control" name="gambar" id="gambar" name="foto[]" required />
+              <div class="card-footer pb-0 p-3">
+                <button type="submit" class="btn btn-round bg-gradient-primary">Save Change</button>
               </div>
-
-            </div>
-            <div class="card-footer pb-0 p-3">
-              <button type="submit" class="btn btn-round bg-gradient-primary">Save Change</button>
-            </div>
         </form>
       </div>
     </div>
   </div>
   <!-- ..... -->
-</div>
-
-<!-- Konten change password -->
-<div id="change-password" class="tab-pane fade">
-  <!-- ..... -->
-
-  <div class="container-fluid py-4">
-    <div class="col-12 col-xl-6 ">
-      <form action="" method="post">
-        <div class="card">
-          <div class="card-header pb-0 p-3">
-            <div class="col-md-8 d-flex align-items-center">
-              <h6 class="mb-0">Change Password</h6>
-            </div>
-            <div class="form-group">
-              <label for="curr_pass">Current Password</label>
-              <input type="password" class="form-control" name="curr_pass" id="curr_pass" placeholder="Enter current password ..." required minlength="8">
-            </div>
-
-            <div class="form-group">
-              <label for="new_password">New Password</label>
-              <input type="password" class="form-control" name="new_password" id="new_password" placeholder="Enter new password ..." required>
-            </div>
-
-            <div class="form-group">
-              <label for="confirm_pass">Confirm Password</label>
-              <input type="password" class="form-control" name="confirm_pass" id="confirm_pass" placeholder="Confirm password ..." required>
-            </div>
-            <div class="card-footer pb-0 p-3">
-              <button type="submit" class="btn btn-round bg-gradient-primary">Save Change</button>
-            </div>
-      </form>
-    </div>
-  </div>
-</div>
-<!-- ..... -->
 </div>
 </div>
 <!-- .... -->

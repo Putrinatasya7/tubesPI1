@@ -124,6 +124,18 @@ class Data_model extends CI_Model {
     return $this->db->get_where('user_detail',['uid' => $uid])->row_array();
   }
 
+  public function updateProfile($new_pict) {
+    $name = $this->input->post('name');
+    $email = $this->input->post('email');
+
+    if($new_pict != '') {
+      $this->db->set('pict',$new_pict);
+    }
+    $this->db->set('name', $name);
+    $this->db->set('email', $email);
+    $this->db->where('uid',$this->session->userdata('uid'))->update('user');
+  }
+
   public function getPass() {
     
     return $this->db->select('password')->where('uid', $this->session->userdata('uid'))->get('user')->row()->password;
