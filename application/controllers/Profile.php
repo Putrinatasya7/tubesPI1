@@ -59,7 +59,7 @@ class Profile extends CI_Controller {
 					$new_pict = $this->upload->data('file_name');
 				}
 				else {
-					$this->session->set_flashdata('message',"There's something wrong with your picture file!");
+					$this->session->set_flashdata('message_wrong',"There's something wrong with your picture file!");
 					redirect('Profile');
 				}
 			}

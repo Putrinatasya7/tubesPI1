@@ -114,9 +114,33 @@ class Data_model extends CI_Model {
       'created_by' => $this->session->userdata('uid'),
       'modified_by' => $this->session->userdata('uid')
     ];
-
+    
     $this->db->insert('barang',$data);
+    
+  }
+  
+  public function updateBarang($new_pict) {
+    $barang_id = $this->input->post('barang_id');
+    $data = [
+      'category_id' => $this->input->post('edit_category'),
+      'barang' => $this->input->post('edit_item_name'),
+      'merk_id' => $this->input->post('edit_brand'),
+      'stock' => $this->input->post('edit_total'),
+      'harga' => $this->input->post('edit_price'),
+      'modified_by' => $this->session->userdata('uid')
+    ];
 
+    if($new_pict != '') {
+      $data['pict'] = $new_pict;
+    }
+
+    $this->db->where('barang_id', $barang_id)->update('barang',$data);
+  }
+
+  public function deleteBarang() {
+    $barang_id = $this->input->post('barang_id');
+
+    $this->db->where('barang_id',$barang_id)->delete('barang');
   }
 
   /**USER PROFILE ZONE */

@@ -33,7 +33,7 @@ class Barang extends CI_Controller {
 		$this->load->library('upload', $config);
 
 		if(!$this->upload->do_upload('picture')) {
-			$this->session->set_flashdata('message','Oops! Wrong picture format');
+			$this->session->set_flashdata('message_wrong','Wrong picture format or size. Maximum size is 5MB');
 			redirect('Barang');
 		}
 		else {
@@ -44,6 +44,39 @@ class Barang extends CI_Controller {
 			$this->session->set_flashdata('message','Item added successfully');
 			redirect('Barang');
 		}
+	}
+
+	public function editBarang() {
+		$upload_image = $_FILES['edit_picture']['name'];
+		$new_pict = '';
+
+		if($upload_image) {
+			$config['upload_path']          = './asset/pict/user/';
+			$config['allowed_types']        = 'jpg|png|jpeg';
+			$config['max_size']             = 5120;
+
+			$this->load->library('upload',$config);
+
+			if($this->upload->do_upload('edit_picture')) {
+				//mengambil nama file yang baru
+				$new_pict = $this->upload->data('file_name');
+			}
+			else {
+				$this->session->set_flashdata('message_wrong',"There's something wrong with your picture file. Maximum size is 5MB and accepted format are jpg, png or jpeg");
+				redirect('Barang');
+			}
+		}
+			
+		$this->data_model->updateBarang($new_pict);
+		$this->session->set_flashdata('message','Item has been successfully updated');
+		redirect('Barang');
+
+	}
+
+	public function removeBarang() {
+		$this->data_model->deleteBarang();
+		$this->session->set_flashdata('message','Item has been successfully removed');
+		redirect('Barang');
 	}
 
 }		//END class Barang

@@ -8,6 +8,12 @@ class Auth extends CI_Controller {
 		
 		//fungsi pengecekan login dan akses menu pada helper
 		is_logged_in();
+		$this->data = array(
+			'title' => "Dashboard",
+			'subtitle' => "Dashboard",
+			'totalSupplier' => count($this->data_model->getSupplier()),
+			'totalItem' => count($this->data_model->getBarang())
+		);
 		
 	}		//END __construct()
 	
@@ -15,8 +21,9 @@ class Auth extends CI_Controller {
 	{
 		roleManager();
 		roleStaff();
-		$data['title'] = "Dashboard";
-		$data['subtitle'] = "Dashboard";
+		$data = $this->data;
+		$this->load->model('Admin_model');
+		$data['totalUser'] = count($this->Admin_model->getUser());
 		
 		$this->load->view('templates/header', $data);
 		$this->load->view('dashboard');
@@ -28,8 +35,7 @@ class Auth extends CI_Controller {
 	{
 		roleAdmin();
 		roleManager();
-		$data['title'] = "Dashboard";
-		$data['subtitle'] = "Dashboard";
+		$data = $this->data;
 		
 		$this->load->view('templates/header', $data);
 		$this->load->view('staff');
@@ -40,8 +46,7 @@ class Auth extends CI_Controller {
 	{
 		roleStaff();
 		roleAdmin();
-		$data['title'] = "Dashboard";
-		$data['subtitle'] = "Dashboard";
+		$data = $this->data;
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('manager');
