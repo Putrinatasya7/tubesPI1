@@ -79,3 +79,29 @@ function roleStaff() {
   }
 
 }   //end roleStaff()
+
+function generateRequestNo($status) {
+  $ci = get_instance();
+
+  if($status == 'In') {
+    $prefix = "REQIn";
+    $ignore_code = 11;
+  }
+  else if($status == 'Out') {
+    $prefix = "REQOut";
+    $ignore_code = 12;
+  }
+  $last_row_no = $ci->db->select('request_no')->where('req_category',$status)->limit(1)->order_by('request_no','DESC')->get('request')->row();
+  
+  if($last_row_no == null) {
+    $new_no = '01';
+  }
+  else {
+    $get_no = substr($last_row_no->request_no,$ignore_code,2);
+    $new_no = str_repeat('0', 2 - strlen($get_no + 1)).($get_no+1);
+  }
+  $date = date("ymd");  
+  $request_no = $prefix.$date.$new_no;
+
+  return $request_no;
+}
