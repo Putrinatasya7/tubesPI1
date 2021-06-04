@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2021 at 11:47 PM
+-- Generation Time: Jun 04, 2021 at 07:47 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -193,9 +193,34 @@ CREATE TABLE `request` (
 --
 
 INSERT INTO `request` (`request_no`, `created_by`, `created_at`, `responded_by`, `responded_at`, `status`, `req_category`) VALUES
+('REQIn21060401', 'A001', '2021-06-04 06:54:06', NULL, NULL, 'Waiting', 'In'),
 ('REQOut21060301', 'A001', '2021-06-03 23:04:25', NULL, NULL, 'Waiting', 'Out'),
 ('REQOut21060303', 'A001', '2021-06-04 02:59:56', NULL, NULL, 'Accepted', 'Out'),
 ('REQOut21060404', 'A001', '2021-06-04 04:30:51', NULL, NULL, 'Rejected', 'Out');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `request_in_detail`
+-- (See below for the actual view)
+--
+CREATE TABLE `request_in_detail` (
+`request_no` varchar(100)
+,`created_by` varchar(4)
+,`creator_name` varchar(50)
+,`created_at` datetime
+,`barang_id` varchar(10)
+,`barang` varchar(200)
+,`harga_satuan` int(11)
+,`qty` int(6)
+,`supplier_id` int(3)
+,`supplier` varchar(200)
+,`category` varchar(100)
+,`responded_by` varchar(4)
+,`responder_name` varchar(50)
+,`responded_at` datetime
+,`status` enum('Accepted','Rejected','Waiting')
+);
 
 -- --------------------------------------------------------
 
@@ -231,6 +256,14 @@ CREATE TABLE `req_item_in` (
   `harga_satuan` int(11) NOT NULL,
   `supplier_id` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `req_item_in`
+--
+
+INSERT INTO `req_item_in` (`request_no`, `barang_id`, `qty`, `harga_satuan`, `supplier_id`) VALUES
+('REQIn21060401', 'B001', 2, 560000, 1),
+('REQIn21060401', 'B002', 4, 630000, 2);
 
 -- --------------------------------------------------------
 
@@ -396,6 +429,15 @@ CREATE TABLE `user_detail` (
 DROP TABLE IF EXISTS `barang_detail`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `barang_detail`  AS SELECT `b`.`barang_id` AS `barang_id`, `b`.`category_id` AS `category_id`, `c`.`category` AS `category`, `b`.`barang` AS `barang`, `b`.`merk_id` AS `merk_id`, `m`.`merk` AS `merk`, `b`.`pict` AS `pict`, `b`.`stock` AS `stock`, `b`.`minimum_stock` AS `minimum_stock`, `b`.`harga` AS `harga`, `b`.`qr_code` AS `qr_code`, `b`.`created_at` AS `created_at`, `b`.`created_by` AS `created_by`, `b`.`modified_at` AS `modified_at`, `b`.`modified_by` AS `modified_by` FROM ((`barang` `b` join `category` `c` on(`c`.`category_id` = `b`.`category_id`)) join `merk` `m` on(`m`.`merk_id` = `b`.`merk_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `request_in_detail`
+--
+DROP TABLE IF EXISTS `request_in_detail`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `request_in_detail`  AS SELECT `r`.`request_no` AS `request_no`, `r`.`created_by` AS `created_by`, `u`.`name` AS `creator_name`, `r`.`created_at` AS `created_at`, `i`.`barang_id` AS `barang_id`, `b`.`barang` AS `barang`, `i`.`harga_satuan` AS `harga_satuan`, `i`.`qty` AS `qty`, `i`.`supplier_id` AS `supplier_id`, `s`.`supplier` AS `supplier`, `c`.`category` AS `category`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder_name`, `r`.`responded_at` AS `responded_at`, `r`.`status` AS `status` FROM ((((((`request` `r` join `user` `u` on(`u`.`uid` = `r`.`created_by`)) left join `user` `u2` on(`u2`.`uid` = `r`.`responded_by`)) join `req_item_in` `i` on(`i`.`request_no` = `r`.`request_no`)) join `barang` `b` on(`b`.`barang_id` = `i`.`barang_id`)) join `supplier` `s` on(`s`.`supplier_id` = `i`.`supplier_id`)) join `category` `c` on(`c`.`category_id` = `b`.`category_id`)) WHERE `r`.`req_category` = 'In' ;
 
 -- --------------------------------------------------------
 
