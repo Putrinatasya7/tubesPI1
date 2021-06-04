@@ -31,7 +31,7 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Request Out</p>
                     <h5 class="font-weight-bolder mb-0">
-                      <?= $requestIn; ?>
+                      <?= $requestOut; ?>
                       <!-- <span class="text-success text-sm font-weight-bolder">+3%</span> -->
                     </h5>
                   </div>
