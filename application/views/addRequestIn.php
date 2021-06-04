@@ -39,10 +39,10 @@
 
             </td>
             <td class="align-middle text-center form-group input-group-sm">
-              <select class="form-control barang" id="barang" name="barang[]" required>
+              <select class="form-control barang" data-item_price_id="1" id="barang" name="barang[]" required>
                 <option value="">Pilih Barang</option>
                 <?php foreach ($barang as $b) : ?>
-                  <option value="<?= $b['barang_id']; ?>" data-price="<?= $b['harga']; ?>"><?= $b['barang']; ?></option>
+                  <option value="<?= $b['barang_id']; ?>" data-row_barang="" data-price="<?= $b['harga']; ?>"><?= $b['barang']; ?></option>
                 <?php endforeach; ?>
               </select>
             </td>
@@ -57,7 +57,7 @@
             <td class="form-group input-group-sm form-group input-group-sm w-20">
               <div class="input-group input-group-sm">
                 <span class="input-group-text">IDR</span>
-                <input type="number" class="form-control px-2 price" id="price" name="price[]" readonly>
+                <input type="number" class="form-control px-2 price" id="price1" name="price[]" readonly>
               </div>
             </td>
             <td class="form-group input-group-sm form-group input-group-sm w-6">
@@ -66,7 +66,7 @@
             <td class="form-group input-group-sm form-group input-group-sm w-20">
               <div class="input-group input-group-sm">
                 <span class="input-group-text">IDR</span>
-                <input type="number" class="form-control px-2" id="totprice" name="totprice[]" readonly>
+                <input type="number" class="form-control px-2" id="totprice" name="totprice[]" disabled>
               </div>
             </td>
           </tr>
@@ -116,28 +116,29 @@
   $(function() {
 
     $('.qty').on("change.add", total_item);
-    $('.barang').on('change', getPrice);
+    // $('.barang').on('change', getPrice);
 
     //initial calculation
     total_item();
-    getPrice();
+    // getPrice();
 
     //button for adding new form
+    var count = 1;
     $('.btnaddformin').click(function() {
       $('.qty').off("change.add");
-      $('.barang').off("change");
+      // $('.barang').off("change");
       addForm();
       $('.qty').on("change.add", total_item);
-      $('.barang').on("change", getPrice);
+      // $('.barang').on("change", getPrice);
       total_item();
-      getPrice()
+      // getPrice()
     });
 
-    function getPrice() {
+    /* function getPrice() {
       $('.barang').each(function() {
         $('.price').val($(this).find(':selected').data('price'));
       });
-    }
+    } */
 
     function total_item() {
       var sum = 0;
@@ -154,6 +155,7 @@
     }
 
     function addForm() {
+      count++;
       $(`<tr>` +
         `<td class="align-middle text-center">
             <button type="button" class="btn btn-icon btn-outline-danger btn-sm btnremoveformin">
@@ -161,7 +163,7 @@
             </button>
           </td>` +
         `<td class="align-middle text-center form-group input-group-sm">
-            <select class="form-control barang" id="barang" name="barang[]" required>
+            <select class="form-control barang" data-item_price_id="` + count + `" id="barang" name="barang[]" required>
               <option value="">Pilih Barang</option>
               <?php foreach ($barang as $b) : ?>
                 <option value="<?= $b['barang_id']; ?>" data-price="<?= $b['harga']; ?>"><?= $b['barang']; ?></option>
@@ -179,7 +181,7 @@
         `<td class="form-group input-group-sm form-group input-group-sm w-20">
             <div class="input-group input-group-sm">
               <span class="input-group-text">IDR</span>
-              <input type="number" class="form-control price px-2" id="price" name="price[]" readonly>
+              <input type="number" class="form-control price px-2" id="price` + count + `" name="price[]" readonly>
             </div>
           </td>` +
         `<td class="form-group input-group-sm form-group input-group-sm w-6">
@@ -188,11 +190,30 @@
         `<td class="form-group input-group-sm form-group input-group-sm w-20">
             <div class="input-group input-group-sm">
               <span class="input-group-text">IDR</span>
-              <input type="number" class="form-control px-2" id="totprice" name="totprice[]" readonly>
+              <input type="number" class="form-control px-2" id="totprice" name="totprice[]" disabled>
             </div>
           </td>` +
         `</tr>`).insertAfter("tr:last-child");
     }
 
+  });
+
+  $(document).ready(function() {
+    $(document).on('change', '.barang', function() {
+      var barang_id = $(this).val();
+      var item_price_id = $(this).data('item_price_id');
+      var price = $(this).find(':selected').data('price');
+
+      $('#price' + item_price_id).val(price);
+      /* $.ajax({
+        url:"<?= base_url('Request/getItemPrice') ?>",
+        method: "POST",
+        data:{barang_id:barang_id},
+        success:function(data)
+        {
+          $('#price').html(data);
+        }
+      }); */
+    });
   });
 </script>

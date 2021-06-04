@@ -174,17 +174,34 @@ class Data_model extends CI_Model {
   }
 
   /**REQUEST ZONE */
+  public function getRequestInCurrMonth() {
+    return $this->db->select('request_no')->where('MONTH(created_at)', date('m'))->where('YEAR(created_at)', date('Y'))->where('req_category','In')->get('request');
+  }
+  
+  public function getRequestOutCurrMonth() {
+    return $this->db->select('request_no')->where('MONTH(created_at)', date('m'))->where('YEAR(created_at)', date('Y'))->where('req_category','Out')->get('request');
+  }
+
   public function getRequestOut() {
     return $this->db->group_by('request_no')->get('request_out_detail');
   }
+
+  public function getRequestIn() {
+    return $this->db->group_by('request_no')->get('request_in_detail');
+  }
+
 
   public function getRequestOutWhere($request_no) {
     return $this->db->get_where('request_out_detail',['request_no'=>$request_no]);
   }
 
+  public function getRequestInWhere($request_no) {
+    return $this->db->get_where('request_in_detail',['request_no'=>$request_no]);
+  }
+
   public function insertRequestIn() {
     $request_no = $this->input->post('request_no');
-    $barang = $this->input->post('item[]');
+    $barang = $this->input->post('barang[]');
     $qty = $this->input->post('qty[]');
     $harga_satuan = $this->input->post('price[]');
     $supplier_id = $this->input->post('supplier[]');
@@ -201,7 +218,7 @@ class Data_model extends CI_Model {
     
     // Insert data into req_item_out table (insert item-item request)
     for($i=0; $i<$countdata; $i++) {
-      $this->db->insert('req_item_out',[
+      $this->db->insert('req_item_in',[
         'request_no' => $request_no,
         'barang_id' => $barang[$i],
         'qty' => $qty[$i],
@@ -252,6 +269,12 @@ class Data_model extends CI_Model {
     $request_no = $this->input->post('request_no');
     $this->db->where('request_no',$request_no)->delete('req_out_reason');
     $this->db->where('request_no',$request_no)->delete('req_item_out');
+    $this->db->where('request_no',$request_no)->delete('request');
+  }
+
+  public function deleteRequestIn() {
+    $request_no = $this->input->post('request_no');
+    $this->db->where('request_no',$request_no)->delete('req_item_in');
     $this->db->where('request_no',$request_no)->delete('request');
   }
 

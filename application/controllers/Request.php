@@ -15,6 +15,7 @@ class Request extends CI_Controller {
   public function addIn() {
     $data['title'] = "Request";
     $data['subtitle'] = "Request Barang Masuk";
+    $data['request_in'] = $this->data_model->getRequestIn()->result_array();
     
     $this->load->view('templates/header', $data);
     $this->load->view('requestIn');
@@ -69,9 +70,10 @@ class Request extends CI_Controller {
     redirect('Request/addOut');
   }
   
-  public function detailsIn() {
+  public function detailsIn($request_no) {
     $data['title'] = "Request";
     $data['subtitle'] = "Detail Request Barang Masuk";
+    $data['request_in'] = $this->data_model->getRequestInWhere($request_no)->result_array();
     
     $this->load->view('templates/header', $data);
     $this->load->view('detailsIn');
@@ -92,7 +94,12 @@ class Request extends CI_Controller {
     $this->data_model->deleteRequestOut();
     $this->session->set_flashdata('message','Your request has been successfully removed');
     redirect('Request/addOut');
-    
+  }
+
+  public function removeRequestIn() {
+    $this->data_model->deleteRequestIn();
+    $this->session->set_flashdata('message','Your request has been successfully removed');
+    redirect('Request/addIn');
   }
 }
 
