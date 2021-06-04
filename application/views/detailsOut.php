@@ -1,5 +1,5 @@
 <div class="container-fluid py-4">
-  <div class="card p-4">
+  <div class="card px-4 pt-3 pb-4">
     <div class="card-header pb-0">
       <div class="row">
         <div class="col">
@@ -54,19 +54,78 @@
         </div>
       </div>
     </div>
-    <div class="card-footer pb-0 p-3">
-
-      <!-- <div class="card card-plain"> -->
-      <!-- <div class="card-header pb-0 p-3"> -->
-      <!-- <div class="row"> -->
-      <!-- <div class="row mt-2"> -->
-      <!-- </div> -->
-      <!-- <div class="card-footer pb-2 p-3"> -->
-      <!-- </div> -->
-      <!-- </div> -->
-      <!-- </div> -->
-      <!-- </div> -->
-      <button type="button" onclick="goBack()" class="btn btn-secondary btn-sm mt-4">Back</button>
+    <div class="card-footer pb-0 p-3 justify-content-between">
+      <div class="row">
+        <div class="col-md-6">
+          <button type="button" onclick="goBack()" class="btn btn-secondary btn-sm mt-4">Back</button>
+        </div>
+        <div class="col-md-6">
+          <?php if ($request_out[0]['status'] == "Waiting" && $this->session->userdata('role_id') == 2) : ?>
+            <button type="button" class="btn btn-success btn-sm mt-4 float-end" data-toggle="modal" data-target="#approvalModal" id="approvebutton" data-id="<?= $request_out[0]['request_no']; ?>">Approve</button>
+            <button type="button" class="btn btn-danger btn-sm mt-4 me-4 float-end" data-toggle="modal" data-target="#rejectModal" id="rejectbutton" data-id="<?= $request_out[0]['request_no']; ?>">Reject</button>
+          <?php endif; ?>
+        </div>
+      </div>
     </div> <!-- /card-footer -->
   </div>
 </div>
+
+<!-- APPROVE MODAL -->
+<div class="modal fade" tabindex="-1" aria-labelledby="approvalModalLabel" role="dialog" id="approvalModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Approve Request</h5>
+        <a type="button" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times top-0"></i></span></a>
+      </div>
+
+      <form role="form" action="<?php echo base_url('Request/respondRequest') ?>" method="post" id="approveForm">
+        <div class="modal-body">
+          <input type="hidden" name="request_no" id="request_no">
+          <input type="hidden" name="status" id="status" value="Accepted">
+          <p>Do you really want to approve this request?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Sure</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- REJECT MODAL -->
+<div class="modal fade" tabindex="-1" aria-labelledby="rejectModalLabel" role="dialog" id="rejectModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reject Request</h5>
+        <a type="button" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times top-0"></i></span></a>
+      </div>
+
+      <form role="form" action="<?php echo base_url('Request/respondRequest') ?>" method="post" id="rejectForm">
+        <div class="modal-body">
+          <input type="hidden" name="request_no" id="request_no">
+          <input type="hidden" name="status" id="status" value="Rejected">
+          <p>Do you really want to reject this request?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger">Sure</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+  $(document).on("click", "#approvebutton", function() {
+    let request_no = $(this).data('id');
+    $(".modal-body #request_no").val(request_no);
+  });
+
+  $(document).on("click", "#rejectbutton", function() {
+    let request_no = $(this).data('id');
+    $(".modal-body #request_no").val(request_no);
+  });
+</script>

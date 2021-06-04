@@ -101,5 +101,16 @@ class Request extends CI_Controller {
     $this->session->set_flashdata('message','Your request has been successfully removed');
     redirect('Request/addIn');
   }
+
+  public function respondRequest() {
+    $this->data_model->updateRespondRequest();
+    $this->session->set_flashdata('message','Request successfully responded');
+    if(str_contains($this->input->post('request_no'), "In")) {
+      redirect('Request/addIn');
+    }
+    else {
+      redirect('Request/addOut');
+    }
+  }
 }
 

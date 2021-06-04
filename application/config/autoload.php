@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url','form','file','tubesPI1');
+$autoload['helper'] = array('url','form','file','tubesPI1','date');
 
 /*
 | -------------------------------------------------------------------

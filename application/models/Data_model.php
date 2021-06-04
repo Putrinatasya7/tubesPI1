@@ -140,8 +140,15 @@ class Data_model extends CI_Model {
 
   public function deleteBarang() {
     $barang_id = $this->input->post('barang_id');
+    
+    $data = [
+      'pict' => $this->db->select('pict')->where('barang_id',$barang_id)->get('barang')->row()->pict,
+      'qr_code' => $this->db->select('qr_code')->where('barang_id',$barang_id)->get('barang')->row()->qr_code
+    ];
 
     $this->db->where('barang_id',$barang_id)->delete('barang');
+    unlink(FCPATH . 'asset/pict/barang/' . $data['pict']);
+    unlink(FCPATH . 'asset/pict/qrcode/' . $data['qr_code']);
   }
 
   /**USER PROFILE ZONE */
@@ -229,7 +236,6 @@ class Data_model extends CI_Model {
     }
   }
 
-
   public function getRequestOutWhere($request_no) {
     return $this->db->get_where('request_out_detail',['request_no'=>$request_no]);
   }
@@ -265,6 +271,36 @@ class Data_model extends CI_Model {
         'supplier_id' => $supplier_id[$i]
       ]);
     }
+  }
+
+  public function updateRespondRequest() {
+    $request_no = $this->input->post('request_no');
+    $responded_by = $this->session->userdata('uid');
+    $status = $this->input->post('status');
+    $timestamp = date('Y-m-d H:i:s');
+
+    $data = [
+      'responded_by' => $responded_by,
+      'responded_at' => $timestamp,
+      'status' => $status
+    ];
+    
+    $invoicedata = [
+      'request_no' => $request_no,
+      'created_at' => $timestamp
+    ];
+    
+    if(str_contains($request_no, "In")){
+      $invoicedata['invoice_no'] = generateInvoiceNo("In");
+      $tbl = "invoice";
+    }
+    else {
+      $invoicedata['invoice_no'] = generateInvoiceNo("Out");
+      $tbl = "invoice_out";
+    }
+    
+    $this->db->where('request_no',$request_no)->update('request',$data);
+    $this->db->insert($tbl,$invoicedata);
   }
 
   /**

@@ -1,4 +1,5 @@
-<div class="container-fluid py-4">
+<div class="container-fluid">
+  <button type="button" onclick="goBack()" class="btn btn-secondary mt-2 btn-sm"><span class="fas fa-long-arrow-alt-left"></span></button>
   <div class="card">
     <div class="card-header pb-0 p-3">
       <div class="row">
@@ -36,16 +37,18 @@
               <th class="align-middle text-center text-secondary text-s">Price</th>
             </tr>
           </thead>
-          <?php $total_item = 0; $total_price = 0; ?>
+          <?php $total_item = 0;
+          $total_price = 0; ?>
           <?php foreach ($request_in as $ri) : ?>
             <tr>
               <td class="text-xs font-weight-bold"><?= $ri['barang']; ?></td>
               <td class="align-middle text-center text-xs font-weight-bold"><?= $ri['supplier']; ?></td>
               <td class="align-middle text-center text-xs font-weight-bold"><?= $ri['qty']; ?></td>
               <td class="align-middle text-center text-xs font-weight-bold"><?= $ri['category']; ?></td>
-              <td class="align-middle text-center text-xs font-weight-bold">Rp. <?= number_format($ri['harga_satuan'],0,'.','.'); ?></td>
+              <td class="align-middle text-center text-xs font-weight-bold">Rp. <?= number_format($ri['harga_satuan'], 0, '.', '.'); ?></td>
             </tr>
-            <?php $total_item += $ri['qty']; $total_price += $ri['harga_satuan'] * $ri['qty'] ?>
+            <?php $total_item += $ri['qty'];
+            $total_price += $ri['harga_satuan'] * $ri['qty'] ?>
           <?php endforeach; ?>
         </table>
 
@@ -64,7 +67,7 @@
                     <div class="input-group input-group-sm">
                       <span class="input-group-text">Subtotal</span>
                       <span class="input-group-text">IDR</span>
-                      <input type="text" aria-label="First name" class="form-control" value="<?= number_format($total_price,0,'.','.'); ?>">
+                      <input type="text" aria-label="First name" class="form-control" value="<?= number_format($total_price, 0, '.', '.'); ?>">
                     </div>
                   </div>
                 </div>
@@ -74,7 +77,10 @@
             </div>
           </div>
         </div> <!-- /card-footer-->
-        <button type="button" onclick="goBack()" class="btn btn-secondary mt-4">Back</button>
+        <?php if ($request_in[0]['status'] == "Waiting" && $this->session->userdata('role_id') == 2) : ?>
+          <button class="btn btn-success me-4" data-toggle="modal" data-target="#approvalModal" id="approvebutton" data-id="<?= $request_in[0]['request_no']; ?>">Approve</button>
+          <button class="btn btn-danger" data-toggle="modal" data-target="#rejectModal" id="rejectbutton" data-id="<?= $request_in[0]['request_no']; ?>">Reject</button>
+        <?php endif; ?>
       </div>
     </div>
   </div>

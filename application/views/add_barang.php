@@ -26,7 +26,7 @@
             <?php $this->session->unset_userdata('message'); ?>
             <!-- alert -->
           </div>
-          <div class="table-responsive p-0">
+          <div class="table-responsive p-4">
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
@@ -34,12 +34,7 @@
                   <th class="align-middle text-center text-secondary text-s ps-2">Kode Barang</th>
                   <th class="align-middle text-center text-secondary text-s">Jumlah Barang</th>
                   <th class="align-middle text-center text-secondary text-s">QrCode</th>
-                  <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
-                    <th class="align-middle text-center text-secondary text-s" colspan="3">Action</th>
-                  <?php else : ?>
-                    <th class="align-middle text-center text-secondary text-s">Action</th>
-                  <?php endif; ?>
-                  <th></th>
+                  <th class="align-middle text-center text-secondary text-s">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -50,18 +45,17 @@
                     </td>
                     <td class="align-middle text-center text-xs font-weight-bold"><?= $b['barang_id']; ?></td>
                     <td class="align-middle text-center text-sm"><?= $b['stock']; ?></span></td>
-                    <td><img style="width: 100px;" src="<?php echo base_url().'asset/pict/qrcode/'.$b['qr_code'];?>"></td>
+                    <td><img style="width: 100px;" src="<?php echo base_url() . 'asset/pict/qrcode/' . $b['qr_code']; ?>"></td>
 
-                    <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
-                      <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-warning" id="editBarangBtn" data-toggle="modal" data-target="#editModal" data-id="<?= $b['barang_id']; ?>" data-edit_item_name="<?= $b['barang']; ?>" data-edit_brand="<?= $b['merk_id']; ?>" data-edit_category="<?= $b['category_id']; ?>" data-edit_total="<?= $b['stock']; ?>" data-edit_price="<?= $b['harga']; ?>"><i class="fa fa-pen top-0" title="Edit"></i></button></td>
-                    <?php endif; ?>
-
-                    <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#detailBarang<?= $b['barang_id']; ?>"><i class="fa fa-search top-0" title="Detail"></i></button></td>
-
-                    <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
-                      <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" id="removeBarangBtn" data-toggle="modal" data-target="#deleteModal" data-id="<?= $b['barang_id']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button></td>
-                    <?php endif; ?>
-                    <td></td>
+                    <td class="align-middle text-center">
+                      <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
+                        <button class="badge badge-sm btn bg-gradient-warning" id="editBarangBtn" data-toggle="modal" data-target="#editModal" data-id="<?= $b['barang_id']; ?>" data-edit_item_name="<?= $b['barang']; ?>" data-edit_brand="<?= $b['merk_id']; ?>" data-edit_category="<?= $b['category_id']; ?>" data-edit_total="<?= $b['stock']; ?>" data-edit_price="<?= $b['harga']; ?>"><i class="fa fa-pen top-0" title="Edit"></i></button>
+                      <?php endif; ?>
+                      <button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#detailBarang<?= $b['barang_id']; ?>"><i class="fa fa-search top-0" title="Detail"></i></button>
+                      <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
+                        <button class="badge bagde-sm btn bg-gradient-danger" id="removeBarangBtn" data-toggle="modal" data-target="#deleteModal" data-id="<?= $b['barang_id']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button>
+                      <?php endif; ?>
+                    </td>
                   </tr>
 
 
@@ -141,7 +135,7 @@
 
           <div class="form-group input-group-sm">
             <label for="name">Item names</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name ..." required>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name ..." required autocomplete="off">
           </div>
 
           <div class="form-group input-group-sm">
@@ -166,7 +160,7 @@
           </div>
           <div class="form-group input-group-sm">
             <label for="price">Price</label>
-            <input type="number" min="0" class="form-control" name="price" id="price" placeholder="Enter kategori ..." required>
+            <input type="number" min="0" class="form-control" name="price" id="price" placeholder="Enter kategori ..." required autocomplete="off">
           </div>
           <div class="form-group">
             <label for="picture">Upload picture</label>
