@@ -16,48 +16,56 @@
           <!-- alert -->
         </div>
         <div class="card-body px-0 pt-0 pb-2">
-          <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0">
-              <thead>
-                <tr>
-                  <th class="align-middle text-center text-secondary text-s ps-2">No.Request</th>
-                  <th class="align-middle text-center text-secondary text-s ps-2">Nama</th>
-                  <th class="align-middle text-center text-secondary text-s ps-2">Tanggal Request</th>
-                  <th class="align-middle text-center text-secondary text-s">Status</th>
-                  <th class="align-middle text-center text-secondary text-s">Action</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($request_in as $ri) : ?>
+          <?php if ($request_in == null) : ?>
+            <!-- tampilkan pemberitahuan bahwa untuk saat ini masih belum ada request yang dibuat -->
+          <?php else : ?>
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
                   <tr>
-                    <td class="align-middle text-center text-xs font-weight-bold"><?= $ri['request_no']; ?></td>
-                    <td class="align-middle text-center text-xs font-weight-bold"><?= $ri['creator_name']; ?></td>
-                    <td class="align-middle text-center text-xs font-weight-bold"><?= date('l, d F Y  g:i a', strtotime($ri['created_at'])); ?></td>
-                    <?php if ($ri['status'] == "Waiting") {
-                      $bg = "bg-gradient-warning";
-                    } elseif ($ri['status'] == "Accepted") {
-                      $bg = "bg-gradient-success";
-                    } else {
-                      $bg = "bg-gradient-danger";
-                    } ?>
-                    <td class="align-middle text-center text-sm"><span class="badge badge-sm <?= $bg; ?>"><?= $ri['status']; ?></span></td>
-                    <td class="align-middle text-center">
-                      <?php if ($ri['status'] == "Waiting") : ?>
-                        <button class="badge badge-sm btn bg-gradient-warning" data-toggle="modal" data-target="#editModal"><i class="fa fa-pen top-0" title="Edit"></i></button>
-                      <?php endif; ?>
-                      <a href=" <?php echo base_url('Request/detailsIn/' . $ri['request_no']) ?>"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal"> <i class="fa fa-search top-0" title="Detail"></i></button></a>
-                      <?php if ($ri['status'] == "Waiting") : ?>
-                        <button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" id="deletebutton" data-id="<?= $ri['request_no']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button>
-                      <?php endif; ?>
-                    </td>
-
-                    <td></td>
+                    <th class="align-middle text-center text-secondary text-s ps-2">No.Request</th>
+                    <th class="align-middle text-center text-secondary text-s ps-2">Nama</th>
+                    <th class="align-middle text-center text-secondary text-s ps-2">Tanggal Request</th>
+                    <th class="align-middle text-center text-secondary text-s">Status</th>
+                    <th class="align-middle text-center text-secondary text-s">Action</th>
+                    <th></th>
                   </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  <?php foreach ($request_in as $ri) : ?>
+                    <tr>
+                      <td class="align-middle text-center text-xs font-weight-bold"><?= $ri['request_no']; ?></td>
+                      <td class="align-middle text-center text-xs font-weight-bold"><?= $ri['creator_name']; ?></td>
+                      <td class="align-middle text-center text-xs font-weight-bold"><?= date('l, d F Y  g:i a', strtotime($ri['created_at'])); ?></td>
+                      <?php if ($ri['status'] == "Waiting") {
+                        $bg = "bg-gradient-warning";
+                      } elseif ($ri['status'] == "Accepted") {
+                        $bg = "bg-gradient-success";
+                      } else {
+                        $bg = "bg-gradient-danger";
+                      } ?>
+                      <td class="align-middle text-center text-sm"><span class="badge badge-sm <?= $bg; ?>"><?= $ri['status']; ?></span></td>
+                      <td class="align-middle text-center">
+                        <?php if ($this->session->userdata('role_id') != 2) : ?>
+                          <?php if ($ri['status'] == "Waiting") : ?>
+                            <button class="badge badge-sm btn bg-gradient-warning" data-toggle="modal" data-target="#editModal"><i class="fa fa-pen top-0" title="Edit"></i></button>
+                          <?php endif; ?>
+                        <?php endif; ?>
+                        <a href=" <?php echo base_url('Request/detailsIn/' . $ri['request_no']) ?>"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal"> <i class="fa fa-search top-0" title="Detail"></i></button></a>
+                        <?php if ($this->session->userdata('role_id') != 2) : ?>
+                          <?php if ($ri['status'] == "Waiting") : ?>
+                            <button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" id="deletebutton" data-id="<?= $ri['request_no']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button>
+                          <?php endif; ?>
+                        <?php endif; ?>
+                      </td>
+
+                      <td></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          <?php endif; ?>
         </div>
       </div>
     </div>
