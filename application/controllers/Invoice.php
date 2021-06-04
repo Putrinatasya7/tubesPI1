@@ -36,4 +36,10 @@ class Invoice extends CI_Controller {
         $this->load->view('templates/footer');
 	}
 
+	public function print()
+	{
+        
+		$this->load->view('print_invoice');
+	}
+
 }
