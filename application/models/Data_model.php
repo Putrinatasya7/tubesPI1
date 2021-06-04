@@ -101,7 +101,7 @@ class Data_model extends CI_Model {
     return $this->db->get('barang_detail')->result_array();
   }
 
-  public function insertBarang($filename) {
+  public function insertBarang($filename, $image_name) {
     $data = [
       'barang_id' => $this->input->post('barang_id'),
       'category_id' => $this->input->post('category'),
@@ -112,7 +112,8 @@ class Data_model extends CI_Model {
       'minimum_stock' => 25,
       'harga' => $this->input->post('price'),
       'created_by' => $this->session->userdata('uid'),
-      'modified_by' => $this->session->userdata('uid')
+      'modified_by' => $this->session->userdata('uid'),
+      'qr_code'   => $image_name
     ];
     
     $this->db->insert('barang',$data);

@@ -33,7 +33,7 @@
                   <th class="text-secondary text-s">Nama Barang</th>
                   <th class="align-middle text-center text-secondary text-s ps-2">Kode Barang</th>
                   <th class="align-middle text-center text-secondary text-s">Jumlah Barang</th>
-                  <th class="align-middle text-center text-secondary text-s">Kategori</th>
+                  <th class="align-middle text-center text-secondary text-s">QrCode</th>
                   <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
                     <th class="align-middle text-center text-secondary text-s" colspan="3">Action</th>
                   <?php else : ?>
@@ -50,7 +50,7 @@
                     </td>
                     <td class="align-middle text-center text-xs font-weight-bold"><?= $b['barang_id']; ?></td>
                     <td class="align-middle text-center text-sm"><?= $b['stock']; ?></span></td>
-                    <td class="align-middle text-center text-sm"><?= $b['category']; ?></span></td>
+                    <td><img style="width: 100px;" src="<?php echo base_url().'asset/pict/qrcode/'.$b['qr_code'];?>"></td>
 
                     <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
                       <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-warning" id="editBarangBtn" data-toggle="modal" data-target="#editModal" data-id="<?= $b['barang_id']; ?>" data-edit_item_name="<?= $b['barang']; ?>" data-edit_brand="<?= $b['merk_id']; ?>" data-edit_category="<?= $b['category_id']; ?>" data-edit_total="<?= $b['stock']; ?>" data-edit_price="<?= $b['harga']; ?>"><i class="fa fa-pen top-0" title="Edit"></i></button></td>
