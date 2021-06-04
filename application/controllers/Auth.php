@@ -24,8 +24,8 @@ class Auth extends CI_Controller {
 		$data = $this->data;
 		$this->load->model('Admin_model');
 		$data['totalUser'] = count($this->Admin_model->getUser());
-		$data['requestIn'] = $this->data_model->getRequestInCurrMonth()->num_rows();
-		$data['requestOut'] = $this->data_model->getRequestOutCurrMonth()->num_rows();
+		$data['requestIn'] = $this->data_model->getRequestInCurrMonth(1)->num_rows();
+		$data['requestOut'] = $this->data_model->getRequestOutCurrMonth(1)->num_rows();
 		
 		$this->load->view('templates/header', $data);
 		$this->load->view('dashboard');
@@ -38,6 +38,10 @@ class Auth extends CI_Controller {
 		roleAdmin();
 		roleManager();
 		$data = $this->data;
+		$data['requestIn'] = $this->data_model->getRequestInCurrMonth(0,1)->num_rows();
+		$data['requestOut'] = $this->data_model->getRequestOutCurrMonth(0,1)->num_rows();
+		$data['todayRequestIn'] = $this->data_model->getTodayRequestIn(0,1)->result_array();
+		$data['todayRequestOut'] = $this->data_model->getTodayRequestOut(0,1)->result_array();
 		
 		$this->load->view('templates/header', $data);
 		$this->load->view('staff');
@@ -49,8 +53,10 @@ class Auth extends CI_Controller {
 		roleStaff();
 		roleAdmin();
 		$data = $this->data;
-		$data['requestIn'] = $this->data_model->getRequestInCurrMonth()->num_rows();
-		$data['requestOut'] = $this->data_model->getRequestOutCurrMonth()->num_rows();
+		$data['requestIn'] = $this->data_model->getRequestInCurrMonth(1)->num_rows();
+		$data['requestOut'] = $this->data_model->getRequestOutCurrMonth(1)->num_rows();
+		$data['todayRequestIn'] = $this->data_model->getTodayRequestIn(1)->result_array();
+		$data['todayRequestOut'] = $this->data_model->getTodayRequestOut(1)->result_array();
 		
 		$this->load->view('templates/header', $data);
 		$this->load->view('manager');

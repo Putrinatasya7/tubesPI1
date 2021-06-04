@@ -175,20 +175,58 @@ class Data_model extends CI_Model {
   }
 
   /**REQUEST ZONE */
-  public function getRequestInCurrMonth() {
-    return $this->db->select('request_no')->where('MONTH(created_at)', date('m'))->where('YEAR(created_at)', date('Y'))->where('req_category','In')->get('request');
+  public function getRequestInCurrMonth($manager = 0, $staff = 0) {
+    if($manager !=0) {
+      return $this->db->select('request_no')->where('MONTH(created_at)', date('m'))->where('YEAR(created_at)', date('Y'))->where('req_category','In')->get('request');
+    }
+    elseif($staff != 0) {
+      return $this->db->select('request_no')->where('created_by', $this->session->userdata('uid'))->where('MONTH(created_at)', date('m'))->where('YEAR(created_at)', date('Y'))->where('req_category','In')->get('request');
+    }
   }
   
-  public function getRequestOutCurrMonth() {
-    return $this->db->select('request_no')->where('MONTH(created_at)', date('m'))->where('YEAR(created_at)', date('Y'))->where('req_category','Out')->get('request');
+  public function getRequestOutCurrMonth($manager = 0, $staff = 0) {
+    if($manager !=0) {
+      return $this->db->select('request_no')->where('MONTH(created_at)', date('m'))->where('YEAR(created_at)', date('Y'))->where('req_category','Out')->get('request');
+    }
+    elseif($staff != 0) {
+      return $this->db->select('request_no')->where('created_by', $this->session->userdata('uid'))->where('MONTH(created_at)', date('m'))->where('YEAR(created_at)', date('Y'))->where('req_category','In')->get('request');
+    }
+  }
+  
+  public function getTodayRequestIn($manager = 0, $staff=0) {
+    if($manager !=0) {
+      return $this->db->where('DATE(created_at)', date("Y-m-d"))->group_by('request_no')->where('status','Waiting')->get('request_in_detail');
+    }
+    elseif($staff != 0) {
+      return $this->db->where('created_by',$this->session->userdata('uid'))->where('DATE(created_at)', date("Y-m-d"))->group_by('request_no')->where("(status='Accepted' OR status='Rejected')")->get('request_in_detail');
+    }
+  }
+
+  public function getTodayRequestOut($manager = 0, $staff = 0) {
+    if($manager != 0) {
+      return $this->db->where('DATE(created_at)', date("Y-m-d"))->group_by('request_no')->where('status','Waiting')->get('request_out_detail');
+    }
+    elseif ($staff != 0) {
+      return $this->db->where('created_by',$this->session->userdata('uid'))->where('DATE(created_at)', date("Y-m-d"))->group_by('request_no')->where("(status='Accepted' OR status='Rejected')")->get('request_out_detail');
+    }
   }
 
   public function getRequestOut() {
-    return $this->db->group_by('request_no')->get('request_out_detail');
+    if($this->session->userdata('role_id') == 3) {
+      return $this->db->where('created_by',$this->session->userdata('uid'))->group_by('request_no')->get('request_out_detail');
+    }
+    else {
+      return $this->db->group_by('request_no')->get('request_out_detail');
+    }
   }
 
   public function getRequestIn() {
-    return $this->db->group_by('request_no')->get('request_in_detail');
+    if($this->session->userdata('role_id') == 3) {
+      return $this->db->where('created_by',$this->session->userdata('uid'))->group_by('request_no')->get('request_in_detail');
+    }
+    else {
+      return $this->db->group_by('request_no')->get('request_in_detail');
+    }
   }
 
 
