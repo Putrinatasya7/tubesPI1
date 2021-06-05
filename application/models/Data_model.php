@@ -205,7 +205,7 @@ class Data_model extends CI_Model {
       return $this->db->where('DATE(created_at)', date("Y-m-d"))->group_by('request_no')->where('status','Waiting')->get('request_in_detail');
     }
     elseif($staff != 0) {
-      return $this->db->where('created_by',$this->session->userdata('uid'))->where('DATE(created_at)', date("Y-m-d"))->group_by('request_no')->where("(status='Accepted' OR status='Rejected')")->get('request_in_detail');
+      return $this->db->where('created_by',$this->session->userdata('uid'))->where('DATE(responded_at)', date("Y-m-d"))->group_by('request_no')->where("(status='Accepted' OR status='Rejected')")->get('request_in_detail');
     }
   }
 
@@ -214,7 +214,7 @@ class Data_model extends CI_Model {
       return $this->db->where('DATE(created_at)', date("Y-m-d"))->group_by('request_no')->where('status','Waiting')->get('request_out_detail');
     }
     elseif ($staff != 0) {
-      return $this->db->where('created_by',$this->session->userdata('uid'))->where('DATE(created_at)', date("Y-m-d"))->group_by('request_no')->where("(status='Accepted' OR status='Rejected')")->get('request_out_detail');
+      return $this->db->where('created_by',$this->session->userdata('uid'))->where('DATE(responded_at)', date("Y-m-d"))->group_by('request_no')->where("(status='Accepted' OR status='Rejected')")->get('request_out_detail');
     }
   }
 
@@ -292,15 +292,16 @@ class Data_model extends CI_Model {
     
     if(str_contains($request_no, "In")){
       $invoicedata['invoice_no'] = generateInvoiceNo("In");
-      $tbl = "invoice";
     }
     else {
       $invoicedata['invoice_no'] = generateInvoiceNo("Out");
-      $tbl = "invoice_out";
     }
     
     $this->db->where('request_no',$request_no)->update('request',$data);
-    $this->db->insert($tbl,$invoicedata);
+    $this->db->insert('invoice',$invoicedata);
+    if(str_contains($request_no, "In")){
+      $this->db->insert('invoice_in_component',['invoice_no' => $invoicedata['invoice_no']]);
+    }
   }
 
   /**
@@ -351,6 +352,11 @@ class Data_model extends CI_Model {
     $request_no = $this->input->post('request_no');
     $this->db->where('request_no',$request_no)->delete('req_item_in');
     $this->db->where('request_no',$request_no)->delete('request');
+  }
+
+  /** INVOICE ZONE */
+  public function getInvoice() {
+    return $this->db->get('invoice_request');
   }
 
 }     //END CLASS

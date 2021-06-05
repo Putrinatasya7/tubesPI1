@@ -156,7 +156,7 @@
                 <?php foreach ($todayRequestIn as $tri) : ?>
                   <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                     <div class="d-flex align-items-center">
-                      <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-right"></i></button>
+                    <a href="<?= base_url('Request/detailsIn/' . $tri['request_no']); ?>"><button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-right"></i></button></a>
                       <div class="d-flex flex-column">
                         <h6 class="mb-1 text-dark text-sm"><?= $tri['request_no']; ?></h6>
                         <span class="text-xs"><?= date("d F Y, g:i A", strtotime($tri['created_at'])); ?></span>
@@ -175,7 +175,7 @@
                 <?php foreach ($todayRequestOut as $tro) : ?>
                   <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                     <div class="d-flex align-items-center">
-                      <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-left"></i></button>
+                    <a href="<?= base_url('Request/detailsIn/' . $tro['request_no']); ?>"><button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-left"></i></button></a>
                       <div class="d-flex flex-column">
                         <h6 class="mb-1 text-dark text-sm"><?= $tro['request_no']; ?></h6>
                         <span class="text-xs"><?= date("d F Y, g:i A", strtotime($tro['created_at'])); ?></span>

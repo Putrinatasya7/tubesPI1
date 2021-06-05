@@ -112,14 +112,12 @@ function generateInvoiceNo($status) {
   if($status == 'In') {
     $prefix = "INVIn";
     $ignore_code = 11;
-    $tbl = "invoice";
   }
   else if($status == 'Out') {
     $prefix = "INVOut";
     $ignore_code = 12;
-    $tbl = "invoice_out";
   }
-  $last_row_no = $ci->db->select('invoice_no')->limit(1)->order_by('invoice_no','DESC')->get($tbl)->row();
+  $last_row_no = $ci->db->select('invoice_no')->like('invoice_no',$prefix)->limit(1)->order_by('invoice_no','DESC')->get('invoice')->row();
   
   if($last_row_no == null) {
     $new_no = '01';

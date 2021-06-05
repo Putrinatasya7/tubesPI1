@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2021 at 07:47 AM
+-- Generation Time: Jun 05, 2021 at 10:59 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -104,23 +104,65 @@ INSERT INTO `category` (`category_id`, `category`, `status`) VALUES
 CREATE TABLE `invoice` (
   `invoice_no` varchar(100) NOT NULL,
   `request_no` varchar(100) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `received_by` varchar(4) DEFAULT NULL,
-  `received_at` datetime DEFAULT NULL,
-  `status` enum('received','waiting for delivery','to be ordered','sent') NOT NULL
+  `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`invoice_no`, `request_no`, `created_at`) VALUES
+('INVIn21060501', 'REQIn21060401', '2021-06-05 15:33:39'),
+('INVIn21060502', 'REQIn21060502', '2021-06-05 15:44:08'),
+('INVIn21060503', 'REQIn21060504', '2021-06-05 15:54:44'),
+('INVOut21060401', 'REQOut21060301', '0000-00-00 00:00:00'),
+('INVOut21060402', 'REQOut21060405', '2021-06-04 22:13:40'),
+('INVOut21060503', 'REQOut21060506', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `invoice_out`
+-- Table structure for table `invoice_in_component`
 --
 
-CREATE TABLE `invoice_out` (
+CREATE TABLE `invoice_in_component` (
   `invoice_no` varchar(100) NOT NULL,
-  `request_no` varchar(100) NOT NULL,
-  `created_at` datetime NOT NULL
+  `received_by` varchar(4) DEFAULT NULL,
+  `received_at` datetime DEFAULT NULL,
+  `status` enum('received','waiting for delivery','to be ordered','sent') NOT NULL DEFAULT 'to be ordered'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoice_in_component`
+--
+
+INSERT INTO `invoice_in_component` (`invoice_no`, `received_by`, `received_at`, `status`) VALUES
+('INVIn21060501', NULL, NULL, 'to be ordered'),
+('INVIn21060502', NULL, NULL, 'to be ordered'),
+('INVIn21060503', NULL, NULL, 'to be ordered');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `invoice_request`
+-- (See below for the actual view)
+--
+CREATE TABLE `invoice_request` (
+`invoice_no` varchar(100)
+,`request_no` varchar(100)
+,`invoice_date` datetime
+,`staff_in_charge` varchar(4)
+,`staff_in_charge_name` varchar(50)
+,`request_date` datetime
+,`responded_by` varchar(4)
+,`responder name` varchar(50)
+,`responded_at` datetime
+,`req_category` enum('In','Out')
+,`received_by` varchar(4)
+,`receiver_name` varchar(50)
+,`received_at` datetime
+,`status_inv_in` enum('received','waiting for delivery','to be ordered','sent')
+);
 
 -- --------------------------------------------------------
 
@@ -146,11 +188,12 @@ INSERT INTO `menu` (`menuid`, `menu`, `url`, `icon`, `collapse`, `is_active`, `r
 (1, 'Dashboard', 'Auth', 'fas fa-home', 'n', '1', '1'),
 (2, 'Dashboard', 'Auth/manager', 'fas fa-home', 'n', '1', '2'),
 (3, 'Dashboard', 'Auth/staff', 'fas fa-home', 'n', '1', '3'),
-(4, 'Barang', 'Barang', 'ni ni-app', 'n', '1', '1,2,3'),
+(4, 'Elements', 'Elements', 'ni ni-tag', 'n', '1', '1,3'),
 (5, 'Supplier', 'Supplier', 'ni ni-delivery-fast', 'n', '1', '1,2,3'),
-(6, 'Request', '#collapseExample', 'ni ni-bullet-list-67', 'y', '1', '1,2,3'),
-(7, 'User', 'User', 'ni ni-single-02', 'n', '1', '1'),
-(8, 'Elements', 'Elements', 'ni ni-tag', 'n', '1', '1,3');
+(6, 'Barang', 'Barang', 'ni ni-app', 'n', '1', '1,2,3'),
+(7, 'Request', '#collapseExample', 'ni ni-bullet-list-67', 'y', '1', '1,2,3'),
+(8, 'Invoice', 'Invoice', 'fas fa-file-invoice', 'n', '1', '1,2,3'),
+(9, 'User', 'User', 'ni ni-single-02', 'n', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -193,10 +236,17 @@ CREATE TABLE `request` (
 --
 
 INSERT INTO `request` (`request_no`, `created_by`, `created_at`, `responded_by`, `responded_at`, `status`, `req_category`) VALUES
-('REQIn21060401', 'A001', '2021-06-04 06:54:06', NULL, NULL, 'Waiting', 'In'),
-('REQOut21060301', 'A001', '2021-06-03 23:04:25', NULL, NULL, 'Waiting', 'Out'),
+('REQIn21060401', 'A001', '2021-06-04 06:54:06', 'M001', '2021-06-05 15:33:39', 'Rejected', 'In'),
+('REQIn21060502', 'S001', '2021-06-05 15:34:43', 'M001', '2021-06-05 15:44:08', 'Accepted', 'In'),
+('REQIn21060503', 'S001', '2021-06-05 15:50:31', 'M001', '2021-06-05 15:51:02', 'Accepted', 'In'),
+('REQIn21060504', 'S001', '2021-06-05 15:50:42', 'M001', '2021-06-05 15:54:44', 'Accepted', 'In'),
+('REQOut21060301', 'A001', '2021-06-03 23:04:25', 'M001', '0000-00-00 00:00:00', 'Accepted', 'Out'),
 ('REQOut21060303', 'A001', '2021-06-04 02:59:56', NULL, NULL, 'Accepted', 'Out'),
-('REQOut21060404', 'A001', '2021-06-04 04:30:51', NULL, NULL, 'Rejected', 'Out');
+('REQOut21060404', 'A001', '2021-06-04 04:30:51', NULL, NULL, 'Rejected', 'Out'),
+('REQOut21060405', 'M001', '2021-06-04 22:12:50', 'M001', '2021-06-04 22:13:40', 'Rejected', 'Out'),
+('REQOut21060506', 'A001', '2021-06-05 11:15:54', 'M001', '0000-00-00 00:00:00', 'Rejected', 'Out'),
+('REQOut21060507', 'M001', '2021-06-05 11:18:22', NULL, '2021-06-05 11:18:22', 'Waiting', 'Out'),
+('REQOut21060508', 'S001', '2021-06-05 15:57:46', NULL, NULL, 'Waiting', 'Out');
 
 -- --------------------------------------------------------
 
@@ -211,6 +261,7 @@ CREATE TABLE `request_in_detail` (
 ,`created_at` datetime
 ,`barang_id` varchar(10)
 ,`barang` varchar(200)
+,`qrcode_barang` varchar(255)
 ,`harga_satuan` int(11)
 ,`qty` int(6)
 ,`supplier_id` int(3)
@@ -235,6 +286,7 @@ CREATE TABLE `request_out_detail` (
 ,`created_at` datetime
 ,`barang_id` varchar(10)
 ,`barang` varchar(200)
+,`qrcode_barang` varchar(255)
 ,`qty` int(6)
 ,`alasan_keluar` text
 ,`responded_by` varchar(4)
@@ -263,7 +315,11 @@ CREATE TABLE `req_item_in` (
 
 INSERT INTO `req_item_in` (`request_no`, `barang_id`, `qty`, `harga_satuan`, `supplier_id`) VALUES
 ('REQIn21060401', 'B001', 2, 560000, 1),
-('REQIn21060401', 'B002', 4, 630000, 2);
+('REQIn21060401', 'B002', 4, 630000, 2),
+('REQIn21060502', 'B001', 11, 560000, 1),
+('REQIn21060502', 'B002', 10, 630000, 1),
+('REQIn21060503', 'B001', 1, 560000, 1),
+('REQIn21060504', 'B002', 2, 630000, 2);
 
 -- --------------------------------------------------------
 
@@ -285,7 +341,12 @@ INSERT INTO `req_item_out` (`request_no`, `barang_id`, `qty`) VALUES
 ('REQOut21060301', 'B001', 4),
 ('REQOut21060301', 'B002', 8),
 ('REQOut21060303', 'B001', 1),
-('REQOut21060404', 'B001', 1);
+('REQOut21060404', 'B001', 1),
+('REQOut21060405', 'B002', 1),
+('REQOut21060506', 'B002', 10),
+('REQOut21060507', 'B002', 1),
+('REQOut21060508', 'B001', 1),
+('REQOut21060508', 'B002', 2);
 
 -- --------------------------------------------------------
 
@@ -305,7 +366,11 @@ CREATE TABLE `req_out_reason` (
 INSERT INTO `req_out_reason` (`request_no`, `alasan_keluar`) VALUES
 ('REQOut21060301', 'Pembuatan mobil baru'),
 ('REQOut21060303', 'Alasan tidak tahu apa alasan oke'),
-('REQOut21060404', 'Lihat tanggal');
+('REQOut21060404', 'Lihat tanggal'),
+('REQOut21060405', 'blabalbalbala'),
+('REQOut21060506', 'mencoba timestamp'),
+('REQOut21060507', 'mencoba timestamp'),
+('REQOut21060508', 'mencoba');
 
 -- --------------------------------------------------------
 
@@ -347,8 +412,8 @@ CREATE TABLE `sub_menu` (
 --
 
 INSERT INTO `sub_menu` (`submenuid`, `menuid`, `submenu`, `url`, `icon`, `is_active`) VALUES
-(1, 6, 'Permintaan Masuk', 'Request/addIn', '', '1'),
-(2, 6, 'Permintaan Keluar', 'Request/addOut', '', '1');
+(1, 7, 'Permintaan Masuk', 'Request/addIn', '', '1'),
+(2, 7, 'Permintaan Keluar', 'Request/addOut', '', '1');
 
 -- --------------------------------------------------------
 
@@ -433,11 +498,20 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
+-- Structure for view `invoice_request`
+--
+DROP TABLE IF EXISTS `invoice_request`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `invoice_request`  AS SELECT `i`.`invoice_no` AS `invoice_no`, `i`.`request_no` AS `request_no`, `i`.`created_at` AS `invoice_date`, `r`.`created_by` AS `staff_in_charge`, `u1`.`name` AS `staff_in_charge_name`, `r`.`created_at` AS `request_date`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder name`, `r`.`responded_at` AS `responded_at`, `r`.`req_category` AS `req_category`, `iic`.`received_by` AS `received_by`, `u3`.`name` AS `receiver_name`, `iic`.`received_at` AS `received_at`, `iic`.`status` AS `status_inv_in` FROM (((((`invoice` `i` join `request` `r` on(`i`.`request_no` = `r`.`request_no`)) join `user` `u1` on(`r`.`created_by` = `u1`.`uid`)) join `user` `u2` on(`r`.`responded_by` = `u2`.`uid`)) left join `invoice_in_component` `iic` on(`i`.`invoice_no` = `iic`.`invoice_no`)) left join `user` `u3` on(`iic`.`received_by` = `u3`.`uid`)) ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `request_in_detail`
 --
 DROP TABLE IF EXISTS `request_in_detail`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `request_in_detail`  AS SELECT `r`.`request_no` AS `request_no`, `r`.`created_by` AS `created_by`, `u`.`name` AS `creator_name`, `r`.`created_at` AS `created_at`, `i`.`barang_id` AS `barang_id`, `b`.`barang` AS `barang`, `i`.`harga_satuan` AS `harga_satuan`, `i`.`qty` AS `qty`, `i`.`supplier_id` AS `supplier_id`, `s`.`supplier` AS `supplier`, `c`.`category` AS `category`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder_name`, `r`.`responded_at` AS `responded_at`, `r`.`status` AS `status` FROM ((((((`request` `r` join `user` `u` on(`u`.`uid` = `r`.`created_by`)) left join `user` `u2` on(`u2`.`uid` = `r`.`responded_by`)) join `req_item_in` `i` on(`i`.`request_no` = `r`.`request_no`)) join `barang` `b` on(`b`.`barang_id` = `i`.`barang_id`)) join `supplier` `s` on(`s`.`supplier_id` = `i`.`supplier_id`)) join `category` `c` on(`c`.`category_id` = `b`.`category_id`)) WHERE `r`.`req_category` = 'In' ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `request_in_detail`  AS SELECT `r`.`request_no` AS `request_no`, `r`.`created_by` AS `created_by`, `u`.`name` AS `creator_name`, `r`.`created_at` AS `created_at`, `i`.`barang_id` AS `barang_id`, `b`.`barang` AS `barang`, `b`.`qr_code` AS `qrcode_barang`, `i`.`harga_satuan` AS `harga_satuan`, `i`.`qty` AS `qty`, `i`.`supplier_id` AS `supplier_id`, `s`.`supplier` AS `supplier`, `c`.`category` AS `category`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder_name`, `r`.`responded_at` AS `responded_at`, `r`.`status` AS `status` FROM ((((((`request` `r` join `user` `u` on(`u`.`uid` = `r`.`created_by`)) left join `user` `u2` on(`u2`.`uid` = `r`.`responded_by`)) join `req_item_in` `i` on(`i`.`request_no` = `r`.`request_no`)) join `barang` `b` on(`b`.`barang_id` = `i`.`barang_id`)) join `supplier` `s` on(`s`.`supplier_id` = `i`.`supplier_id`)) join `category` `c` on(`c`.`category_id` = `b`.`category_id`)) WHERE `r`.`req_category` = 'In' ;
 
 -- --------------------------------------------------------
 
@@ -446,7 +520,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `request_out_detail`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `request_out_detail`  AS SELECT `r`.`request_no` AS `request_no`, `r`.`created_by` AS `created_by`, `u`.`name` AS `creator_name`, `r`.`created_at` AS `created_at`, `i`.`barang_id` AS `barang_id`, `b`.`barang` AS `barang`, `i`.`qty` AS `qty`, `a`.`alasan_keluar` AS `alasan_keluar`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder_name`, `r`.`responded_at` AS `responded_at`, `r`.`status` AS `status` FROM (((((`request` `r` join `user` `u` on(`u`.`uid` = `r`.`created_by`)) left join `user` `u2` on(`u2`.`uid` = `r`.`responded_by`)) join `req_item_out` `i` on(`i`.`request_no` = `r`.`request_no`)) join `barang` `b` on(`i`.`barang_id` = `b`.`barang_id`)) join `req_out_reason` `a` on(`a`.`request_no` = `r`.`request_no`)) WHERE `r`.`req_category` = 'Out' ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `request_out_detail`  AS SELECT `r`.`request_no` AS `request_no`, `r`.`created_by` AS `created_by`, `u`.`name` AS `creator_name`, `r`.`created_at` AS `created_at`, `i`.`barang_id` AS `barang_id`, `b`.`barang` AS `barang`, `b`.`qr_code` AS `qrcode_barang`, `i`.`qty` AS `qty`, `a`.`alasan_keluar` AS `alasan_keluar`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder_name`, `r`.`responded_at` AS `responded_at`, `r`.`status` AS `status` FROM (((((`request` `r` join `user` `u` on(`u`.`uid` = `r`.`created_by`)) left join `user` `u2` on(`u2`.`uid` = `r`.`responded_by`)) join `req_item_out` `i` on(`i`.`request_no` = `r`.`request_no`)) join `barang` `b` on(`i`.`barang_id` = `b`.`barang_id`)) join `req_out_reason` `a` on(`a`.`request_no` = `r`.`request_no`)) WHERE `r`.`req_category` = 'Out' ;
 
 -- --------------------------------------------------------
 
@@ -482,15 +556,14 @@ ALTER TABLE `category`
 --
 ALTER TABLE `invoice`
   ADD PRIMARY KEY (`invoice_no`),
-  ADD KEY `fk_invoicereqno` (`request_no`),
-  ADD KEY `fk_invoicercvby` (`received_by`);
+  ADD KEY `fk_invreqnoout` (`request_no`);
 
 --
--- Indexes for table `invoice_out`
+-- Indexes for table `invoice_in_component`
 --
-ALTER TABLE `invoice_out`
+ALTER TABLE `invoice_in_component`
   ADD PRIMARY KEY (`invoice_no`),
-  ADD KEY `fk_invreqnoout` (`request_no`);
+  ADD KEY `fk_invoicercvby` (`received_by`);
 
 --
 -- Indexes for table `menu`
@@ -573,7 +646,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `menuid` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `menuid` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `merk`
@@ -616,14 +689,14 @@ ALTER TABLE `barang`
 -- Constraints for table `invoice`
 --
 ALTER TABLE `invoice`
-  ADD CONSTRAINT `fk_invoicercvby` FOREIGN KEY (`received_by`) REFERENCES `user` (`uid`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_invoicereqno` FOREIGN KEY (`request_no`) REFERENCES `request` (`request_no`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_invreqnoout` FOREIGN KEY (`request_no`) REFERENCES `request` (`request_no`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `invoice_out`
+-- Constraints for table `invoice_in_component`
 --
-ALTER TABLE `invoice_out`
-  ADD CONSTRAINT `fk_invreqnoout` FOREIGN KEY (`request_no`) REFERENCES `request` (`request_no`) ON UPDATE CASCADE;
+ALTER TABLE `invoice_in_component`
+  ADD CONSTRAINT `fk_invoiceno` FOREIGN KEY (`invoice_no`) REFERENCES `invoice` (`invoice_no`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_invoicercvby` FOREIGN KEY (`received_by`) REFERENCES `user` (`uid`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `request`

@@ -84,3 +84,65 @@
       </div>
     </div>
   </div>
+</div>
+
+  
+<!-- APPROVE MODAL -->
+<div class="modal fade" tabindex="-1" aria-labelledby="approvalModalLabel" role="dialog" id="approvalModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Approve Request</h5>
+        <a type="button" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times top-0"></i></span></a>
+      </div>
+
+      <form role="form" action="<?php echo base_url('Request/respondRequest') ?>" method="post" id="approveForm">
+        <div class="modal-body">
+          <input type="hidden" name="request_no" id="request_no">
+          <input type="hidden" name="status" id="status" value="Accepted">
+          <p>Do you really want to approve this request?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Sure</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- REJECT MODAL -->
+<div class="modal fade" tabindex="-1" aria-labelledby="rejectModalLabel" role="dialog" id="rejectModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reject Request</h5>
+        <a type="button" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times top-0"></i></span></a>
+      </div>
+
+      <form role="form" action="<?php echo base_url('Request/respondRequest') ?>" method="post" id="rejectForm">
+        <div class="modal-body">
+          <input type="hidden" name="request_no" id="request_no">
+          <input type="hidden" name="status" id="status" value="Rejected">
+          <p>Do you really want to reject this request?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger">Sure</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+  $(document).on("click", "#approvebutton", function() {
+    let request_no = $(this).data('id');
+    $(".modal-body #request_no").val(request_no);
+  });
+
+  $(document).on("click", "#rejectbutton", function() {
+    let request_no = $(this).data('id');
+    $(".modal-body #request_no").val(request_no);
+  });
+</script>
