@@ -29,9 +29,10 @@
                       <td class="align-middle text-center text-sm"><?= $user['name']; ?></td>
                       <td class="align-middle text-center text-sm"><?= $user['role']; ?></td>
 
-                      <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#editModal" id="editbutton" data-uid="<?= $user['uid']; ?>" data-uname="<?= $user['uname']; ?>" data-email="<?= $user['email']; ?>" data-name="<?= $user['name']; ?>" data-password="<?= $user['password']; ?>" data-roleid="<?= $user['role_id']; ?>">Edit</button></td>
-                      <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-warning" data-toggle="modal" data-target="#editPasswordModal" id="editPassword" data-uid="<?= $user['uid']; ?>">Change Password</button></td>
-                      <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" id="deletebutton" data-uid="<?= $user['uid']; ?>">Delete</button></td>
+                      <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#editModal" id="editbutton" data-uid="<?= $user['uid']; ?>" data-uname="<?= $user['uname']; ?>" data-email="<?= $user['email']; ?>" data-name="<?= $user['name']; ?>" data-password="<?= $user['password']; ?>" data-roleid="<?= $user['role_id']; ?>"><i class="fa fa-pen top-0" title="Edit"></i></button>
+                        <button class="badge bagde-sm btn bg-gradient-warning" data-toggle="modal" data-target="#editPasswordModal" id="editPassword" data-uid="<?= $user['uid']; ?>"><i class="fa fa-lock top-0" title="Change Password"></i></button>
+                        <button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" id="deletebutton" data-uid="<?= $user['uid']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button>
+                      </td>
                       <td></td>
                       <!-- <td><a href="<?= base_url(); ?>admin/update/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-info">Edit</span></a></td>
                       <td><a href="<?= base_url(); ?>admin/delete/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-danger" onclick="return confirm('Anda yakin ingin menghapus akun ini?')">Delete</span></a></td> -->
