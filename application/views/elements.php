@@ -38,7 +38,13 @@
                         <td class="text-xs font-weight-bold">
                           <h7 class="mx-3 mb-0 text-m "><?= $c['category']; ?></h7>
                         </td>
-                        <td class="align-middle text-center text-sm"><span class="badge badge-m bg-gradient-success"><?= $c['status']; ?></span></td>
+                        <td class="align-middle text-center text-sm">
+                        <?php if ($c['status'] == 'Active'):  ?>
+                        <span class="badge badge-sm bg-gradient-success"><?= $c['status']; ?></span>
+                        <?php else : ?>
+                          <span class="badge badge-sm bg-gradient-secondary"><?= $c['status']; ?></span>
+                        <?php endif; ?>
+                      </td>
 
                         <td class="align-middle text-center"><button class="badge badge-m btn bg-gradient-warning" data-toggle="modal" data-target="#editCategory" id="editCategorybutton" data-id="<?= $c['category_id']; ?>" data-category="<?= $c['category']; ?>"  data-catstatus="<?= $c['status']; ?>"><i class="fa fa-pen top-0" title="Edit"></i></button></td>
                         <td class="align-middle text-center"><button class="badge bagde-m btn bg-gradient-danger" data-toggle="modal" data-target="#delCategory" id="delCategorybutton" data-id="<?= $c['category_id']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button></td>
@@ -89,7 +95,13 @@
                     <?php foreach ($brand as $b) : ?>
                       <tr>
                         <td class="text-xs font-weight-bold"><h7 class="mx-3 mb-0 text-m "><?= $b['merk']; ?></h7></td>
-                        <td class="align-middle text-center text-sm"><span class="badge badge-m bg-gradient-success"><?= $b['status']; ?></span></td>
+                        <td class="align-middle text-center text-sm">
+                        <?php if ($b['status'] == 'Active'):  ?>
+                        <span class="badge badge-sm bg-gradient-success"><?= $b['status']; ?></span>
+                        <?php else : ?>
+                          <span class="badge badge-sm bg-gradient-secondary"><?= $b['status']; ?></span>
+                        <?php endif; ?>
+                      </td>
 
                         <td class="align-middle text-center"><button class="badge badge-m btn bg-gradient-warning" data-toggle="modal" data-target="#editBrand" id="editBrandbutton" data-id="<?= $b['merk_id']; ?>" data-merk="<?= $b['merk']; ?>" data-brandstatus="<?= $b['status']; ?>"><i class="fa fa-pen top-0" title="Edit"></i></button></td>
                         <td class="align-middle text-center"><button class="badge bagde-m btn bg-gradient-danger" data-toggle="modal" data-target="#delBrand" id="delBrandbutton" data-id="<?= $b['merk_id']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button></td>

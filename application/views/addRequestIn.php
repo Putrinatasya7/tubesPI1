@@ -40,7 +40,7 @@
             </td>
             <td class="align-middle text-center form-group input-group-sm">
               <select class="form-control barang" data-item_price_id="1" id="barang" name="barang[]" required>
-                <option value="">Pilih Barang</option>
+                <option value="">Choose Item</option>
                 <?php foreach ($barang as $b) : ?>
                   <option value="<?= $b['barang_id']; ?>" data-row_barang="" data-price="<?= $b['harga']; ?>"><?= $b['barang']; ?></option>
                 <?php endforeach; ?>
@@ -48,7 +48,7 @@
             </td>
             <td class="align-middle text-center form-group input-group-sm">
               <select class="form-control" id="supplier" name="supplier[]" required>
-                <option value="">Pilih Supplier</option>
+                <option value="">Choose Supplier</option>
                 <?php foreach ($supplier as $s) : ?>
                   <option value="<?= $s['supplier_id']; ?>"><?= $s['supplier']; ?></option>
                 <?php endforeach; ?>

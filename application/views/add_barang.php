@@ -30,10 +30,10 @@
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-secondary text-s">Nama Barang</th>
-                  <th class="align-middle text-center text-secondary text-s ps-2">Kode Barang</th>
-                  <th class="align-middle text-center text-secondary text-s">Jumlah Barang</th>
-                  <th class="align-middle text-center text-secondary text-s">QrCode</th>
+                  <th class="text-secondary text-s">Item Name</th>
+                  <th class="align-middle text-center text-secondary text-s ps-2">Item Code</th>
+                  <th class="align-middle text-center text-secondary text-s">Qty</th>
+                  <th class="align-middle text-center text-secondary text-s">QR Code</th>
                   <th class="align-middle text-center text-secondary text-s">Action</th>
                 </tr>
               </thead>
@@ -80,7 +80,7 @@
                                 <h6><?= $b['merk']; ?> <span class="font-weight-normal">| <?= $b['category']; ?></span></h6>
                                 <h6>Rp <?= $b['harga']; ?></h6>
                                 <h6 class="font-weight-normal">Stock : <?= $b['stock']; ?></h6>
-                                <img src="<?php echo base_url(); ?>asset\pict\qrcode\qrcode_contoh.png" alt="..." class="w-15 position-relative z-index-2 border-radius-lg shadow-sm">
+                                <img src="<?php echo base_url(); ?>asset\pict\qrcode\<?= $b['qr_code'] ?>" alt="..." class="w-15 position-relative z-index-2 border-radius-lg shadow-sm">
                                 <?php if ($this->session->userdata('role_id') == 1) : ?>
                                   <div class="row mt-5">
                                     <div class="col-md-6">
@@ -135,12 +135,12 @@
 
           <div class="form-group input-group-sm">
             <label for="name">Item names</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name ..." required autocomplete="off">
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter item name ..." required autocomplete="off">
           </div>
 
           <div class="form-group input-group-sm">
             <label for="total">Stock</label>
-            <input type="number" min="0" class="form-control" name="total" id="total" placeholder="Enter jumlah ..." required autocomplete="off">
+            <input type="number" min="0" class="form-control" name="total" id="total" placeholder="Enter stock quantity ..." required autocomplete="off">
           </div>
           <div class="form-group input-group-sm">
             <label for="caregory">Category</label>
@@ -160,7 +160,7 @@
           </div>
           <div class="form-group input-group-sm">
             <label for="price">Price</label>
-            <input type="number" min="0" class="form-control" name="price" id="price" placeholder="Enter kategori ..." required autocomplete="off">
+            <input type="number" min="0" class="form-control" name="price" id="price" placeholder="Enter price ..." required autocomplete="off">
           </div>
           <div class="form-group">
             <label for="picture">Upload picture</label>
@@ -196,11 +196,11 @@
           </div>
           <div class="form-group input-group-sm">
             <label for="edit_item_name">Item names</label>
-            <input type="text" class="form-control" id="edit_item_name" name="edit_item_name" placeholder="Enter nama barang" autocomplete="off">
+            <input type="text" class="form-control" id="edit_item_name" name="edit_item_name" placeholder="Enter item name" autocomplete="off">
           </div>
           <div class="form-group input-group-sm">
             <label for="edit_total">Stock</label>
-            <input type="number" min="0" class="form-control" name="edit_total" id="edit_total" placeholder="Enter jumlah ..." required>
+            <input type="number" min="0" class="form-control" name="edit_total" id="edit_total" placeholder="Enter stock ..." required>
           </div>
           <div class="form-group input-group-sm">
             <label for="edit_category">Category</label>
@@ -220,7 +220,7 @@
           </div>
           <div class="form-group input-group-sm">
             <label for="edit_price">Price</label>
-            <input type="number" min="0" class="form-control" id="edit_price" name="edit_price" placeholder="Enter nama barang" autocomplete="off">
+            <input type="number" min="0" class="form-control" id="edit_price" name="edit_price" placeholder="Enter price ..." autocomplete="off">
           </div>
           <div class="form-group">
             <label for="edit_picture">Edit Picture</label>

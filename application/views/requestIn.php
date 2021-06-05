@@ -25,9 +25,9 @@
               <table class="table align-items-center mb-0">
                 <thead>
                   <tr>
-                    <th class="align-middle text-center text-secondary text-s ps-2">No.Request</th>
-                    <th class="align-middle text-center text-secondary text-s ps-2">Nama</th>
-                    <th class="align-middle text-center text-secondary text-s ps-2">Tanggal Request</th>
+                    <th class="align-middle text-center text-secondary text-s ps-2">Request No</th>
+                    <th class="align-middle text-center text-secondary text-s ps-2">Request by</th>
+                    <th class="align-middle text-center text-secondary text-s ps-2">Request Date</th>
                     <th class="align-middle text-center text-secondary text-s">Status</th>
                     <th class="align-middle text-center text-secondary text-s">Action</th>
                     <th></th>

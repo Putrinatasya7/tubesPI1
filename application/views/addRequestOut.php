@@ -36,7 +36,7 @@
                   </td>
                   <td class="align-middle text-center form-group input-group-sm">
                     <select class="form-control" name="item[]" required>
-                      <option value="">Pilih Barang</option>
+                      <option value="">Choose Item</option>
                       <?php foreach ($barang as $b) : ?>
                         <option value="<?= $b['barang_id']; ?>"><?= $b['barang']; ?></option>
                       <?php endforeach; ?>
@@ -53,7 +53,7 @@
           <div class="row mt-3">
             <div class="col-md">
               <div class="form-group">
-                <label for="reason">Alasan Pengambilan</label>
+                <label for="reason">Purpose</label>
                 <textarea class="form-control" name="reason" id="reason" rows="3" required></textarea>
               </div>
             </div>
