@@ -103,7 +103,7 @@ class Request extends CI_Controller {
   }
 
   public function respondRequest() {
-    $this->data_model->updateStock($this->input->post('request_no'), "Out");
+    $this->data_model->updateStock($this->input->post('request_no'), "In");
     $img = $this->input->post('image');
     $img = str_replace('data:image/png;base64,', '', $img);
     $img = str_replace(' ', '+', $img);
@@ -114,7 +114,7 @@ class Request extends CI_Controller {
 
     $this->data_model->updateRespondRequest($image);
     $this->session->set_flashdata('message','Request successfully responded');
-    if(str_contains($this->input->post('request_no'), "In")) {
+    if(strpos($this->input->post('request_no'), "In")) {
       redirect('Request/addIn');
     }
     else {

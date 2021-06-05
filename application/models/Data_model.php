@@ -291,7 +291,7 @@ class Data_model extends CI_Model {
       'sign-img' => $image
     ];
     
-    if(str_contains($request_no, "In")){
+    if(strpos($request_no, "In")){
       $invoicedata['invoice_no'] = generateInvoiceNo("In");
       $status = "In";
     }
@@ -325,29 +325,30 @@ class Data_model extends CI_Model {
     
     $this->db->where('request_no',$request_no)->update('request',$data);
     $this->db->insert('invoice',$invoicedata);
-    if(str_contains($request_no, "In")){
+    if(strpos($request_no, "In")){
       $this->db->insert('invoice_in_component',['invoice_no' => $invoicedata['invoice_no']]);
     }
-    elseif(str_contains($request_no, "Out")) {
+    elseif(strpos($request_no, "Out")) {
       $this->updateStock($request_no, $status);
     }
   }
 
   public function updateStock($request_no, $status) {
     if($status == "In") {
-      $barang = $this->db->select('barang_id','qty')->where('request_no',$request_no)->get('req_item_in')->result_array();
+      $barang = $this->db->select('barang_id,qty')->where('request_no',$request_no)->get('req_item_in')->result_array();
       foreach ($barang as $b) {
-        $stock_now = $this->db->select('stock')->where('barang_id',$b['barang_id'])->get('barang')->stock;
+        $stock_now = $this->db->select('stock')->where('barang_id',$b['barang_id'])->get('barang')->row()->stock;
         $new_stock = $stock_now + $b['qty'];
         $this->db->set('stock',$new_stock)->where('barang_id',$b['barang_id'])->update('barang');
       }
     }
       
       elseif($status == "Out") {
-        var_dump($barang = $this->db->select('barang_id','qty')->where('request_no',$request_no)->get('req_item_out')->result_array());die();
+        $barang = $this->db->select('barang_id,qty')->where('request_no',$request_no)->get('req_item_out')->result_array();
         foreach ($barang as $b) {
-          $stock_now = $this->db->select('stock')->where('barang_id',$b['barang_id'])->get('barang')->stock;
+          $stock_now = $this->db->select('stock')->where('barang_id',$b['barang_id'])->get('barang')->row()->stock;
           $new_stock = $stock_now - $b['qty'];
+          $new_stock;
           $this->db->set('stock',$new_stock)->where('barang_id',$b['barang_id'])->update('barang');
         }
       }
@@ -409,7 +410,7 @@ class Data_model extends CI_Model {
   }
 
   public function getParticularInvoice($invoice_no) {
-    if(str_contains($invoice_no,"INVIn")) {
+    if(strpos($invoice_no,"INVIn")) {
       return $this->db->select('*')->from('invoice_request')->where('invoice_no',$invoice_no)->join('request_in_detail','invoice_request.request_no=request_in_detail.request_no')->get()->result_array();
     }
     else {
