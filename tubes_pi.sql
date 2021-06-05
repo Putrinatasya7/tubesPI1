@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2021 at 10:59 AM
+-- Generation Time: Jun 05, 2021 at 03:50 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -104,20 +104,27 @@ INSERT INTO `category` (`category_id`, `category`, `status`) VALUES
 CREATE TABLE `invoice` (
   `invoice_no` varchar(100) NOT NULL,
   `request_no` varchar(100) NOT NULL,
-  `created_at` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `sign-img` varchar(255) NOT NULL,
+  `invoice_qrcode` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `invoice`
 --
 
-INSERT INTO `invoice` (`invoice_no`, `request_no`, `created_at`) VALUES
-('INVIn21060501', 'REQIn21060401', '2021-06-05 15:33:39'),
-('INVIn21060502', 'REQIn21060502', '2021-06-05 15:44:08'),
-('INVIn21060503', 'REQIn21060504', '2021-06-05 15:54:44'),
-('INVOut21060401', 'REQOut21060301', '0000-00-00 00:00:00'),
-('INVOut21060402', 'REQOut21060405', '2021-06-04 22:13:40'),
-('INVOut21060503', 'REQOut21060506', '0000-00-00 00:00:00');
+INSERT INTO `invoice` (`invoice_no`, `request_no`, `created_at`, `sign-img`, `invoice_qrcode`) VALUES
+('INVIn21060501', 'REQIn21060401', '2021-06-05 15:33:39', '', NULL),
+('INVIn21060502', 'REQIn21060502', '2021-06-05 15:44:08', '', NULL),
+('INVIn21060503', 'REQIn21060504', '2021-06-05 15:54:44', '', NULL),
+('INVIn21060504', 'REQIn21060505', '2021-06-05 19:20:44', '60bb6c1c62ac7.png', NULL),
+('INVOut21060401', 'REQOut21060301', '0000-00-00 00:00:00', '', NULL),
+('INVOut21060402', 'REQOut21060405', '2021-06-04 22:13:40', '', NULL),
+('INVOut21060503', 'REQOut21060506', '0000-00-00 00:00:00', '', NULL),
+('INVOut21060504', 'REQOut21060507', '2021-06-05 19:09:07', '60bb69639ee6d.png', NULL),
+('INVOut21060505', 'REQOut21060508', '2021-06-05 19:13:38', '60bb6a72373fb.png', NULL),
+('INVOut21060506', 'REQOut21060509', '2021-06-05 19:34:31', '60bb6f57d9602.png', 'INVOut21060506.png'),
+('INVOut21060507', 'REQOut21060510', '2021-06-05 20:44:06', '60bb7fa66f58d.png', 'INVOut21060507.png');
 
 -- --------------------------------------------------------
 
@@ -139,7 +146,8 @@ CREATE TABLE `invoice_in_component` (
 INSERT INTO `invoice_in_component` (`invoice_no`, `received_by`, `received_at`, `status`) VALUES
 ('INVIn21060501', NULL, NULL, 'to be ordered'),
 ('INVIn21060502', NULL, NULL, 'to be ordered'),
-('INVIn21060503', NULL, NULL, 'to be ordered');
+('INVIn21060503', NULL, NULL, 'to be ordered'),
+('INVIn21060504', NULL, NULL, 'to be ordered');
 
 -- --------------------------------------------------------
 
@@ -162,6 +170,8 @@ CREATE TABLE `invoice_request` (
 ,`receiver_name` varchar(50)
 ,`received_at` datetime
 ,`status_inv_in` enum('received','waiting for delivery','to be ordered','sent')
+,`sign-img` varchar(255)
+,`invoice_qrcode` varchar(255)
 );
 
 -- --------------------------------------------------------
@@ -240,13 +250,18 @@ INSERT INTO `request` (`request_no`, `created_by`, `created_at`, `responded_by`,
 ('REQIn21060502', 'S001', '2021-06-05 15:34:43', 'M001', '2021-06-05 15:44:08', 'Accepted', 'In'),
 ('REQIn21060503', 'S001', '2021-06-05 15:50:31', 'M001', '2021-06-05 15:51:02', 'Accepted', 'In'),
 ('REQIn21060504', 'S001', '2021-06-05 15:50:42', 'M001', '2021-06-05 15:54:44', 'Accepted', 'In'),
+('REQIn21060505', 'S001', '2021-06-05 19:19:23', 'M001', '2021-06-05 19:20:44', 'Accepted', 'In'),
+('REQIn21060506', 'A001', '2021-06-05 20:25:09', NULL, NULL, 'Waiting', 'In'),
 ('REQOut21060301', 'A001', '2021-06-03 23:04:25', 'M001', '0000-00-00 00:00:00', 'Accepted', 'Out'),
 ('REQOut21060303', 'A001', '2021-06-04 02:59:56', NULL, NULL, 'Accepted', 'Out'),
 ('REQOut21060404', 'A001', '2021-06-04 04:30:51', NULL, NULL, 'Rejected', 'Out'),
 ('REQOut21060405', 'M001', '2021-06-04 22:12:50', 'M001', '2021-06-04 22:13:40', 'Rejected', 'Out'),
 ('REQOut21060506', 'A001', '2021-06-05 11:15:54', 'M001', '0000-00-00 00:00:00', 'Rejected', 'Out'),
-('REQOut21060507', 'M001', '2021-06-05 11:18:22', NULL, '2021-06-05 11:18:22', 'Waiting', 'Out'),
-('REQOut21060508', 'S001', '2021-06-05 15:57:46', NULL, NULL, 'Waiting', 'Out');
+('REQOut21060507', 'M001', '2021-06-05 11:18:22', 'M001', '2021-06-05 19:09:07', 'Accepted', 'Out'),
+('REQOut21060508', 'S001', '2021-06-05 15:57:46', 'M001', '2021-06-05 19:13:38', 'Accepted', 'Out'),
+('REQOut21060509', 'S001', '2021-06-05 19:34:09', 'M001', '2021-06-05 19:34:31', 'Accepted', 'Out'),
+('REQOut21060510', 'A001', '2021-06-05 20:43:51', 'M001', '2021-06-05 20:44:06', 'Accepted', 'Out'),
+('REQOut21060511', 'A001', '2021-06-05 20:47:17', NULL, NULL, 'Waiting', 'Out');
 
 -- --------------------------------------------------------
 
@@ -319,7 +334,9 @@ INSERT INTO `req_item_in` (`request_no`, `barang_id`, `qty`, `harga_satuan`, `su
 ('REQIn21060502', 'B001', 11, 560000, 1),
 ('REQIn21060502', 'B002', 10, 630000, 1),
 ('REQIn21060503', 'B001', 1, 560000, 1),
-('REQIn21060504', 'B002', 2, 630000, 2);
+('REQIn21060504', 'B002', 2, 630000, 2),
+('REQIn21060505', 'B002', 1, 630000, 1),
+('REQIn21060506', 'B001', 1, 560000, 1);
 
 -- --------------------------------------------------------
 
@@ -346,7 +363,10 @@ INSERT INTO `req_item_out` (`request_no`, `barang_id`, `qty`) VALUES
 ('REQOut21060506', 'B002', 10),
 ('REQOut21060507', 'B002', 1),
 ('REQOut21060508', 'B001', 1),
-('REQOut21060508', 'B002', 2);
+('REQOut21060508', 'B002', 2),
+('REQOut21060509', 'B001', 1),
+('REQOut21060510', 'B001', 1),
+('REQOut21060511', 'B001', 1);
 
 -- --------------------------------------------------------
 
@@ -370,7 +390,10 @@ INSERT INTO `req_out_reason` (`request_no`, `alasan_keluar`) VALUES
 ('REQOut21060405', 'blabalbalbala'),
 ('REQOut21060506', 'mencoba timestamp'),
 ('REQOut21060507', 'mencoba timestamp'),
-('REQOut21060508', 'mencoba');
+('REQOut21060508', 'mencoba'),
+('REQOut21060509', 'coba invoice qrcode'),
+('REQOut21060510', 'coba lihat stock'),
+('REQOut21060511', 'lihat stock');
 
 -- --------------------------------------------------------
 
@@ -502,7 +525,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `invoice_request`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `invoice_request`  AS SELECT `i`.`invoice_no` AS `invoice_no`, `i`.`request_no` AS `request_no`, `i`.`created_at` AS `invoice_date`, `r`.`created_by` AS `staff_in_charge`, `u1`.`name` AS `staff_in_charge_name`, `r`.`created_at` AS `request_date`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder name`, `r`.`responded_at` AS `responded_at`, `r`.`req_category` AS `req_category`, `iic`.`received_by` AS `received_by`, `u3`.`name` AS `receiver_name`, `iic`.`received_at` AS `received_at`, `iic`.`status` AS `status_inv_in` FROM (((((`invoice` `i` join `request` `r` on(`i`.`request_no` = `r`.`request_no`)) join `user` `u1` on(`r`.`created_by` = `u1`.`uid`)) join `user` `u2` on(`r`.`responded_by` = `u2`.`uid`)) left join `invoice_in_component` `iic` on(`i`.`invoice_no` = `iic`.`invoice_no`)) left join `user` `u3` on(`iic`.`received_by` = `u3`.`uid`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `invoice_request`  AS SELECT `i`.`invoice_no` AS `invoice_no`, `i`.`request_no` AS `request_no`, `i`.`created_at` AS `invoice_date`, `r`.`created_by` AS `staff_in_charge`, `u1`.`name` AS `staff_in_charge_name`, `r`.`created_at` AS `request_date`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder name`, `r`.`responded_at` AS `responded_at`, `r`.`req_category` AS `req_category`, `iic`.`received_by` AS `received_by`, `u3`.`name` AS `receiver_name`, `iic`.`received_at` AS `received_at`, `iic`.`status` AS `status_inv_in`, `i`.`sign-img` AS `sign-img`, `i`.`invoice_qrcode` AS `invoice_qrcode` FROM (((((`invoice` `i` join `request` `r` on(`i`.`request_no` = `r`.`request_no`)) join `user` `u1` on(`r`.`created_by` = `u1`.`uid`)) join `user` `u2` on(`r`.`responded_by` = `u2`.`uid`)) left join `invoice_in_component` `iic` on(`i`.`invoice_no` = `iic`.`invoice_no`)) left join `user` `u3` on(`iic`.`received_by` = `u3`.`uid`)) ;
 
 -- --------------------------------------------------------
 

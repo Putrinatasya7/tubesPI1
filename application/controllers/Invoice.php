@@ -23,10 +23,12 @@ class Invoice extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
-	public function detailInv()
+	public function detailInv($invoice_no)
 	{
 		$data['title'] = "Invoice";
 		$data['subtitle'] = "Invoice";
+		$data['invoice'] = $this->data_model->getParticularInvoice($invoice_no);
+
 		$this->load->view('templates/header', $data);
 		$this->load->view('detailInv');
 		$this->load->view('templates/footer');

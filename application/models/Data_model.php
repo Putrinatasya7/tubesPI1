@@ -273,7 +273,7 @@ class Data_model extends CI_Model {
     }
   }
 
-  public function updateRespondRequest() {
+  public function updateRespondRequest($image) {
     $request_no = $this->input->post('request_no');
     $responded_by = $this->session->userdata('uid');
     $status = $this->input->post('status');
@@ -287,22 +287,71 @@ class Data_model extends CI_Model {
     
     $invoicedata = [
       'request_no' => $request_no,
-      'created_at' => $timestamp
+      'created_at' => $timestamp,
+      'sign-img' => $image
     ];
     
     if(str_contains($request_no, "In")){
       $invoicedata['invoice_no'] = generateInvoiceNo("In");
+      $status = "In";
     }
     else {
       $invoicedata['invoice_no'] = generateInvoiceNo("Out");
+      $status = "Out";
     }
+
+    // GENERATE QR CODE INVOICE
+    $this->load->library('ciqrcode'); //pemanggilan library QR CODE
+
+		$config['cacheable']    = true; //boolean, the default is true
+		$config['cachedir']     = './asset/'; //string, the default is application/cache/
+		$config['errorlog']     = './asset/'; //string, the default is application/logs/
+		$config['imagedir']     = './asset/pict/qrcode_invoice/'; //direktori penyimpanan qr code
+		$config['quality']      = true; //boolean, the default is true
+		$config['size']         = '1024'; //interger, the default is 1024
+		$config['black']        = array(224,255,255); // array, default is array(255,255,255)
+		$config['white']        = array(70,130,180); // array, default is array(0,0,0)
+		$this->ciqrcode->initialize($config);
+
+		$image_name=$invoicedata['invoice_no'].'.png'; //buat name dari qr code sesuai dengan invoice$invoicedata['invoice_no']
+
+		$params['data'] = 'http://localhost/tubesPI1/Qrcode/detailInvoice/'.$invoicedata['invoice_no']; //data yang akan di jadikan QR CODE
+		$params['level'] = 'H'; //H=High
+		$params['size'] = 10;
+		$params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
+		$this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+
+    $invoicedata['invoice_qrcode'] = $image_name;
     
     $this->db->where('request_no',$request_no)->update('request',$data);
     $this->db->insert('invoice',$invoicedata);
     if(str_contains($request_no, "In")){
       $this->db->insert('invoice_in_component',['invoice_no' => $invoicedata['invoice_no']]);
     }
+    elseif(str_contains($request_no, "Out")) {
+      $this->updateStock($request_no, $status);
+    }
   }
+
+  public function updateStock($request_no, $status) {
+    if($status == "In") {
+      $barang = $this->db->select('barang_id','qty')->where('request_no',$request_no)->get('req_item_in')->result_array();
+      foreach ($barang as $b) {
+        $stock_now = $this->db->select('stock')->where('barang_id',$b['barang_id'])->get('barang')->stock;
+        $new_stock = $stock_now + $b['qty'];
+        $this->db->set('stock',$new_stock)->where('barang_id',$b['barang_id'])->update('barang');
+      }
+    }
+      
+      elseif($status == "Out") {
+        var_dump($barang = $this->db->select('barang_id','qty')->where('request_no',$request_no)->get('req_item_out')->result_array());die();
+        foreach ($barang as $b) {
+          $stock_now = $this->db->select('stock')->where('barang_id',$b['barang_id'])->get('barang')->stock;
+          $new_stock = $stock_now - $b['qty'];
+          $this->db->set('stock',$new_stock)->where('barang_id',$b['barang_id'])->update('barang');
+        }
+      }
+    }
 
   /**
    * 
@@ -357,6 +406,15 @@ class Data_model extends CI_Model {
   /** INVOICE ZONE */
   public function getInvoice() {
     return $this->db->get('invoice_request');
+  }
+
+  public function getParticularInvoice($invoice_no) {
+    if(str_contains($invoice_no,"INVIn")) {
+      return $this->db->select('*')->from('invoice_request')->where('invoice_no',$invoice_no)->join('request_in_detail','invoice_request.request_no=request_in_detail.request_no')->get()->result_array();
+    }
+    else {
+      return $this->db->select('*')->from('invoice_request')->where('invoice_no',$invoice_no)->join('request_out_detail','invoice_request.request_no=request_out_detail.request_no')->get()->result_array();
+    }
   }
 
 }     //END CLASS

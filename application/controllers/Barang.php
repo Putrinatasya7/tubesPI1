@@ -34,24 +34,24 @@ class Barang extends CI_Controller {
 		$barang_id = $this->input->post('barang_id');
 
 		$this->load->library('ciqrcode'); //pemanggilan library QR CODE
- 
-        $config['cacheable']    = true; //boolean, the default is true
-        $config['cachedir']     = './asset/'; //string, the default is application/cache/
-        $config['errorlog']     = './asset/'; //string, the default is application/logs/
-        $config['imagedir']     = './asset/pict/qrcode/'; //direktori penyimpanan qr code
-        $config['quality']      = true; //boolean, the default is true
-        $config['size']         = '1024'; //interger, the default is 1024
-        $config['black']        = array(224,255,255); // array, default is array(255,255,255)
-        $config['white']        = array(70,130,180); // array, default is array(0,0,0)
-        $this->ciqrcode->initialize($config);
- 
-        $image_name=$barang_id.'.png'; //buat name dari qr code sesuai dengan barang_id
- 
-        $params['data'] = 'http://localhost/tubesPI1/Qrcode/detailBarang/'.$barang_id; //data yang akan di jadikan QR CODE
-        $params['level'] = 'H'; //H=High
-        $params['size'] = 10;
-        $params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
-        $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+
+		$config['cacheable']    = true; //boolean, the default is true
+		$config['cachedir']     = './asset/'; //string, the default is application/cache/
+		$config['errorlog']     = './asset/'; //string, the default is application/logs/
+		$config['imagedir']     = './asset/pict/qrcode/'; //direktori penyimpanan qr code
+		$config['quality']      = true; //boolean, the default is true
+		$config['size']         = '1024'; //interger, the default is 1024
+		$config['black']        = array(224,255,255); // array, default is array(255,255,255)
+		$config['white']        = array(70,130,180); // array, default is array(0,0,0)
+		$this->ciqrcode->initialize($config);
+
+		$image_name=$barang_id.'.png'; //buat name dari qr code sesuai dengan barang_id
+
+		$params['data'] = 'http://localhost/tubesPI1/Qrcode/detailBarang/'.$barang_id; //data yang akan di jadikan QR CODE
+		$params['level'] = 'H'; //H=High
+		$params['size'] = 10;
+		$params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
+		$this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
 
 		if(!$this->upload->do_upload('picture')) {
 			$this->session->set_flashdata('message_wrong','Wrong picture format or size. Maximum size is 5MB');

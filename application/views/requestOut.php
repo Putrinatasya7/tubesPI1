@@ -3,7 +3,9 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <a href=" <?php echo base_url('Request/addReqOut') ?>" class="btn btn-success"><i class="fas fa-plus mb-1"></i>&nbsp;&nbsp;Add Request</a>
+          <?php if ($this->session->userdata('role_id') != 2) : ?>
+            <a href=" <?php echo base_url('Request/addReqOut') ?>" class="btn btn-success"><i class="fas fa-plus mb-1"></i>&nbsp;&nbsp;Add Request</a>
+          <?php endif; ?>
           <!-- alert -->
           <?php if ($this->session->flashdata('message')) : ?>
             <div class="alert alert-success col-md-8 alert-dismissible fade show text-white" role="alert">

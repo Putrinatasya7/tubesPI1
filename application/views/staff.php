@@ -156,11 +156,21 @@
                 <?php foreach ($todayRequestIn as $tri) : ?>
                   <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                     <div class="d-flex align-items-center">
-                    <a href="<?= base_url('Request/detailsIn/' . $tri['request_no']); ?>"><button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-right"></i></button></a>
+                      <a href="<?= base_url('Request/detailsIn/' . $tri['request_no']); ?>"><button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-right"></i></button></a>
                       <div class="d-flex flex-column">
                         <h6 class="mb-1 text-dark text-sm"><?= $tri['request_no']; ?></h6>
                         <span class="text-xs"><?= date("d F Y, g:i A", strtotime($tri['created_at'])); ?></span>
                       </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <?php
+                      if ($tri['status'] == "Rejected") {
+                        $color = 'bg-gradient-danger';
+                      } elseif ($tri['status'] == "Accepted") {
+                        $color = 'bg-gradient-success';
+                      }
+                      ?>
+                      <span class="badge badge-sm <?= $color; ?> float-right"><?= $tri['status']; ?></span>
                     </div>
                   </li>
                 <?php endforeach; ?>
@@ -175,14 +185,21 @@
                 <?php foreach ($todayRequestOut as $tro) : ?>
                   <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                     <div class="d-flex align-items-center">
-                    <a href="<?= base_url('Request/detailsIn/' . $tro['request_no']); ?>"><button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-left"></i></button></a>
+                      <a href="<?= base_url('Request/detailsOut/' . $tro['request_no']); ?>"><button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-left"></i></button></a>
                       <div class="d-flex flex-column">
                         <h6 class="mb-1 text-dark text-sm"><?= $tro['request_no']; ?></h6>
                         <span class="text-xs"><?= date("d F Y, g:i A", strtotime($tro['created_at'])); ?></span>
                       </div>
                     </div>
                     <div class="d-flex align-items-center">
-                      <span class="badge badge-sm bg-gradient-danger float-right"><?= $tro['status']; ?></span>
+                      <?php
+                      if ($tro['status'] == "Rejected") {
+                        $color = 'bg-gradient-danger';
+                      } elseif ($tro['status'] == "Accepted") {
+                        $color = 'bg-gradient-success';
+                      }
+                      ?>
+                      <span class="badge badge-sm <?= $color; ?> float-right"><?= $tro['status']; ?></span>
                     </div>
                   </li>
                 <?php endforeach; ?>
