@@ -9,4 +9,6 @@ class Qrcode extends CI_Controller {
 		$this->load->view('detailBarang', $data);
 	}
 
+	
+
 }

@@ -291,7 +291,7 @@ class Data_model extends CI_Model {
       'sign-img' => $image
     ];
     
-    if(strpos($request_no, "In")){
+    if(strpos($request_no, "In") != false){
       $invoicedata['invoice_no'] = generateInvoiceNo("In");
       $status = "In";
     }
@@ -325,10 +325,10 @@ class Data_model extends CI_Model {
     
     $this->db->where('request_no',$request_no)->update('request',$data);
     $this->db->insert('invoice',$invoicedata);
-    if(strpos($request_no, "In")){
+    if(strpos($request_no, "In") != false){
       $this->db->insert('invoice_in_component',['invoice_no' => $invoicedata['invoice_no']]);
     }
-    elseif(strpos($request_no, "Out")) {
+    elseif(strpos($request_no, "Out") != false) {
       $this->updateStock($request_no, $status);
     }
   }
@@ -410,11 +410,11 @@ class Data_model extends CI_Model {
   }
 
   public function getParticularInvoice($invoice_no) {
-    if(strpos($invoice_no,"INVIn")) {
-      return $this->db->select('*')->from('invoice_request')->where('invoice_no',$invoice_no)->join('request_in_detail','invoice_request.request_no=request_in_detail.request_no')->get()->result_array();
+    if(strpos($invoice_no,"Out") != false) {
+      return $this->db->select('*')->from('invoice_request')->where('invoice_no',$invoice_no)->join('request_out_detail','invoice_request.request_no=request_out_detail.request_no')->get()->result_array();
     }
     else {
-      return $this->db->select('*')->from('invoice_request')->where('invoice_no',$invoice_no)->join('request_out_detail','invoice_request.request_no=request_out_detail.request_no')->get()->result_array();
+      return $this->db->select('*')->from('invoice_request')->where('invoice_no',$invoice_no)->join('request_in_detail','invoice_request.request_no=request_in_detail.request_no')->get()->result_array();
     }
   }
 

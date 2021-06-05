@@ -58,6 +58,8 @@
         <div class="row">
           <div class="col-md-12 mt-5 text-right">
             <h6>Accepted By</h6>
+          </div>
+          <div class="col-md-12 ms-6 text-right">
             <img src="<?= base_url('asset/signature/') . $invoice[0]['sign-img']; ?>" alt="" width="20%">
           </div>
         </div>
@@ -68,6 +70,3 @@
     </div>
   </div>
 </div>
-
-
-</main>
