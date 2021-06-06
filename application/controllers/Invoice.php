@@ -28,16 +28,25 @@ class Invoice extends CI_Controller
 		$data['title'] = "Invoice";
 		$data['subtitle'] = "Invoice";
 		$data['invoice'] = $this->data_model->getParticularInvoice($invoice_no);
-		
+
 		$this->load->view('templates/header', $data);
 		$this->load->view('detailInv');
 		$this->load->view('templates/footer');
 	}
-	
+
 	public function print($invoice_no)
 	{
-		
+
 		$data['invoice'] = $this->data_model->getParticularInvoice($invoice_no);
-		$this->load->view('print_invoice',$data);
+		$this->load->view('print_invoice', $data);
+	}
+
+	/** FUNGSI UNTUK MEMBERITAHU BAHWA BARANG SUDAH DITERIMA */
+	public function receivedItem()
+	{
+		$invoice_no = $this->input->post('invoice_no');
+		$this->data_model->updateInvoiceIn();
+		$this->session->set_flashdata('message', 'Items received successfully, stock has been added');
+		redirect("Invoice/detailInv/" . $invoice_no);
 	}
 }

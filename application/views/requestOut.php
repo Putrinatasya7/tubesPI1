@@ -48,11 +48,6 @@
                       } ?>
                       <td class="align-middle text-center text-sm"><span class="badge badge-sm <?= $bg; ?>"><?= $ro['status']; ?></span></td>
                       <td class="align-middle text-center">
-                        <?php if ($ro['status'] == "Waiting") : ?>
-                          <?php if ($this->session->userdata('role_id') != 2) : ?>
-                            <button class="badge badge-sm btn bg-gradient-warning" data-toggle="modal" data-target="#editModal"><i class="fa fa-pen top-0" title="Edit"></i></button>
-                          <?php endif; ?>
-                        <?php endif; ?>
                         <a href=" <?php echo base_url('Request/detailsOut/' . $ro['request_no']); ?>"><button class="badge badge-sm btn bg-gradient-info"> <i class="fa fa-search top-0" title="Detail"></i></button></a>
                         <?php if ($this->session->userdata('role_id') != 2) : ?>
                           <?php if ($ro['status'] == "Waiting") : ?>

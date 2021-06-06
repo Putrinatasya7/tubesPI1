@@ -31,14 +31,25 @@
       <div class="card">
         <div class="card-header pb-0">
           <div class="row">
-            <div class="col">
-              <h6 class="text-s font-weight-bolder"><span class="font-weight-normal pe-1">Invoice ID.</span> <?= $invoice[0]['invoice_no']; ?></h6>
-              <h6 class="text-sm"><span class="font-weight-normal pe-1">Invoice Date</span> <?= $invoice[0]['invoice_date']; ?></h6>
-            </div>
-            <div class="col">
-              <h6 class="text-sm"><span class="font-weight-normal pe-1">Receive Date</span> <?= $invoice[0]['received_at']; ?></h6>
-              <h6 class="text-sm"><span class="font-weight-normal pe-1">Receive by</span> <?= $invoice[0]['received_by']; ?></h6>
-            </div>
+            <?php if ($invoice[0]['req_category'] == "In") : ?>
+              <div class="col">
+                <h6 class="text-s font-weight-bolder"><span class="font-weight-normal pe-1">Invoice ID.</span> <?= $invoice[0]['invoice_no']; ?></h6>
+                <h6 class="text-sm"><span class="font-weight-normal pe-1">Invoice Date</span> <?= date('l, d F Y  g:i a', strtotime($invoice[0]['invoice_date'])); ?></h6>
+              </div>
+              <div class="col">
+                <h6 class="text-sm"><span class="font-weight-normal pe-1">Receive Date</span> <?php if ($invoice[0]['status_inv_in'] == "received") {
+                                                                                                echo date('l, d F Y  g:i a', strtotime($invoice[0]['received_at']));
+                                                                                              } ?></h6>
+                <h6 class="text-sm"><span class="font-weight-normal pe-1">Receive by</span> <?= $invoice[0]['receiver_name']; ?></h6>
+              </div>
+            <?php else : ?>
+              <div class="col">
+                <h6 class="text-s font-weight-bolder"><span class="font-weight-normal pe-1">Invoice ID.</span> <?= $invoice[0]['invoice_no']; ?></h6>
+              </div>
+              <div class="col">
+                <h6 class="text-sm"><span class="font-weight-normal pe-1">Invoice Date</span> <?= date('l, d F Y  g:i a', strtotime($invoice[0]['invoice_date'])); ?></h6>
+              </div>
+            <?php endif; ?>
           </div>
         </div>
 

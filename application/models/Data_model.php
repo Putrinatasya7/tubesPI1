@@ -220,19 +220,19 @@ class Data_model extends CI_Model {
 
   public function getRequestOut() {
     if($this->session->userdata('role_id') == 3) {
-      return $this->db->where('created_by',$this->session->userdata('uid'))->group_by('request_no')->get('request_out_detail');
+      return $this->db->where('created_by',$this->session->userdata('uid'))->group_by('request_no')->order_by('created_at','DESC')->get('request_out_detail');
     }
     else {
-      return $this->db->group_by('request_no')->get('request_out_detail');
+      return $this->db->group_by('request_no')->order_by('created_at','DESC')->get('request_out_detail');
     }
   }
 
   public function getRequestIn() {
     if($this->session->userdata('role_id') == 3) {
-      return $this->db->where('created_by',$this->session->userdata('uid'))->group_by('request_no')->get('request_in_detail');
+      return $this->db->where('created_by',$this->session->userdata('uid'))->group_by('request_no')->order_by('created_at','DESC')->get('request_in_detail');
     }
     else {
-      return $this->db->group_by('request_no')->get('request_in_detail');
+      return $this->db->group_by('request_no')->order_by('created_at','DESC')->get('request_in_detail');
     }
   }
 
@@ -331,6 +331,9 @@ class Data_model extends CI_Model {
     elseif(strpos($request_no, "Out") != false) {
       $this->updateStock($request_no, $status);
     }
+    if($data['status'] == "Rejected") {
+      $this->insertRejectNote($request_no);
+    }
   }
 
   public function updateStock($request_no, $status) {
@@ -343,16 +346,25 @@ class Data_model extends CI_Model {
       }
     }
       
-      elseif($status == "Out") {
-        $barang = $this->db->select('barang_id,qty')->where('request_no',$request_no)->get('req_item_out')->result_array();
-        foreach ($barang as $b) {
-          $stock_now = $this->db->select('stock')->where('barang_id',$b['barang_id'])->get('barang')->row()->stock;
-          $new_stock = $stock_now - $b['qty'];
-          $new_stock;
-          $this->db->set('stock',$new_stock)->where('barang_id',$b['barang_id'])->update('barang');
-        }
+    elseif($status == "Out") {
+      $barang = $this->db->select('barang_id,qty')->where('request_no',$request_no)->get('req_item_out')->result_array();
+      foreach ($barang as $b) {
+        $stock_now = $this->db->select('stock')->where('barang_id',$b['barang_id'])->get('barang')->row()->stock;
+        $new_stock = $stock_now - $b['qty'];
+        $new_stock;
+        $this->db->set('stock',$new_stock)->where('barang_id',$b['barang_id'])->update('barang');
       }
     }
+  }
+
+  public function insertRejectNote($request_no) {
+    $data = [
+      'request_no' => $request_no,
+      'note' => $this->input->post('note')
+    ];
+    $this->db->insert('reject_note',$data);
+  }
+    
 
   /**
    * 
@@ -406,7 +418,7 @@ class Data_model extends CI_Model {
 
   /** INVOICE ZONE */
   public function getInvoice() {
-    return $this->db->get('invoice_request');
+    return $this->db->order_by('invoice_date','DESC')->get('invoice_request');
   }
 
   public function getParticularInvoice($invoice_no) {
@@ -416,6 +428,20 @@ class Data_model extends CI_Model {
     else {
       return $this->db->select('*')->from('invoice_request')->where('invoice_no',$invoice_no)->join('request_in_detail','invoice_request.request_no=request_in_detail.request_no')->get()->result_array();
     }
+  }
+
+  public function updateInvoiceIn() {
+    $invoice_no = $this->input->post("invoice_no");
+    $request_no = $this->input->post("request_no");
+
+    $data = [
+      'received_by' => $this->session->userdata('uid'),
+      'received_at' => date('Y-m-d H:i:s'),
+      'status' => "received"
+    ];
+
+    $this->db->where('invoice_no',$invoice_no)->update('invoice_in_component',$data);
+    $this->updateStock($request_no,"In");
   }
 
 }     //END CLASS

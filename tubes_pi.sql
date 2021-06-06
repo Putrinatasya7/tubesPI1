@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2021 at 03:50 PM
+-- Generation Time: Jun 06, 2021 at 09:32 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -48,8 +48,8 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`barang_id`, `category_id`, `barang`, `merk_id`, `pict`, `stock`, `minimum_stock`, `harga`, `qr_code`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-('B001', 1, 'Dunlop SP Sport LM705 185/70 R14 Ban Mobil [Tahun 2021]', 1, 'dunlopban1.jpg', 50, 25, 560000, NULL, '2021-06-01 22:07:00', 'A001', '2021-06-01 22:07:00', 'A001'),
-('B002', 1, 'Dunlop Direzza DZ101 195/50 R16 - Produksi 2021', 1, 'dunlop-dz101.jpg', 50, 25, 630000, NULL, '2021-06-01 22:14:07', 'A001', '2021-06-01 22:14:07', 'A001');
+('B001', 1, 'Dunlop SP Sport LM705 185/70 R14 Ban Mobil [Tahun 2021]', 1, 'dunlopban1.jpg', 72, 25, 560000, 'B001.png', '2021-06-01 22:07:00', 'A001', '2021-06-01 22:07:00', 'A001'),
+('B002', 1, 'Dunlop Direzza DZ101 195/50 R16 - Produksi 2021', 1, 'dunlop-dz101.jpg', 66, 25, 630000, 'B002.png', '2021-06-01 22:14:07', 'A001', '2021-06-01 22:14:07', 'A001');
 
 -- --------------------------------------------------------
 
@@ -118,13 +118,23 @@ INSERT INTO `invoice` (`invoice_no`, `request_no`, `created_at`, `sign-img`, `in
 ('INVIn21060502', 'REQIn21060502', '2021-06-05 15:44:08', '', NULL),
 ('INVIn21060503', 'REQIn21060504', '2021-06-05 15:54:44', '', NULL),
 ('INVIn21060504', 'REQIn21060505', '2021-06-05 19:20:44', '60bb6c1c62ac7.png', NULL),
+('INVIn21060505', 'REQIn21060506', '2021-06-05 21:15:01', '60bb86e5d5340.png', 'INVIn21060505.png'),
+('INVIn21060506', 'REQIn21060401', '2021-06-05 21:15:21', '60bb86f92825a.png', 'INVIn21060506.png'),
+('INVIn21060607', 'REQIn21060607', '2021-06-06 10:57:59', '60bc47c778d8b.png', 'INVIn21060607.png'),
+('INVIn21060608', 'REQIn21060608', '2021-06-06 11:59:53', '60bc56498296b.png', 'INVIn21060608.png'),
+('INVIn21060609', 'REQIn21060609', '2021-06-06 14:26:58', '60bc78c24e60f.png', 'INVIn21060609.png'),
 ('INVOut21060401', 'REQOut21060301', '0000-00-00 00:00:00', '', NULL),
 ('INVOut21060402', 'REQOut21060405', '2021-06-04 22:13:40', '', NULL),
 ('INVOut21060503', 'REQOut21060506', '0000-00-00 00:00:00', '', NULL),
 ('INVOut21060504', 'REQOut21060507', '2021-06-05 19:09:07', '60bb69639ee6d.png', NULL),
 ('INVOut21060505', 'REQOut21060508', '2021-06-05 19:13:38', '60bb6a72373fb.png', NULL),
 ('INVOut21060506', 'REQOut21060509', '2021-06-05 19:34:31', '60bb6f57d9602.png', 'INVOut21060506.png'),
-('INVOut21060507', 'REQOut21060510', '2021-06-05 20:44:06', '60bb7fa66f58d.png', 'INVOut21060507.png');
+('INVOut21060507', 'REQOut21060510', '2021-06-05 20:44:06', '60bb7fa66f58d.png', 'INVOut21060507.png'),
+('INVOut21060508', 'REQOut21060511', '2021-06-05 20:55:56', '60bb826c2b89d.png', 'INVOut21060508.png'),
+('INVOut21060509', 'REQOut21060511', '2021-06-05 21:07:00', '60bb850441199.png', 'INVOut21060509.png'),
+('INVOut21060610', 'REQOut21060612', '2021-06-06 10:57:33', '60bc47ad70cb6.png', 'INVOut21060610.png'),
+('INVOut21060611', 'REQOut21060613', '2021-06-06 13:55:19', '60bc7157e6c25.png', 'INVOut21060611.png'),
+('INVOut21060612', 'REQOut21060613', '2021-06-06 14:19:30', '60bc7702ab57f.png', 'INVOut21060612.png');
 
 -- --------------------------------------------------------
 
@@ -136,7 +146,7 @@ CREATE TABLE `invoice_in_component` (
   `invoice_no` varchar(100) NOT NULL,
   `received_by` varchar(4) DEFAULT NULL,
   `received_at` datetime DEFAULT NULL,
-  `status` enum('received','waiting for delivery','to be ordered','sent') NOT NULL DEFAULT 'to be ordered'
+  `status` enum('received','waiting for delivery') NOT NULL DEFAULT 'waiting for delivery'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -144,10 +154,15 @@ CREATE TABLE `invoice_in_component` (
 --
 
 INSERT INTO `invoice_in_component` (`invoice_no`, `received_by`, `received_at`, `status`) VALUES
-('INVIn21060501', NULL, NULL, 'to be ordered'),
-('INVIn21060502', NULL, NULL, 'to be ordered'),
-('INVIn21060503', NULL, NULL, 'to be ordered'),
-('INVIn21060504', NULL, NULL, 'to be ordered');
+('INVIn21060501', NULL, NULL, 'waiting for delivery'),
+('INVIn21060502', NULL, NULL, 'waiting for delivery'),
+('INVIn21060503', NULL, NULL, 'waiting for delivery'),
+('INVIn21060504', NULL, NULL, 'waiting for delivery'),
+('INVIn21060505', NULL, NULL, 'waiting for delivery'),
+('INVIn21060506', 'S002', '2021-06-06 13:26:14', 'received'),
+('INVIn21060607', NULL, NULL, 'waiting for delivery'),
+('INVIn21060608', 'S002', '2021-06-06 12:37:28', 'received'),
+('INVIn21060609', NULL, NULL, 'waiting for delivery');
 
 -- --------------------------------------------------------
 
@@ -169,7 +184,7 @@ CREATE TABLE `invoice_request` (
 ,`received_by` varchar(4)
 ,`receiver_name` varchar(50)
 ,`received_at` datetime
-,`status_inv_in` enum('received','waiting for delivery','to be ordered','sent')
+,`status_inv_in` enum('received','waiting for delivery')
 ,`sign-img` varchar(255)
 ,`invoice_qrcode` varchar(255)
 );
@@ -228,6 +243,25 @@ INSERT INTO `merk` (`merk_id`, `merk`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reject_note`
+--
+
+CREATE TABLE `reject_note` (
+  `request_no` varchar(100) NOT NULL,
+  `note` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `reject_note`
+--
+
+INSERT INTO `reject_note` (`request_no`, `note`) VALUES
+('REQIn21060609', 'try reject note in request in'),
+('REQOut21060613', 'try reject note');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `request`
 --
 
@@ -238,30 +272,36 @@ CREATE TABLE `request` (
   `responded_by` varchar(4) DEFAULT NULL,
   `responded_at` datetime DEFAULT NULL,
   `status` enum('Accepted','Rejected','Waiting') NOT NULL DEFAULT 'Waiting',
-  `req_category` enum('In','Out') NOT NULL
+  `req_category` enum('In','Out') NOT NULL,
+  `request_to` varchar(4) NOT NULL DEFAULT 'M001'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `request`
 --
 
-INSERT INTO `request` (`request_no`, `created_by`, `created_at`, `responded_by`, `responded_at`, `status`, `req_category`) VALUES
-('REQIn21060401', 'A001', '2021-06-04 06:54:06', 'M001', '2021-06-05 15:33:39', 'Rejected', 'In'),
-('REQIn21060502', 'S001', '2021-06-05 15:34:43', 'M001', '2021-06-05 15:44:08', 'Accepted', 'In'),
-('REQIn21060503', 'S001', '2021-06-05 15:50:31', 'M001', '2021-06-05 15:51:02', 'Accepted', 'In'),
-('REQIn21060504', 'S001', '2021-06-05 15:50:42', 'M001', '2021-06-05 15:54:44', 'Accepted', 'In'),
-('REQIn21060505', 'S001', '2021-06-05 19:19:23', 'M001', '2021-06-05 19:20:44', 'Accepted', 'In'),
-('REQIn21060506', 'A001', '2021-06-05 20:25:09', NULL, NULL, 'Waiting', 'In'),
-('REQOut21060301', 'A001', '2021-06-03 23:04:25', 'M001', '0000-00-00 00:00:00', 'Accepted', 'Out'),
-('REQOut21060303', 'A001', '2021-06-04 02:59:56', NULL, NULL, 'Accepted', 'Out'),
-('REQOut21060404', 'A001', '2021-06-04 04:30:51', NULL, NULL, 'Rejected', 'Out'),
-('REQOut21060405', 'M001', '2021-06-04 22:12:50', 'M001', '2021-06-04 22:13:40', 'Rejected', 'Out'),
-('REQOut21060506', 'A001', '2021-06-05 11:15:54', 'M001', '0000-00-00 00:00:00', 'Rejected', 'Out'),
-('REQOut21060507', 'M001', '2021-06-05 11:18:22', 'M001', '2021-06-05 19:09:07', 'Accepted', 'Out'),
-('REQOut21060508', 'S001', '2021-06-05 15:57:46', 'M001', '2021-06-05 19:13:38', 'Accepted', 'Out'),
-('REQOut21060509', 'S001', '2021-06-05 19:34:09', 'M001', '2021-06-05 19:34:31', 'Accepted', 'Out'),
-('REQOut21060510', 'A001', '2021-06-05 20:43:51', 'M001', '2021-06-05 20:44:06', 'Accepted', 'Out'),
-('REQOut21060511', 'A001', '2021-06-05 20:47:17', NULL, NULL, 'Waiting', 'Out');
+INSERT INTO `request` (`request_no`, `created_by`, `created_at`, `responded_by`, `responded_at`, `status`, `req_category`, `request_to`) VALUES
+('REQIn21060401', 'A001', '2021-06-04 06:54:06', 'M001', '2021-06-05 21:15:21', 'Accepted', 'In', 'M001'),
+('REQIn21060502', 'S001', '2021-06-05 15:34:43', 'M001', '2021-06-05 15:44:08', 'Accepted', 'In', 'M001'),
+('REQIn21060503', 'S001', '2021-06-05 15:50:31', 'M001', '2021-06-05 15:51:02', 'Accepted', 'In', 'M001'),
+('REQIn21060504', 'S001', '2021-06-05 15:50:42', 'M001', '2021-06-05 15:54:44', 'Accepted', 'In', 'M001'),
+('REQIn21060505', 'S001', '2021-06-05 19:19:23', 'M001', '2021-06-05 19:20:44', 'Accepted', 'In', 'M001'),
+('REQIn21060506', 'A001', '2021-06-05 20:25:09', 'M001', '2021-06-05 21:15:01', 'Accepted', 'In', 'M001'),
+('REQIn21060607', 'A001', '2021-06-06 10:54:27', 'M001', '2021-06-06 10:57:59', 'Accepted', 'In', 'M001'),
+('REQIn21060608', 'S002', '2021-06-06 11:10:59', 'M001', '2021-06-06 11:59:53', 'Accepted', 'In', 'M001'),
+('REQIn21060609', 'S002', '2021-06-06 14:23:51', 'M001', '2021-06-06 14:26:58', 'Rejected', 'In', 'M001'),
+('REQOut21060301', 'A001', '2021-06-03 23:04:25', 'M001', '0000-00-00 00:00:00', 'Accepted', 'Out', 'M001'),
+('REQOut21060303', 'A001', '2021-06-04 02:59:56', NULL, NULL, 'Accepted', 'Out', 'M001'),
+('REQOut21060404', 'A001', '2021-06-04 04:30:51', NULL, NULL, 'Rejected', 'Out', 'M001'),
+('REQOut21060405', 'M001', '2021-06-04 22:12:50', 'M001', '2021-06-04 22:13:40', 'Rejected', 'Out', 'M001'),
+('REQOut21060506', 'A001', '2021-06-05 11:15:54', 'M001', '0000-00-00 00:00:00', 'Rejected', 'Out', 'M001'),
+('REQOut21060507', 'M001', '2021-06-05 11:18:22', 'M001', '2021-06-05 19:09:07', 'Accepted', 'Out', 'M001'),
+('REQOut21060508', 'S001', '2021-06-05 15:57:46', 'M001', '2021-06-05 19:13:38', 'Accepted', 'Out', 'M001'),
+('REQOut21060509', 'S001', '2021-06-05 19:34:09', 'M001', '2021-06-05 19:34:31', 'Accepted', 'Out', 'M001'),
+('REQOut21060510', 'A001', '2021-06-05 20:43:51', 'M001', '2021-06-05 20:44:06', 'Accepted', 'Out', 'M001'),
+('REQOut21060511', 'A001', '2021-06-05 20:47:17', 'M001', '2021-06-05 21:07:00', 'Accepted', 'Out', 'M001'),
+('REQOut21060612', 'A001', '2021-06-06 10:54:59', 'M001', '2021-06-06 10:57:33', 'Accepted', 'Out', 'M001'),
+('REQOut21060613', 'S002', '2021-06-06 13:09:09', 'M001', '2021-06-06 14:19:30', 'Rejected', 'Out', 'M001');
 
 -- --------------------------------------------------------
 
@@ -274,6 +314,8 @@ CREATE TABLE `request_in_detail` (
 ,`created_by` varchar(4)
 ,`creator_name` varchar(50)
 ,`created_at` datetime
+,`request_to` varchar(4)
+,`manager_name` varchar(50)
 ,`barang_id` varchar(10)
 ,`barang` varchar(200)
 ,`qrcode_barang` varchar(255)
@@ -286,6 +328,7 @@ CREATE TABLE `request_in_detail` (
 ,`responder_name` varchar(50)
 ,`responded_at` datetime
 ,`status` enum('Accepted','Rejected','Waiting')
+,`reject_note` text
 );
 
 -- --------------------------------------------------------
@@ -299,6 +342,8 @@ CREATE TABLE `request_out_detail` (
 ,`created_by` varchar(4)
 ,`creator_name` varchar(50)
 ,`created_at` datetime
+,`request_to` varchar(4)
+,`manager_name` varchar(50)
 ,`barang_id` varchar(10)
 ,`barang` varchar(200)
 ,`qrcode_barang` varchar(255)
@@ -308,6 +353,7 @@ CREATE TABLE `request_out_detail` (
 ,`responder_name` varchar(50)
 ,`responded_at` datetime
 ,`status` enum('Accepted','Rejected','Waiting')
+,`reject_note` text
 );
 
 -- --------------------------------------------------------
@@ -336,7 +382,12 @@ INSERT INTO `req_item_in` (`request_no`, `barang_id`, `qty`, `harga_satuan`, `su
 ('REQIn21060503', 'B001', 1, 560000, 1),
 ('REQIn21060504', 'B002', 2, 630000, 2),
 ('REQIn21060505', 'B002', 1, 630000, 1),
-('REQIn21060506', 'B001', 1, 560000, 1);
+('REQIn21060506', 'B001', 1, 560000, 1),
+('REQIn21060607', 'B001', 10, 560000, 1),
+('REQIn21060607', 'B002', 10, 630000, 1),
+('REQIn21060608', 'B001', 10, 560000, 2),
+('REQIn21060608', 'B002', 10, 630000, 2),
+('REQIn21060609', 'B001', 1, 560000, 2);
 
 -- --------------------------------------------------------
 
@@ -366,7 +417,10 @@ INSERT INTO `req_item_out` (`request_no`, `barang_id`, `qty`) VALUES
 ('REQOut21060508', 'B002', 2),
 ('REQOut21060509', 'B001', 1),
 ('REQOut21060510', 'B001', 1),
-('REQOut21060511', 'B001', 1);
+('REQOut21060511', 'B001', 1),
+('REQOut21060612', 'B001', 2),
+('REQOut21060612', 'B002', 4),
+('REQOut21060613', 'B002', 4);
 
 -- --------------------------------------------------------
 
@@ -393,7 +447,9 @@ INSERT INTO `req_out_reason` (`request_no`, `alasan_keluar`) VALUES
 ('REQOut21060508', 'mencoba'),
 ('REQOut21060509', 'coba invoice qrcode'),
 ('REQOut21060510', 'coba lihat stock'),
-('REQOut21060511', 'lihat stock');
+('REQOut21060511', 'lihat stock'),
+('REQOut21060612', 'mencoba stock kembali'),
+('REQOut21060613', 'pembuatan mobil baru');
 
 -- --------------------------------------------------------
 
@@ -487,7 +543,7 @@ INSERT INTO `user` (`uid`, `name`, `uname`, `email`, `password`, `pict`, `create
 ('A002', 'Putri Natasya', 'punat', 'putrinatasya@gmail.com', '$2y$10$uqqACchko3qRn5FHiZ4LC.nU6QwqZCF3.X/I8IM68fI8XOEfZs8wS', 'PicsArt_01-17-07_40_19.jpg', '2021-05-28 11:09:21', '2021-05-28 11:09:21', 1, 'Active'),
 ('M001', 'Patrisia Tambunan', 'patty', 'patrisia@gmail.com', '$2y$10$ML6DaOcIbM3YNtDMwWTXpOZbrfsSpEqXNAKimuhIb0.csoAUNRIm6', 'defaultusrpict.jpg', '2021-05-28 01:27:51', '2021-05-28 01:27:51', 2, 'Active'),
 ('S001', 'Mita Amelia', 'mita', 'mitaamelia@gmail.com', '$2y$10$tpxwesVPE2AQFcpyEtaiauxjxSyI6Db21fzZXRDfWPwSg0xQ3Kply', 'defaultusrpict.jpg', '2021-05-28 11:08:18', '2021-05-28 11:08:18', 3, 'Active'),
-('S002', 'Ruhami Sukma Putri', 'puti', 'puti@gmail.com', '$2y$10$FXpuJLovoksjUoxlREbL.OI.Y39jGw3Bv04YR78bU2Q8VJ8ACk6t2', 'defaultusrpict.jpg', '2021-05-29 20:15:31', '2021-05-29 20:15:31', 3, 'Active');
+('S002', 'Ruhami Sukma Putri', 'puti', 'puti@gmail.com', '$2y$10$Zmm8J4WUZV83Gv4bVYlgfe330P8vfptH6NorYYSgN09PWOJsmFoj2', 'defaultusrpict.jpg', '2021-05-29 20:15:31', '2021-05-29 20:15:31', 3, 'Active');
 
 -- --------------------------------------------------------
 
@@ -534,7 +590,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `request_in_detail`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `request_in_detail`  AS SELECT `r`.`request_no` AS `request_no`, `r`.`created_by` AS `created_by`, `u`.`name` AS `creator_name`, `r`.`created_at` AS `created_at`, `i`.`barang_id` AS `barang_id`, `b`.`barang` AS `barang`, `b`.`qr_code` AS `qrcode_barang`, `i`.`harga_satuan` AS `harga_satuan`, `i`.`qty` AS `qty`, `i`.`supplier_id` AS `supplier_id`, `s`.`supplier` AS `supplier`, `c`.`category` AS `category`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder_name`, `r`.`responded_at` AS `responded_at`, `r`.`status` AS `status` FROM ((((((`request` `r` join `user` `u` on(`u`.`uid` = `r`.`created_by`)) left join `user` `u2` on(`u2`.`uid` = `r`.`responded_by`)) join `req_item_in` `i` on(`i`.`request_no` = `r`.`request_no`)) join `barang` `b` on(`b`.`barang_id` = `i`.`barang_id`)) join `supplier` `s` on(`s`.`supplier_id` = `i`.`supplier_id`)) join `category` `c` on(`c`.`category_id` = `b`.`category_id`)) WHERE `r`.`req_category` = 'In' ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `request_in_detail`  AS SELECT `r`.`request_no` AS `request_no`, `r`.`created_by` AS `created_by`, `u`.`name` AS `creator_name`, `r`.`created_at` AS `created_at`, `r`.`request_to` AS `request_to`, `u3`.`name` AS `manager_name`, `i`.`barang_id` AS `barang_id`, `b`.`barang` AS `barang`, `b`.`qr_code` AS `qrcode_barang`, `i`.`harga_satuan` AS `harga_satuan`, `i`.`qty` AS `qty`, `i`.`supplier_id` AS `supplier_id`, `s`.`supplier` AS `supplier`, `c`.`category` AS `category`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder_name`, `r`.`responded_at` AS `responded_at`, `r`.`status` AS `status`, `rj`.`note` AS `reject_note` FROM ((((((((`request` `r` join `user` `u` on(`u`.`uid` = `r`.`created_by`)) left join `user` `u2` on(`u2`.`uid` = `r`.`responded_by`)) left join `user` `u3` on(`r`.`request_to` = `u3`.`uid`)) join `req_item_in` `i` on(`i`.`request_no` = `r`.`request_no`)) join `barang` `b` on(`b`.`barang_id` = `i`.`barang_id`)) join `supplier` `s` on(`s`.`supplier_id` = `i`.`supplier_id`)) join `category` `c` on(`c`.`category_id` = `b`.`category_id`)) left join `reject_note` `rj` on(`r`.`request_no` = `rj`.`request_no`)) WHERE `r`.`req_category` = 'In' ;
 
 -- --------------------------------------------------------
 
@@ -543,7 +599,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `request_out_detail`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `request_out_detail`  AS SELECT `r`.`request_no` AS `request_no`, `r`.`created_by` AS `created_by`, `u`.`name` AS `creator_name`, `r`.`created_at` AS `created_at`, `i`.`barang_id` AS `barang_id`, `b`.`barang` AS `barang`, `b`.`qr_code` AS `qrcode_barang`, `i`.`qty` AS `qty`, `a`.`alasan_keluar` AS `alasan_keluar`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder_name`, `r`.`responded_at` AS `responded_at`, `r`.`status` AS `status` FROM (((((`request` `r` join `user` `u` on(`u`.`uid` = `r`.`created_by`)) left join `user` `u2` on(`u2`.`uid` = `r`.`responded_by`)) join `req_item_out` `i` on(`i`.`request_no` = `r`.`request_no`)) join `barang` `b` on(`i`.`barang_id` = `b`.`barang_id`)) join `req_out_reason` `a` on(`a`.`request_no` = `r`.`request_no`)) WHERE `r`.`req_category` = 'Out' ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `request_out_detail`  AS SELECT `r`.`request_no` AS `request_no`, `r`.`created_by` AS `created_by`, `u`.`name` AS `creator_name`, `r`.`created_at` AS `created_at`, `r`.`request_to` AS `request_to`, `u3`.`name` AS `manager_name`, `i`.`barang_id` AS `barang_id`, `b`.`barang` AS `barang`, `b`.`qr_code` AS `qrcode_barang`, `i`.`qty` AS `qty`, `a`.`alasan_keluar` AS `alasan_keluar`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder_name`, `r`.`responded_at` AS `responded_at`, `r`.`status` AS `status`, `rj`.`note` AS `reject_note` FROM (((((((`request` `r` join `user` `u` on(`u`.`uid` = `r`.`created_by`)) left join `user` `u2` on(`u2`.`uid` = `r`.`responded_by`)) left join `user` `u3` on(`r`.`request_to` = `u3`.`uid`)) join `req_item_out` `i` on(`i`.`request_no` = `r`.`request_no`)) join `barang` `b` on(`i`.`barang_id` = `b`.`barang_id`)) join `req_out_reason` `a` on(`a`.`request_no` = `r`.`request_no`)) left join `reject_note` `rj` on(`r`.`request_no` = `rj`.`request_no`)) WHERE `r`.`req_category` = 'Out' ;
 
 -- --------------------------------------------------------
 
@@ -601,12 +657,19 @@ ALTER TABLE `merk`
   ADD PRIMARY KEY (`merk_id`);
 
 --
+-- Indexes for table `reject_note`
+--
+ALTER TABLE `reject_note`
+  ADD PRIMARY KEY (`request_no`);
+
+--
 -- Indexes for table `request`
 --
 ALTER TABLE `request`
   ADD PRIMARY KEY (`request_no`),
   ADD KEY `fk_reqby` (`created_by`),
-  ADD KEY `fk_respby` (`responded_by`);
+  ADD KEY `fk_respby` (`responded_by`),
+  ADD KEY `fk_manager` (`request_to`);
 
 --
 -- Indexes for table `req_item_in`
@@ -722,9 +785,16 @@ ALTER TABLE `invoice_in_component`
   ADD CONSTRAINT `fk_invoicercvby` FOREIGN KEY (`received_by`) REFERENCES `user` (`uid`) ON UPDATE CASCADE;
 
 --
+-- Constraints for table `reject_note`
+--
+ALTER TABLE `reject_note`
+  ADD CONSTRAINT `fk_rejectreqno` FOREIGN KEY (`request_no`) REFERENCES `request` (`request_no`) ON UPDATE CASCADE;
+
+--
 -- Constraints for table `request`
 --
 ALTER TABLE `request`
+  ADD CONSTRAINT `fk_manager` FOREIGN KEY (`request_to`) REFERENCES `user` (`uid`),
   ADD CONSTRAINT `fk_reqby` FOREIGN KEY (`created_by`) REFERENCES `user` (`uid`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_respby` FOREIGN KEY (`responded_by`) REFERENCES `user` (`uid`) ON UPDATE CASCADE;
 
