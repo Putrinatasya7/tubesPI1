@@ -39,7 +39,13 @@
                         <h7 class="mx-3 mb-0 text-sm "><?= $s['supplier']; ?></h7>
                       </td>
                       <td class="align-middle text-center text-xs font-weight-bold"><?= $s['contact']; ?></td>
-                      <td class="align-middle text-center text-sm"><span class="badge badge-sm bg-gradient-success"><?= $s['status']; ?></span></td>
+                      <td class="align-middle text-center text-sm">
+                        <?php if ($s['status'] == 'Active'):  ?>
+                        <span class="badge badge-sm bg-gradient-success"><?= $s['status']; ?></span>
+                        <?php else : ?>
+                          <span class="badge badge-sm bg-gradient-secondary"><?= $s['status']; ?></span>
+                        <?php endif; ?>
+                      </td>
                       <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
                         <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#editModal" id="editbutton" data-id="<?= $s['supplier_id']; ?>" data-supplier="<?= $s['supplier']; ?>" data-contact="<?= $s['contact']; ?>" data-status="<?= $s['status']; ?>">Edit</button></td>
                         <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" id="deletebutton" data-id="<?= $s['supplier_id']; ?>">Delete</button></td>

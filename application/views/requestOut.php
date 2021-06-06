@@ -25,9 +25,9 @@
               <table class="table align-items-center mb-0">
                 <thead>
                   <tr>
-                    <th class="align-middle text-center text-secondary text-s ps-2">No.Request</th>
-                    <th class="align-middle text-center text-secondary text-s ps-2">Nama</th>
-                    <th class="align-middle text-center text-secondary text-s ps-2">Tanggal Request</th>
+                    <th class="align-middle text-center text-secondary text-s ps-2">Request No</th>
+                    <th class="align-middle text-center text-secondary text-s ps-2">Name</th>
+                    <th class="align-middle text-center text-secondary text-s ps-2">Request Date</th>
                     <th class="align-middle text-center text-secondary text-s">Status</th>
                     <th class="align-middle text-center text-secondary text-s w-10">Action</th>
                     <th></th>
@@ -87,11 +87,11 @@
               <input type="no" class="form-control" id="no" name="no" placeholder="Enter No.Request" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="nama">Nama</label>
+              <label for="nama">Name</label>
               <input type="text" class="form-control" name="text" id="email" placeholder="Enter Name ..." required>
             </div>
             <div class="form-group">
-              <label for="nama">Tanggal Request</label>
+              <label for="nama">Request Date</label>
               <input type="text" class="form-control" name="text" id="email" placeholder="Enter Request Date ..." required>
             </div>
             <div class="form-group">
