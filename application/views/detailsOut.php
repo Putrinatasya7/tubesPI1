@@ -1,8 +1,17 @@
 <style type="text/css">
-		#errors:empty{display: none;}
-		input[type="checkbox"]:not(old), input[type="radio"]:not(old){ opacity:10;}
-		img{    margin: 17px;}
-	</style>
+  #errors:empty {
+    display: none;
+  }
+
+  input[type="checkbox"]:not(old),
+  input[type="radio"]:not(old) {
+    opacity: 10;
+  }
+
+  img {
+    margin: 17px;
+  }
+</style>
 <div class="container-fluid py-4">
   <div class="card px-4 pt-3 pb-4">
     <div class="card-header pb-0">
@@ -13,7 +22,7 @@
         </div>
         <div class="col">
           <h6>Date: <span class="px-2"><?= date("l, d F Y", strtotime($request_out[0]['created_at'])); ?></span></h6>
-          <h6>To. </h6>
+          <h6>To: Ms.<?= $request_out[0]['manager_name']; ?></h6>
         </div>
       </div>
       <div class="row mt-1">
@@ -54,11 +63,23 @@
         <div class="col-md">
           <div class="form-group form-group-sm">
             <label for="exampleFormControlTextarea1">Alasan Pengambilan</label>
-            <textbox class="form-control" id="exampleFormControlTextarea1" rows="3"><?= $request_out[0]['alasan_keluar']; ?></textbox>
+            <textbox class="form-control bg-white" id="exampleFormControlTextarea1" rows="3"><?= $request_out[0]['alasan_keluar']; ?></textbox>
           </div>
         </div>
       </div>
-    </div>
+
+      <?php if($request_out[0]['status'] == "Rejected"): ?>
+      <div class="row mt-4">
+        <div class="col-md">
+          <div class="form-group form-group-sm">
+            <label for="exampleFormControlTextarea1">Reason of disapproval</label>
+            <textbox class="form-control bg-white" id="exampleFormControlTextarea1" rows="3"><?= $request_out[0]['reject_note']; ?></textbox>
+          </div>
+        </div>
+      </div>
+      <?php endif; ?>
+
+    </div>      <!-- /.modal-body-->
     <div class="card-footer pb-0 p-3 justify-content-between">
       <div class="row">
         <div class="col-md-6">
@@ -116,9 +137,15 @@
 
       <form role="form" action="<?php echo base_url('Request/respondRequest') ?>" method="post" id="rejectForm">
         <div class="modal-body">
+          <h6 class="text-warning text-center font-weight-normal" style="font-size: 120px;"><i class="fa fa-info-circle"></i></h6>
+          <h6 class="text-center mb-4 font-weight-bold">Are you sure you want to reject this request?</h6>
           <input type="hidden" name="request_no" id="request_no">
           <input type="hidden" name="status" id="status" value="Rejected">
-          <p>Do you really want to reject this request?</p>
+          <div class="form-group">
+            <label class="font-weight-normal" for="note">Please give a note to the staff why you reject this request</label>
+            <textarea class="form-control" name="note" id="note" rows="3" required minlength="10"></textarea>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -229,16 +256,16 @@
         url: "<?php echo base_url(); ?>Request/respondRequest",
         data: {
           'image': signaturePad.toDataURL(),
-          'request_no':$('#request_no').val(),
-          'status':$('#status').val(),
+          'request_no': $('#request_no').val(),
+          'status': $('#status').val(),
         },
         success: function(datas1) {
           signaturePad.clear();
-          window.location.href = "<?php echo base_url('Request/addOut')?>";
+          window.location.href = "<?php echo base_url('Request/addOut') ?>";
         }
       });
 
-      
+
     }
   });
 </script>

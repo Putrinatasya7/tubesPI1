@@ -1,6 +1,8 @@
 <style type="text/css">
-		#errors:empty{display: none;}
-	</style>
+  #errors:empty {
+    display: none;
+  }
+</style>
 <div class="container-fluid">
   <button type="button" onclick="goBack()" class="btn btn-secondary mt-2 btn-sm"><span class="fas fa-long-arrow-alt-left"></span></button>
   <div class="card">
@@ -12,7 +14,7 @@
         </div>
         <div class="col">
           <h6>Date: <span class="px-2"><?= date("l, d F Y", strtotime($request_in[0]['created_at'])); ?></span></h6>
-          <h6>To. </h6>
+          <h6>To: Ms.<?= $request_in[0]['manager_name']; ?></h6>
         </div>
       </div>
     </div>
@@ -79,6 +81,17 @@
               </div>
             </div>
           </div>
+
+          <?php if ($request_in[0]['status'] == "Rejected") : ?>
+            <div class="row mt-4">
+              <div class="col-md">
+                <div class="form-group form-group-sm">
+                  <label for="exampleFormControlTextarea1">Reason of disapproval</label>
+                  <textbox class="form-control bg-white" id="exampleFormControlTextarea1" rows="3"><?= $request_in[0]['reject_note']; ?></textbox>
+                </div>
+              </div>
+            </div>
+          <?php endif; ?>
         </div> <!-- /card-footer-->
         <?php if ($request_in[0]['status'] == "Waiting" && $this->session->userdata('role_id') == 2) : ?>
           <button class="btn btn-success me-4" data-toggle="modal" data-target="#approvalModal" id="approvebutton" data-id="<?= $request_in[0]['request_no']; ?>">Approve</button>
@@ -130,9 +143,15 @@
 
       <form role="form" action="<?php echo base_url('Request/respondRequest') ?>" method="post" id="rejectForm">
         <div class="modal-body">
+          <h6 class="text-warning text-center font-weight-normal" style="font-size: 120px;"><i class="fa fa-info-circle"></i></h6>
+          <h6 class="text-center mb-4 font-weight-bold">Are you sure you want to reject this request?</h6>
+
           <input type="hidden" name="request_no" id="request_no">
           <input type="hidden" name="status" id="status" value="Rejected">
-          <p>Do you really want to reject this request?</p>
+          <div class="form-group">
+            <label class="font-weight-normal" for="note">Please give a note to the staff why you reject this request</label>
+            <textarea class="form-control" name="note" id="note" rows="3" required minlength="10"></textarea>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

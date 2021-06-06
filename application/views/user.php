@@ -167,12 +167,12 @@
 
               <div class="form-group">
                 <label for="new_password">New Password</label>
-                <input type="password" class="form-control" name="new_password" id="new_password" required>
+                <input type="password" class="form-control" name="new_password" id="new_password" required minlength="8">
               </div>
 
               <div class="form-group">
                 <label for="confirm_password">Confirm Password</label>
-                <input type="password" class="form-control" name="confirm_password" id="confirm_password" required>
+                <input type="password" class="form-control" name="confirm_password" id="confirm_password" required minlength="8">
               </div>
             </div>
 

@@ -11,6 +11,7 @@
                   <th class="text-secondary text-s ps-">No</th>
                   <th class="align-middle text-center text-secondary text-s">Created Date</th>
                   <th class="align-middle text-center text-secondary text-s">In Charge</th>
+                  <th class="align-middle text-center text-secondary text-s w-5">QR Code</th>
                   <th class="align-middle text-center text-secondary text-s">Status</th>
                   <th class="align-middle text-center text-secondary text-s">Action</th>
                 </tr>
@@ -24,8 +25,19 @@
                     </td>
                     <td class="align-middle text-center text-xs font-weight-bold"><?php echo date('l, d F Y, g:i A', strtotime($i['invoice_date'])) ?></td>
                     <td class="align-middle text-center text-xs font-weight-bold"><?= $i['staff_in_charge_name']; ?></td>
-                    <td class="align-middle text-center text-sm"><span class="badge badge-sm bg-gradient-success"><?= $i['req_category']; ?></span>
-                    <td class="align-middle text-center"><a href="<?php echo base_url('Invoice/detailInv/').$i['invoice_no'] ?>" class="badge badge-sm btn bg-gradient-info"><i class="fa fa-search top-0" title="Detail"></i></a></td>
+                    <td class="align-middle text-center text-xs font-weight-bold w-5"><img src="<?= base_url('asset/pict/qrcode_invoice/') . $i['invoice_qrcode']; ?>" alt="QR Code" width="60%"></td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge badge-sm bg-gradient-success"><?= $i['req_category']; ?></span><br>
+                      <?php if ($i['req_category'] == "In") : ?>
+                        <?php if ($i['status_inv_in'] == "received") {
+                          $bg = "bg-gradient-success";
+                        } else {
+                          $bg = "bg-gradient-warning";
+                        } ?>
+                        <span class="badge badge-sm mt-2 <?php echo $bg; ?>"><?= $i['status_inv_in']; ?></span>
+                      <?php endif; ?>
+                    </td>
+                    <td class="align-middle text-center"><a href="<?php echo base_url('Invoice/detailInv/') . $i['invoice_no'] ?>" class="badge badge-sm btn bg-gradient-info"><i class="fa fa-search top-0" title="Detail"></i></a></td>
                   </tr>
                 <?php endforeach; ?>
                 <!-- baru ditambah -->

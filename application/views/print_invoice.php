@@ -30,54 +30,78 @@
     <div class="container-fluid py-4">
       <div class="card-header pb-0">
         <div class="row">
-          <div class="col">
-            <h6 class="text-sm">Invoice ID. <?= $invoice[0]['invoice_no']; ?></h6>
-            <h6 class="text-sm">Invoice Date <?= $invoice[0]['invoice_date']; ?></h6>
-          </div>
-          <div class="col">
-            <h6 class="text-sm">Receive Date <?= $invoice[0]['received_at']; ?></h6>
-            <h6 class="text-sm">Receive by <?= $invoice[0]['received_by']; ?></h6>
-          </div>
+          <?php if ($invoice[0]['req_category'] == "In") : ?>
+            <div class="col">
+              <h6 class="text-s font-weight-bolder"><span class="font-weight-normal pe-1">Invoice ID.</span> <?= $invoice[0]['invoice_no']; ?></h6>
+              <h6 class="text-sm"><span class="font-weight-normal pe-1">Invoice Date</span> <?= date('l, d F Y  g:i a', strtotime($invoice[0]['invoice_date'])); ?></h6>
+            </div>
+            <div class="col">
+              <h6 class="text-sm"><span class="font-weight-normal pe-1">Receive Date</span> <?php if ($invoice[0]['status_inv_in'] == "received") {
+                                                                                              echo date('l, d F Y  g:i a', strtotime($invoice[0]['received_at']));
+                                                                                            } ?></h6>
+              <h6 class="text-sm"><span class="font-weight-normal pe-1">Receive by</span> <?= $invoice[0]['receiver_name']; ?></h6>
+            </div>
+          <?php else : ?>
+            <div class="col">
+              <h6 class="text-s font-weight-bolder"><span class="font-weight-normal pe-1">Invoice ID.</span> <?= $invoice[0]['invoice_no']; ?></h6>
+            </div>
+            <div class="col">
+              <h6 class="text-sm"><span class="font-weight-normal pe-1">Invoice Date</span> <?= date('l, d F Y  g:i a', strtotime($invoice[0]['invoice_date'])); ?></h6>
+            </div>
+          <?php endif; ?>
         </div>
+
+        <?php if ($invoice[0]['req_category'] == "In") : ?>
+          <div class="row mt-1">
+            <div class="col-md-6">
+              <?php if ($invoice[0]['status_inv_in'] == "waiting for delivery") {
+                $bg = "bg-gradient-warning";
+              } elseif ($invoice[0]['status_inv_in'] == "received") {
+                $bg = "bg-gradient-success";
+              } ?>
+              <span class="badge badge-sm <?= $bg; ?>"><?= $invoice[0]['status_inv_in']; ?></span>
+            </div>
+          </div>
+        <?php endif; ?>
 
         <form action="" method="post">
           <!-- <div class="table-responsive"> -->
-            <table class="table align-items-center mb-0 mt-2">
-              <thead>
-                <th class="align-middle text-center text-xs font-weight-bold">Item</th>
-                <?php if ($invoice[0]['req_category'] == "In") : ?>
-                  <th class="align-middle text-center text-xs font-weight-bold">Supplier</th>
-                <?php endif; ?>
-                <th class="align-middle text-center text-xs font-weight-bold">Qty</th>
-                <?php if ($invoice[0]['req_category'] == "In") : ?>
-                  <th class="align-middle text-center text-xs font-weight-bold">Unit Price</th>
-                  <th class="align-middle text-center text-xs font-weight-bold">Amount</th>
-                <?php endif; ?>
-                <th class="align-middle text-center text-xs font-weight-bold">QR Code</th>
-              </thead>
-              <tbody>
-                <?php $total_item = 0;
-                $total_price = 0; ?>
-                <?php foreach ($invoice as $inv) : ?>
-                  <tr>
-                    <td class="align-middle text-center text-xs"><?= $inv['barang']; ?></td>
-                    <?php if ($inv['req_category'] == "In") : ?>
-                      <td class="align-middle text-center text-xs"><?= $inv['supplier']; ?></td>
-                    <?php endif ?>
-                    <td class="align-middle text-center text-xs"><?= $inv['qty']; ?></td>
-                    <?php if ($inv['req_category'] == "In") : ?>
-                      <td class="align-middle text-center text-xs">Rp <?= number_format($inv['harga_satuan'], 0, ',', '.'); ?></td>
-                      <td class="align-middle text-center text-xs">Rp <?= number_format($inv['harga_satuan'] * $inv['qty'], 0, ',', '.'); ?></td>
-                    <?php endif ?>
-                    <td class="align-middle text-center text-xs"><img src="<?= base_url('asset/pict/qrcode/') . $inv['qrcode_barang']; ?>"></td>
-                    <?php if ($inv['req_category'] == "In") : ?>
-                      <?php $total_item += $inv['qty'];
-                      $total_price += $inv['harga_satuan'] * $inv['qty'] ?>
-                    <?php endif ?>
-                  </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
+          <table class="table align-items-center mb-0 mt-2">
+            <thead>
+              <th class="align-middle text-center text-xs font-weight-bold">Item</th>
+              <?php if ($invoice[0]['req_category'] == "In") : ?>
+                <th class="align-middle text-center text-xs font-weight-bold">Supplier</th>
+              <?php endif; ?>
+              <th class="align-middle text-center text-xs font-weight-bold">Qty</th>
+              <?php if ($invoice[0]['req_category'] == "In") : ?>
+                <th class="align-middle text-center text-xs font-weight-bold">Unit Price</th>
+                <th class="align-middle text-center text-xs font-weight-bold">Amount</th>
+              <?php endif; ?>
+              <th class="align-middle text-center text-xs font-weight-bold w-10">QR Code</th>
+            </thead>
+            <tbody>
+              <?php $total_item = 0;
+              $total_price = 0; ?>
+              <?php foreach ($invoice as $inv) : ?>
+                <tr>
+                  <td class="align-middle text-center text-xs"><?= $inv['barang']; ?></td>
+                  <?php if ($inv['req_category'] == "In") : ?>
+                    <td class="align-middle text-center text-xs"><?= $inv['supplier']; ?></td>
+                  <?php endif ?>
+                  <td class="align-middle text-center text-xs"><?= $inv['qty']; ?></td>
+                  <?php if ($inv['req_category'] == "In") : ?>
+                    <td class="align-middle text-center text-xs">Rp <?= number_format($inv['harga_satuan'], 0, ',', '.'); ?></td>
+                    <td class="align-middle text-center text-xs">Rp <?= number_format($inv['harga_satuan'] * $inv['qty'], 0, ',', '.'); ?></td>
+                  <?php endif ?>
+                  <td class="align-middle text-center text-xs"><img src="<?= base_url('asset/pict/qrcode/') . $inv['qrcode_barang']; ?>" width="70%"></td>
+                  <?php if ($inv['req_category'] == "In") : ?>
+                    <?php $total_item += $inv['qty'];
+                    $total_price += $inv['harga_satuan'] * $inv['qty'] ?>
+                  <?php endif ?>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
           <!-- </div> -->
           <?php if ($invoice[0]['req_category'] == "In") : ?>
             <div class="row mt-5">
@@ -113,6 +137,9 @@
           </div>
           <div class="col-md-12 ms-6 text-right">
             <img src="<?= base_url('asset/signature/') . $invoice[0]['sign-img']; ?>" alt="" width="20%">
+          </div>
+          <div class="col-md-12 text-right">
+            <p><?= $invoice[0]['responder_name']; ?></p>
           </div>
         </form>
       </div>

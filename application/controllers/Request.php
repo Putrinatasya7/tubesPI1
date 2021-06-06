@@ -103,7 +103,6 @@ class Request extends CI_Controller {
   }
 
   public function respondRequest() {
-    $this->data_model->updateStock($this->input->post('request_no'), "In");
     $img = $this->input->post('image');
     $img = str_replace('data:image/png;base64,', '', $img);
     $img = str_replace(' ', '+', $img);
