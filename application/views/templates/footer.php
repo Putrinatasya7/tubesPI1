@@ -35,9 +35,6 @@
   <!--   Core JS Files   -->
   <script src="<?php echo base_url(); ?>asset/bootstrap/js/core/popper.min.js"></script>
   <script src="<?php echo base_url(); ?>asset/bootstrap/js/core/bootstrap.min.js"></script>
-  <script src="<?php echo base_url(); ?>asset/bootstrap/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="<?php echo base_url(); ?>asset/bootstrap/js/plugins/chartjs.min.js"></script>
-  <script src="<?php echo base_url(); ?>asset/bootstrap/js/plugins/Chart.extension.js"></script>
 
   <script>
     function goBack() {

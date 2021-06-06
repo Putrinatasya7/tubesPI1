@@ -24,6 +24,7 @@
   <!-- for Modal -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+  <script src="<?= base_url('assets\js\signature-pad.js'); ?>"></script>
 
 </head>
 

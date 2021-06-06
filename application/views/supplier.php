@@ -1,4 +1,10 @@
-  <div class="container-fluid py-4">
+<link href="<?php echo base_url('asset/datatables/bootstrap.min.css') ?>" rel="stylesheet" />
+<link href="<?php echo base_url('asset/datatables/dataTables.bootstrap5.min.css') ?>" rel="stylesheet" />
+<script src="<?php echo base_url(); ?>asset/datatables/jquery-3.5.1.js"></script>
+<script src="<?php echo base_url(); ?>asset/datatables/jquery.dataTables.min.js"></script>
+<script src="<?php echo base_url(); ?>asset/datatables/dataTables.bootstrap5.min.js"></script>
+
+<div class="container-fluid py-4">
     <div class="row">
       <div class="col-12">
         <div class="card mb-4">
@@ -19,8 +25,7 @@
           </div>
 
           <div class="card-body px-0 pt-0 pb-2">
-            <div class="table-responsive p-0">
-              <table class="table align-items-center mb-0">
+            <table class="table table-striped" id="example" style="width:100%">
                 <thead>
                   <tr>
                     <th class="text-secondary text-s">Supplier Name</th>
@@ -58,7 +63,6 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
 
     <!-- Modal -->
@@ -169,6 +173,12 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <script>
+      $(document).ready(function() {
+      $('#example').DataTable();
+      } );
+    </script>
+    
 
     <script>
       // untuk menampilkan data pada form edit

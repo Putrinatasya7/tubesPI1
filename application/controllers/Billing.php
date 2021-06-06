@@ -20,7 +20,7 @@ class Billing extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('billing');
+		$this->load->view('pogi_hajima');
 	}
 
 }
