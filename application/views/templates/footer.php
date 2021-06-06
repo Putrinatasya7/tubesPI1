@@ -1,4 +1,4 @@
-  <footer class="footer pt-3">
+<footer class="footer pt-3">
     <div class="container-fluid">
       <div class="row align-items-center justify-content-lg-between">
         <div class="col-lg-6 mb-lg-0 mb-4">
@@ -35,6 +35,9 @@
   <!--   Core JS Files   -->
   <script src="<?php echo base_url(); ?>asset/bootstrap/js/core/popper.min.js"></script>
   <script src="<?php echo base_url(); ?>asset/bootstrap/js/core/bootstrap.min.js"></script>
+  <script src="<?php echo base_url(); ?>asset/bootstrap/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="<?php echo base_url(); ?>asset/bootstrap/js/plugins/chartjs.min.js"></script>
+  <script src="<?php echo base_url(); ?>asset/bootstrap/js/plugins/Chart.extension.js"></script>
 
   <script>
     function goBack() {
