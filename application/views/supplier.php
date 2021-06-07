@@ -48,7 +48,7 @@
                       </td>
                       <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
                         <td class="align-middle text-center"><button class="badge badge-sm btn bg-gradient-info" data-toggle="modal" data-target="#editModal" id="editbutton" data-id="<?= $s['supplier_id']; ?>" data-supplier="<?= $s['supplier']; ?>" data-contact="<?= $s['contact']; ?>" data-status="<?= $s['status']; ?>">Edit</button></td>
-                        <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" id="deletebutton" data-id="<?= $s['supplier_id']; ?>">Delete</button></td>
+                        <!-- <td class="align-middle text-center"><button class="badge bagde-sm btn bg-gradient-danger" data-toggle="modal" data-target="#deleteModal" id="deletebutton" data-id="<?= $s['supplier_id']; ?>">Delete</button></td> -->
                       <?php endif; ?>
                     </tr>
                   <?php endforeach; ?>
@@ -145,7 +145,7 @@
     </div><!-- /.modal -->
 
     <!-- Detele Modal -->
-    <div class="modal fade" tabindex="-1" aria-labelledby="deleteModalLabel" role="dialog" id="deleteModal">
+    <!-- <div class="modal fade" tabindex="-1" aria-labelledby="deleteModalLabel" role="dialog" id="deleteModal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -163,11 +163,11 @@
               <button type="submit" class="btn btn-danger">Delete</button>
             </div>
           </form>
+ -->
 
-
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+        <!-- </div>/.modal-content -->
+      <!-- </div>/.modal-dialog -->
+    <!-- </div>/.modal -->
 
 
     <script>

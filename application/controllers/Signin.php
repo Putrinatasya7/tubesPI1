@@ -42,8 +42,14 @@ class Signin extends CI_Controller
 
 				//check username
 				if ($user) {
+					// cek status
+					if($user['is_active']!="Active") {
+						$this->session->set_flashdata('message_wrong', 'Sorry, you cannot access this system.');
+						redirect('Signin');
+					}
+
 					//check password
-					if (password_verify($password, $user['password'])) {
+					else if (password_verify($password, $user['password'])) {
 						$data = [
 							'uid' => $user['uid'],
 							'uname' => $user['uname'],
@@ -65,6 +71,7 @@ class Signin extends CI_Controller
 
 					//jika password salah
 					else {
+						
 						$this->session->set_flashdata('message_wrong', 'Password tidak sesuai');
 						redirect('Signin');
 					}

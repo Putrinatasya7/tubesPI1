@@ -128,141 +128,35 @@
                   <p class="text-sm"></p>
                 </div>
                 <div class="card-body p-3">
-                  <div class="row">
-                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                      <div class="card card-blog card-plain">
-                        <div class="position-relative">
-                          <a class="d-block shadow-xl border-radius-xl">
-                            <img src="<?php echo base_url(); ?>asset/bootstrap/img/home-decor-1.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                          </a>
-                        </div>
-                        <div class="card-body px-1 pb-0">
+                  <?php if ($minimum_stock != null) : ?>
+                    <div class="row">
+                      <?php foreach ($minimum_stock as $ms) : ?>
+                        <div class="col-xl-4 col-md-6 mb-xl-0 mb-4">
+
                           <div class="d-flex align-items-center justify-content-between">
-                            <h5>
-                              Item Names1
-                            </h5>
-                            <h5>
-                              <span class="badge bg-gradient-danger">10</span>
-                            </h5>
+                            <h6>
+                              <?= $ms['barang']; ?>
+                            </h6>
+                            <?php if ($ms['stock'] <= 10) {
+                              $bg = "bg-gradient-danger";
+                            } else {
+                              $bg = "bg-gradient-warning";
+                            } ?>
                           </div>
                           <div class="d-flex align-items-center justify-content-between">
+                            <h5>
+                              <span class="badge <?= $bg; ?>"><?= $ms['stock']; ?></span>
+                            </h5>
                             <a href="<?php echo base_url('Request/addReqIn') ?>"><button type="button" class="btn btn-outline-primary btn-sm mb-0">Add Stock</button></a>
                           </div>
                           <p></p>
+
                         </div>
-                      </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                      <div class="card card-blog card-plain">
-                        <div class="position-relative">
-                          <a class="d-block shadow-xl border-radius-xl">
-                            <img src="<?php echo base_url(); ?>asset/bootstrap/img/home-decor-2.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
-                          </a>
-                        </div>
-                        <div class="card-body px-1 pb-0">
-                          <div class="d-flex align-items-center justify-content-between">
-                            <h5>
-                              Scandinavian
-                            </h5>
-                            <h5>
-                              <span class="badge bg-gradient-danger">10</span>
-                            </h5>
-                          </div>
-                          <div class="d-flex align-items-center justify-content-between">
-                            <button type="button" class="btn btn-outline-primary btn-sm mb-0">Add Stock</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                      <div class="card card-blog card-plain">
-                        <div class="position-relative">
-                          <a class="d-block shadow-xl border-radius-xl">
-                            <img src="<?php echo base_url(); ?>asset/bootstrap/img/home-decor-2.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
-                          </a>
-                        </div>
-                        <div class="card-body px-1 pb-0">
-                          <div class="d-flex align-items-center justify-content-between">
-                            <h5>
-                              Scandinavian
-                            </h5>
-                            <h5>
-                              <span class="badge bg-gradient-warning">20</span>
-                            </h5>
-                          </div>
-                          <div class="d-flex align-items-center justify-content-between">
-                            <button type="button" class="btn btn-outline-primary btn-sm mb-0">Add Stock</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                      <div class="card card-blog card-plain">
-                        <div class="position-relative">
-                          <a class="d-block shadow-xl border-radius-xl">
-                            <img src="<?php echo base_url(); ?>asset/bootstrap/img/home-decor-2.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
-                          </a>
-                        </div>
-                        <div class="card-body px-1 pb-0">
-                          <div class="d-flex align-items-center justify-content-between">
-                            <h5>
-                              Scandinavian
-                            </h5>
-                            <h5>
-                              <span class="badge bg-gradient-danger">10</span>
-                            </h5>
-                          </div>
-                          <div class="d-flex align-items-center justify-content-between">
-                            <button type="button" class="btn btn-outline-primary btn-sm mb-0">Add Stock</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                      <div class="card card-blog card-plain">
-                        <div class="position-relative">
-                          <a class="d-block shadow-xl border-radius-xl">
-                            <img src="<?php echo base_url(); ?>asset/bootstrap/img/home-decor-2.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
-                          </a>
-                        </div>
-                        <div class="card-body px-1 pb-0">
-                          <div class="d-flex align-items-center justify-content-between">
-                            <h5>
-                              Scandinavian
-                            </h5>
-                            <h5>
-                              <span class="badge bg-gradient-danger">10</span>
-                            </h5>
-                          </div>
-                          <div class="d-flex align-items-center justify-content-between">
-                            <button type="button" class="btn btn-outline-primary btn-sm mb-0">Add Stock</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                      <div class="card card-blog card-plain">
-                        <div class="position-relative">
-                          <a class="d-block shadow-xl border-radius-xl">
-                            <img src="<?php echo base_url(); ?>asset/bootstrap/img/home-decor-2.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
-                          </a>
-                        </div>
-                        <div class="card-body px-1 pb-0">
-                          <div class="d-flex align-items-center justify-content-between">
-                            <h5>
-                              Scandinavian
-                            </h5>
-                            <h5>
-                              <span class="badge bg-gradient-danger">10</span>
-                            </h5>
-                          </div>
-                          <div class="d-flex align-items-center justify-content-between">
-                            <button type="button" class="btn btn-outline-primary btn-sm mb-0">Add Stock</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      <?php endforeach; ?>
+                    </div> <!-- /.row-->
+                    <?php else: ?>
+                    <h6 class="text-center font-weight-normal mb-4">No stock minimum avaliable right now.</h6>
+                  <?php endif; ?>
                 </div>
               </div>
             </div>

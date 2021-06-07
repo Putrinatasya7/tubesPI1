@@ -15,7 +15,12 @@ class Barang extends CI_Controller {
 	{
 		$data['title'] = "Barang";
 		$data['subtitle'] = "Manage Barang";
-		$data['barang'] = $this->data_model->getBarang();
+		if($this->session->userdata('role_id') == 1) {
+			$data['barang'] = $this->data_model->getBarang();
+		}
+		else {
+			$data['barang'] = $this->data_model->getBarangAktif();
+		}
 		$data['category'] = $this->data_model->getCategory();
 		$data['merk'] = $this->data_model->getMerk();
 

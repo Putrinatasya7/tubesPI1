@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2021 at 09:32 AM
+-- Generation Time: Jun 07, 2021 at 09:19 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -40,16 +40,17 @@ CREATE TABLE `barang` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `created_by` varchar(4) NOT NULL,
   `modified_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `modified_by` varchar(4) NOT NULL
+  `modified_by` varchar(4) NOT NULL,
+  `status` enum('1','0') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `barang`
 --
 
-INSERT INTO `barang` (`barang_id`, `category_id`, `barang`, `merk_id`, `pict`, `stock`, `minimum_stock`, `harga`, `qr_code`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-('B001', 1, 'Dunlop SP Sport LM705 185/70 R14 Ban Mobil [Tahun 2021]', 1, 'dunlopban1.jpg', 72, 25, 560000, 'B001.png', '2021-06-01 22:07:00', 'A001', '2021-06-01 22:07:00', 'A001'),
-('B002', 1, 'Dunlop Direzza DZ101 195/50 R16 - Produksi 2021', 1, 'dunlop-dz101.jpg', 66, 25, 630000, 'B002.png', '2021-06-01 22:14:07', 'A001', '2021-06-01 22:14:07', 'A001');
+INSERT INTO `barang` (`barang_id`, `category_id`, `barang`, `merk_id`, `pict`, `stock`, `minimum_stock`, `harga`, `qr_code`, `created_at`, `created_by`, `modified_at`, `modified_by`, `status`) VALUES
+('B001', 1, 'Dunlop SP Sport LM705 185/70 R14 Ban Mobil [Tahun 2021]', 1, 'dunlopban1.jpg', 70, 25, 560000, 'B001.png', '2021-06-01 22:07:00', 'A001', '2021-06-01 22:07:00', 'A001', '1'),
+('B002', 1, 'Dunlop Direzza DZ101 195/50 R16 - Produksi 2021', 1, 'dunlop-dz101.jpg', 70, 25, 630000, 'B002.png', '2021-06-01 22:14:07', 'A001', '2021-06-01 22:14:07', 'A001', '0');
 
 -- --------------------------------------------------------
 
@@ -73,6 +74,66 @@ CREATE TABLE `barang_detail` (
 ,`created_by` varchar(4)
 ,`modified_at` datetime
 ,`modified_by` varchar(4)
+,`status` enum('1','0')
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `barang_invoice_in`
+-- (See below for the actual view)
+--
+CREATE TABLE `barang_invoice_in` (
+`invoice_no` varchar(100)
+,`request_no` varchar(100)
+,`invoice_date` datetime
+,`staff_in_charge` varchar(4)
+,`staff_in_charge_name` varchar(50)
+,`request_date` datetime
+,`responded_by` varchar(4)
+,`responder_name` varchar(50)
+,`responded_at` datetime
+,`req_category` enum('In','Out')
+,`received_by` varchar(4)
+,`receiver_name` varchar(50)
+,`received_at` datetime
+,`status_inv_in` enum('received','waiting for delivery')
+,`sign-img` varchar(255)
+,`invoice_qrcode` varchar(255)
+,`barang_id` varchar(10)
+,`barang` varchar(200)
+,`qrcode_barang` varchar(255)
+,`harga_satuan` int(11)
+,`qty` int(6)
+,`supplier_id` int(3)
+,`supplier` varchar(200)
+,`category` varchar(100)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `barang_invoice_out`
+-- (See below for the actual view)
+--
+CREATE TABLE `barang_invoice_out` (
+`invoice_no` varchar(100)
+,`request_no` varchar(100)
+,`invoice_date` datetime
+,`staff_in_charge` varchar(4)
+,`staff_in_charge_name` varchar(50)
+,`request_date` datetime
+,`responded_by` varchar(4)
+,`responder_name` varchar(50)
+,`responded_at` datetime
+,`req_category` enum('In','Out')
+,`sign-img` varchar(255)
+,`invoice_qrcode` varchar(255)
+,`barang_id` varchar(10)
+,`barang` varchar(200)
+,`qrcode_barang` varchar(255)
+,`qty` int(6)
+,`alasan_keluar` text
 );
 
 -- --------------------------------------------------------
@@ -178,7 +239,7 @@ CREATE TABLE `invoice_request` (
 ,`staff_in_charge_name` varchar(50)
 ,`request_date` datetime
 ,`responded_by` varchar(4)
-,`responder name` varchar(50)
+,`responder_name` varchar(50)
 ,`responded_at` datetime
 ,`req_category` enum('In','Out')
 ,`received_by` varchar(4)
@@ -531,7 +592,7 @@ CREATE TABLE `user` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `modified_at` datetime NOT NULL DEFAULT current_timestamp(),
   `role_id` int(1) NOT NULL,
-  `is_active` enum('Active','Inactive') NOT NULL
+  `is_active` enum('Active','Inactive') NOT NULL DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -543,7 +604,7 @@ INSERT INTO `user` (`uid`, `name`, `uname`, `email`, `password`, `pict`, `create
 ('A002', 'Putri Natasya', 'punat', 'putrinatasya@gmail.com', '$2y$10$uqqACchko3qRn5FHiZ4LC.nU6QwqZCF3.X/I8IM68fI8XOEfZs8wS', 'PicsArt_01-17-07_40_19.jpg', '2021-05-28 11:09:21', '2021-05-28 11:09:21', 1, 'Active'),
 ('M001', 'Patrisia Tambunan', 'patty', 'patrisia@gmail.com', '$2y$10$ML6DaOcIbM3YNtDMwWTXpOZbrfsSpEqXNAKimuhIb0.csoAUNRIm6', 'defaultusrpict.jpg', '2021-05-28 01:27:51', '2021-05-28 01:27:51', 2, 'Active'),
 ('S001', 'Mita Amelia', 'mita', 'mitaamelia@gmail.com', '$2y$10$tpxwesVPE2AQFcpyEtaiauxjxSyI6Db21fzZXRDfWPwSg0xQ3Kply', 'defaultusrpict.jpg', '2021-05-28 11:08:18', '2021-05-28 11:08:18', 3, 'Active'),
-('S002', 'Ruhami Sukma Putri', 'puti', 'puti@gmail.com', '$2y$10$Zmm8J4WUZV83Gv4bVYlgfe330P8vfptH6NorYYSgN09PWOJsmFoj2', 'defaultusrpict.jpg', '2021-05-29 20:15:31', '2021-05-29 20:15:31', 3, 'Active');
+('S002', 'Ruhami Sukma Putri', 'puti', 'puti@gmail.com', '$2y$10$Zmm8J4WUZV83Gv4bVYlgfe330P8vfptH6NorYYSgN09PWOJsmFoj2', 'defaultusrpict.jpg', '2021-05-29 20:15:31', '2021-05-29 20:15:31', 3, 'Inactive');
 
 -- --------------------------------------------------------
 
@@ -572,7 +633,25 @@ CREATE TABLE `user_detail` (
 --
 DROP TABLE IF EXISTS `barang_detail`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `barang_detail`  AS SELECT `b`.`barang_id` AS `barang_id`, `b`.`category_id` AS `category_id`, `c`.`category` AS `category`, `b`.`barang` AS `barang`, `b`.`merk_id` AS `merk_id`, `m`.`merk` AS `merk`, `b`.`pict` AS `pict`, `b`.`stock` AS `stock`, `b`.`minimum_stock` AS `minimum_stock`, `b`.`harga` AS `harga`, `b`.`qr_code` AS `qr_code`, `b`.`created_at` AS `created_at`, `b`.`created_by` AS `created_by`, `b`.`modified_at` AS `modified_at`, `b`.`modified_by` AS `modified_by` FROM ((`barang` `b` join `category` `c` on(`c`.`category_id` = `b`.`category_id`)) join `merk` `m` on(`m`.`merk_id` = `b`.`merk_id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `barang_detail`  AS SELECT `b`.`barang_id` AS `barang_id`, `b`.`category_id` AS `category_id`, `c`.`category` AS `category`, `b`.`barang` AS `barang`, `b`.`merk_id` AS `merk_id`, `m`.`merk` AS `merk`, `b`.`pict` AS `pict`, `b`.`stock` AS `stock`, `b`.`minimum_stock` AS `minimum_stock`, `b`.`harga` AS `harga`, `b`.`qr_code` AS `qr_code`, `b`.`created_at` AS `created_at`, `b`.`created_by` AS `created_by`, `b`.`modified_at` AS `modified_at`, `b`.`modified_by` AS `modified_by`, `b`.`status` AS `status` FROM ((`barang` `b` join `category` `c` on(`c`.`category_id` = `b`.`category_id`)) join `merk` `m` on(`m`.`merk_id` = `b`.`merk_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `barang_invoice_in`
+--
+DROP TABLE IF EXISTS `barang_invoice_in`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `barang_invoice_in`  AS SELECT `ir`.`invoice_no` AS `invoice_no`, `ir`.`request_no` AS `request_no`, `ir`.`invoice_date` AS `invoice_date`, `ir`.`staff_in_charge` AS `staff_in_charge`, `ir`.`staff_in_charge_name` AS `staff_in_charge_name`, `ir`.`request_date` AS `request_date`, `ir`.`responded_by` AS `responded_by`, `ir`.`responder_name` AS `responder_name`, `ir`.`responded_at` AS `responded_at`, `ir`.`req_category` AS `req_category`, `ir`.`received_by` AS `received_by`, `ir`.`receiver_name` AS `receiver_name`, `ir`.`received_at` AS `received_at`, `ir`.`status_inv_in` AS `status_inv_in`, `ir`.`sign-img` AS `sign-img`, `ir`.`invoice_qrcode` AS `invoice_qrcode`, `rid`.`barang_id` AS `barang_id`, `rid`.`barang` AS `barang`, `rid`.`qrcode_barang` AS `qrcode_barang`, `rid`.`harga_satuan` AS `harga_satuan`, `rid`.`qty` AS `qty`, `rid`.`supplier_id` AS `supplier_id`, `rid`.`supplier` AS `supplier`, `rid`.`category` AS `category` FROM (`invoice_request` `ir` left join `request_in_detail` `rid` on(`ir`.`request_no` = `rid`.`request_no`)) WHERE `ir`.`req_category` = 'In' ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `barang_invoice_out`
+--
+DROP TABLE IF EXISTS `barang_invoice_out`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `barang_invoice_out`  AS SELECT `ir`.`invoice_no` AS `invoice_no`, `ir`.`request_no` AS `request_no`, `ir`.`invoice_date` AS `invoice_date`, `ir`.`staff_in_charge` AS `staff_in_charge`, `ir`.`staff_in_charge_name` AS `staff_in_charge_name`, `ir`.`request_date` AS `request_date`, `ir`.`responded_by` AS `responded_by`, `ir`.`responder_name` AS `responder_name`, `ir`.`responded_at` AS `responded_at`, `ir`.`req_category` AS `req_category`, `ir`.`sign-img` AS `sign-img`, `ir`.`invoice_qrcode` AS `invoice_qrcode`, `rod`.`barang_id` AS `barang_id`, `rod`.`barang` AS `barang`, `rod`.`qrcode_barang` AS `qrcode_barang`, `rod`.`qty` AS `qty`, `rod`.`alasan_keluar` AS `alasan_keluar` FROM (`invoice_request` `ir` left join `request_out_detail` `rod` on(`ir`.`request_no` = `rod`.`request_no`)) WHERE `ir`.`req_category` = 'Out' ;
 
 -- --------------------------------------------------------
 
@@ -581,7 +660,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `invoice_request`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `invoice_request`  AS SELECT `i`.`invoice_no` AS `invoice_no`, `i`.`request_no` AS `request_no`, `i`.`created_at` AS `invoice_date`, `r`.`created_by` AS `staff_in_charge`, `u1`.`name` AS `staff_in_charge_name`, `r`.`created_at` AS `request_date`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder name`, `r`.`responded_at` AS `responded_at`, `r`.`req_category` AS `req_category`, `iic`.`received_by` AS `received_by`, `u3`.`name` AS `receiver_name`, `iic`.`received_at` AS `received_at`, `iic`.`status` AS `status_inv_in`, `i`.`sign-img` AS `sign-img`, `i`.`invoice_qrcode` AS `invoice_qrcode` FROM (((((`invoice` `i` join `request` `r` on(`i`.`request_no` = `r`.`request_no`)) join `user` `u1` on(`r`.`created_by` = `u1`.`uid`)) join `user` `u2` on(`r`.`responded_by` = `u2`.`uid`)) left join `invoice_in_component` `iic` on(`i`.`invoice_no` = `iic`.`invoice_no`)) left join `user` `u3` on(`iic`.`received_by` = `u3`.`uid`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `invoice_request`  AS SELECT `i`.`invoice_no` AS `invoice_no`, `i`.`request_no` AS `request_no`, `i`.`created_at` AS `invoice_date`, `r`.`created_by` AS `staff_in_charge`, `u1`.`name` AS `staff_in_charge_name`, `r`.`created_at` AS `request_date`, `r`.`responded_by` AS `responded_by`, `u2`.`name` AS `responder_name`, `r`.`responded_at` AS `responded_at`, `r`.`req_category` AS `req_category`, `iic`.`received_by` AS `received_by`, `u3`.`name` AS `receiver_name`, `iic`.`received_at` AS `received_at`, `iic`.`status` AS `status_inv_in`, `i`.`sign-img` AS `sign-img`, `i`.`invoice_qrcode` AS `invoice_qrcode` FROM (((((`invoice` `i` join `request` `r` on(`i`.`request_no` = `r`.`request_no`)) join `user` `u1` on(`r`.`created_by` = `u1`.`uid`)) join `user` `u2` on(`r`.`responded_by` = `u2`.`uid`)) left join `invoice_in_component` `iic` on(`i`.`invoice_no` = `iic`.`invoice_no`)) left join `user` `u3` on(`iic`.`received_by` = `u3`.`uid`)) ;
 
 -- --------------------------------------------------------
 

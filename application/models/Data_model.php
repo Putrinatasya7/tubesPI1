@@ -28,12 +28,12 @@ class Data_model extends CI_Model {
     $this->db->update('supplier', $data);
   }
   
-  public function deleteSupplier() {
-    $supplier_id = $this->input->post('supplier_id');
+  // public function deleteSupplier() {
+  //   $supplier_id = $this->input->post('supplier_id');
     
-    $this->db->where('supplier_id', $supplier_id);
-    $this->db->delete('supplier');
-  }
+  //   $this->db->where('supplier_id', $supplier_id);
+  //   $this->db->delete('supplier');
+  // }
   
   /**ELEMENTS ZONE */
   /**DATA MERK */
@@ -101,6 +101,10 @@ class Data_model extends CI_Model {
     return $this->db->get('barang_detail')->result_array();
   }
 
+  public function getBarangAktif() {
+    return $this->db->get_where('barang_detail',['status' => '1'])->result_array();
+  }
+
   public function insertBarang($filename, $image_name) {
     $data = [
       'barang_id' => $this->input->post('barang_id'),
@@ -128,7 +132,8 @@ class Data_model extends CI_Model {
       'merk_id' => $this->input->post('edit_brand'),
       'stock' => $this->input->post('edit_total'),
       'harga' => $this->input->post('edit_price'),
-      'modified_by' => $this->session->userdata('uid')
+      'modified_by' => $this->session->userdata('uid'),
+      'modified_at' => date('Y-m-d H:i:s')
     ];
 
     if($new_pict != '') {
@@ -140,15 +145,20 @@ class Data_model extends CI_Model {
 
   public function deleteBarang() {
     $barang_id = $this->input->post('barang_id');
-    
+    /* 
     $data = [
       'pict' => $this->db->select('pict')->where('barang_id',$barang_id)->get('barang')->row()->pict,
       'qr_code' => $this->db->select('qr_code')->where('barang_id',$barang_id)->get('barang')->row()->qr_code
-    ];
+    ]; */
 
-    $this->db->where('barang_id',$barang_id)->delete('barang');
-    unlink(FCPATH . 'asset/pict/barang/' . $data['pict']);
-    unlink(FCPATH . 'asset/pict/qrcode/' . $data['qr_code']);
+    $this->db->set('status','0')->where('barang_id',$barang_id)->update('barang');
+    /* unlink(FCPATH . 'asset/pict/barang/' . $data['pict']);
+    unlink(FCPATH . 'asset/pict/qrcode/' . $data['qr_code']); */
+  }
+
+  public function getMinimumStock() {
+    $query = "SELECT barang_id, barang, stock, pict FROM barang WHERE stock <= minimum_stock";
+    return $this->db->query($query);
   }
 
   /**USER PROFILE ZONE */
@@ -342,7 +352,12 @@ class Data_model extends CI_Model {
       foreach ($barang as $b) {
         $stock_now = $this->db->select('stock')->where('barang_id',$b['barang_id'])->get('barang')->row()->stock;
         $new_stock = $stock_now + $b['qty'];
-        $this->db->set('stock',$new_stock)->where('barang_id',$b['barang_id'])->update('barang');
+        $data = [
+          'stock' => $new_stock,
+          'modified_by' => $this->session->userdata('uid'),
+          'date_modified' => date('Y-m-d H:i:s')
+        ];
+        $this->db->where('barang_id',$b['barang_id'])->update('barang',$data);
       }
     }
       
@@ -351,8 +366,12 @@ class Data_model extends CI_Model {
       foreach ($barang as $b) {
         $stock_now = $this->db->select('stock')->where('barang_id',$b['barang_id'])->get('barang')->row()->stock;
         $new_stock = $stock_now - $b['qty'];
-        $new_stock;
-        $this->db->set('stock',$new_stock)->where('barang_id',$b['barang_id'])->update('barang');
+        $data = [
+          'stock' => $new_stock,
+          'modified_by' => $this->session->userdata('uid'),
+          'date_modified' => date('Y-m-d H:i:s')
+        ];
+        $this->db->where('barang_id',$b['barang_id'])->update('barang',$data);
       }
     }
   }

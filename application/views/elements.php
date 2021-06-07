@@ -28,7 +28,7 @@
                     <tr>
                       <th class="text-secondary text-sm">Category Name</th>
                       <th class="align-middle text-center text-secondary text-sm">Status</th>
-                      <th class="align-middle text-center text-secondary text-sm" colspan="2">Action</th>
+                      <th class="align-middle text-center text-secondary text-sm">Action</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -39,15 +39,15 @@
                           <h7 class="mx-3 mb-0 text-m "><?= $c['category']; ?></h7>
                         </td>
                         <td class="align-middle text-center text-sm">
-                        <?php if ($c['status'] == 'Active'):  ?>
-                        <span class="badge badge-sm bg-gradient-success"><?= $c['status']; ?></span>
-                        <?php else : ?>
-                          <span class="badge badge-sm bg-gradient-secondary"><?= $c['status']; ?></span>
-                        <?php endif; ?>
-                      </td>
+                          <?php if ($c['status'] == 'Active') :  ?>
+                            <span class="badge badge-sm bg-gradient-success"><?= $c['status']; ?></span>
+                          <?php else : ?>
+                            <span class="badge badge-sm bg-gradient-secondary"><?= $c['status']; ?></span>
+                          <?php endif; ?>
+                        </td>
 
-                        <td class="align-middle text-center"><button class="badge badge-m btn bg-gradient-warning" data-toggle="modal" data-target="#editCategory" id="editCategorybutton" data-id="<?= $c['category_id']; ?>" data-category="<?= $c['category']; ?>"  data-catstatus="<?= $c['status']; ?>"><i class="fa fa-pen top-0" title="Edit"></i></button></td>
-                        <td class="align-middle text-center"><button class="badge bagde-m btn bg-gradient-danger" data-toggle="modal" data-target="#delCategory" id="delCategorybutton" data-id="<?= $c['category_id']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button></td>
+                        <td class="align-middle text-center"><button class="badge badge-m btn bg-gradient-warning" data-toggle="modal" data-target="#editCategory" id="editCategorybutton" data-id="<?= $c['category_id']; ?>" data-category="<?= $c['category']; ?>" data-catstatus="<?= $c['status']; ?>"><i class="fa fa-pen top-0" title="Edit"></i></button></td>
+                        <!-- <td class="align-middle text-center"><button class="badge bagde-m btn bg-gradient-danger" data-toggle="modal" data-target="#delCategory" id="delCategorybutton" data-id="<?= $c['category_id']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button></td> -->
                         <td></td>
                         <!-- <td><a href="<?= base_url(); ?>admin/update/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-info">Edit</span></a></td>
                       <td><a href="<?= base_url(); ?>admin/delete/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-danger" onclick="return confirm('Anda yakin ingin menghapus akun ini?')">Delete</span></a></td> -->
@@ -87,24 +87,26 @@
                     <tr>
                       <th class="text-secondary text-sm">Brand Name</th>
                       <th class="align-middle text-center text-secondary text-sm">Status</th>
-                      <th class="align-middle text-center text-secondary text-sm" colspan="2">Action</th>
+                      <th class="align-middle text-center text-secondary text-sm">Action</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php foreach ($brand as $b) : ?>
                       <tr>
-                        <td class="text-xs font-weight-bold"><h7 class="mx-3 mb-0 text-m "><?= $b['merk']; ?></h7></td>
+                        <td class="text-xs font-weight-bold">
+                          <h7 class="mx-3 mb-0 text-m "><?= $b['merk']; ?></h7>
+                        </td>
                         <td class="align-middle text-center text-sm">
-                        <?php if ($b['status'] == 'Active'):  ?>
-                        <span class="badge badge-sm bg-gradient-success"><?= $b['status']; ?></span>
-                        <?php else : ?>
-                          <span class="badge badge-sm bg-gradient-secondary"><?= $b['status']; ?></span>
-                        <?php endif; ?>
-                      </td>
+                          <?php if ($b['status'] == 'Active') :  ?>
+                            <span class="badge badge-sm bg-gradient-success"><?= $b['status']; ?></span>
+                          <?php else : ?>
+                            <span class="badge badge-sm bg-gradient-secondary"><?= $b['status']; ?></span>
+                          <?php endif; ?>
+                        </td>
 
                         <td class="align-middle text-center"><button class="badge badge-m btn bg-gradient-warning" data-toggle="modal" data-target="#editBrand" id="editBrandbutton" data-id="<?= $b['merk_id']; ?>" data-merk="<?= $b['merk']; ?>" data-brandstatus="<?= $b['status']; ?>"><i class="fa fa-pen top-0" title="Edit"></i></button></td>
-                        <td class="align-middle text-center"><button class="badge bagde-m btn bg-gradient-danger" data-toggle="modal" data-target="#delBrand" id="delBrandbutton" data-id="<?= $b['merk_id']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button></td>
+                        <!-- <td class="align-middle text-center"><button class="badge bagde-m btn bg-gradient-danger" data-toggle="modal" data-target="#delBrand" id="delBrandbutton" data-id="<?= $b['merk_id']; ?>"><i class="fa fa-trash top-0" title="Delete"></i></button></td> -->
                         <td></td>
                         <!-- <td><a href="<?= base_url(); ?>admin/update/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-info">Edit</span></a></td>
                       <td><a href="<?= base_url(); ?>admin/delete/<?= $object->id; ?>"><span class="badge badge-sm bg-gradient-danger" onclick="return confirm('Anda yakin ingin menghapus akun ini?')">Delete</span></a></td> -->
@@ -270,7 +272,7 @@
     </div><!-- /.modal -->
 
     <!-- Detele Brand -->
-    <div class="modal fade" tabindex="-1" aria-labelledby="delBrandLabel" role="dialog" id="delBrand">
+    <!-- <div class="modal fade" tabindex="-1" aria-labelledby="delBrandLabel" role="dialog" id="delBrand">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -287,15 +289,15 @@
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-danger">Delete</button>
             </div>
-          </form>
+          </form> -->
 
 
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    <!-- </div>/.modal-content -->
+    <!-- </div>/.modal-dialog -->
+    <!-- </div>/.modal -->
 
     <!-- Detele Category -->
-    <div class="modal fade" tabindex="-1" aria-labelledby="delCategoryLabel" role="dialog" id="delCategory">
+    <!-- <div class="modal fade" tabindex="-1" aria-labelledby="delCategoryLabel" role="dialog" id="delCategory">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -312,12 +314,12 @@
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-danger">Delete</button>
             </div>
-          </form>
+          </form> -->
 
 
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    <!-- </div>/.modal-content -->
+    <!-- </div>/.modal-dialog -->
+    <!-- </div>/.modal -->
 
 
     <script>
@@ -326,29 +328,29 @@
         let merk_id = $(this).data('id');
         let merk = $(this).data('merk');
         let brandstatus = $(this).data('brandstatus');
-        
+
         $(".modal-body #merk_id").val(merk_id);
         $(".modal-body #merk").val(merk);
         $(".modal-body #status_brand").val(brandstatus);
       });
-      
+
       $(document).on("click", "#editCategorybutton", function() {
         let category_id = $(this).data('id');
         let category = $(this).data('category');
         let catstatus = $(this).data('catstatus');
-        
+
         $(".modal-body #category_id").val(category_id);
         $(".modal-body #category").val(category);
         $(".modal-body #status_category").val(catstatus);
       });
 
-      $(document).on("click", "#delBrandbutton", function() {
-        let merk_id = $(this).data('id');
-        $(".modal-body #merk_id").val(merk_id);
-      });
+      // $(document).on("click", "#delBrandbutton", function() {
+      //   let merk_id = $(this).data('id');
+      //   $(".modal-body #merk_id").val(merk_id);
+      // });
 
-      $(document).on("click", "#delCategorybutton", function() {
-        let category_id = $(this).data('id');
-        $(".modal-body #category_id").val(category_id);
-      });
+      // $(document).on("click", "#delCategorybutton", function() {
+      //   let category_id = $(this).data('id');
+      //   $(".modal-body #category_id").val(category_id);
+      // });
     </script>

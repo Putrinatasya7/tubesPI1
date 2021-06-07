@@ -44,9 +44,9 @@
                     <h6 class="font-weight-bolder"><?= $barang['barang_id']; ?></h6>
                     <h5 class="font-weight-bolder text-info text-gradient"><?= $barang['barang']; ?></h5>
                     <h6><?= $barang['merk']; ?> <span class="font-weight-normal">| <?= $barang['category']; ?></span></h6>
-                    <h6>Rp <?= $barang['harga']; ?></h6>
+                    <h6>Rp <?= number_format($barang['harga'], 0, '.', '.'); ?></h6>
                     <h6 class="font-weight-normal">Stock : <?= $barang['stock']; ?></h6>
-                    <div class="row mt-5">
+                    <div class="row mt-4">
                       <div class="col-md-6">
                         <h6>Date Created</h6>
                         <h6 class="font-weight-normal">Selasa, 2 Juni 2021</h6>
@@ -59,6 +59,94 @@
                   </div>
                 </div>
               </div>
+              <?php if ($invoicein != null) : ?>
+                <div class="col-md-12">
+                  <div class="row p-4">
+                    <div class="col-md-12">
+                    </div>
+                    <h6>In History</h6>
+                    <div class="table-responsive px-4">
+                      <table class="table align-items-center mb-0">
+                        <thead>
+                          <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Invocie No</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Invoice Date</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Staff In Charge</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Qty</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Grand Total</th>
+                            <th class="text-secondary opacity-7 w-10">QR Code</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php foreach ($invoicein as $ii) : ?>
+                            <tr>
+                              <td class="align-middle">
+                                <h6 class="text-sm"><?= $ii['invoice_no']; ?></h6>
+                              </td>
+                              <td class="align-middle">
+                                <p class="text-xs font-weight-bold mb-0"><?= $ii['invoice_date']; ?></p>
+                              </td>
+                              <td class="align-middle">
+                                <p class="text-xs font-weight-bold mb-0"><?= $ii['staff_in_charge_name']; ?></p>
+                              </td>
+                              <td class="align-middle text-center text-xs">
+                                <p class="text-xs"><?= $ii['qty']; ?></p>
+                              </td>
+                              <?php $grandtotal = $ii['qty'] * $ii['harga_satuan']; ?>
+                              <td class="align-middle text-center">
+                                <span class="text-secondary text-xs font-weight-bold">Rp <?= number_format($grandtotal, 0, '.', '.'); ?></span>
+                              </td>
+                              <td class="align-middle w-10"><img src="<?= base_url('asset/pict/qrcode_invoice/') . $ii['invoice_qrcode']; ?>" alt="QR Code" width="70%"></td>
+                            </tr>
+                          <?php endforeach; ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              <?php endif; ?>
+
+              <?php if ($invoiceout != null) : ?>
+                <div class="col-md-12">
+                  <div class="row p-4">
+                    <div class="col-md-12">
+                    </div>
+                    <h6>Out History</h6>
+                    <div class="table-responsive px-4">
+                      <table class="table align-items-center mb-0">
+                        <thead>
+                          <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Invocie No</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Invoice Date</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Staff In Charge</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Purpose</th>
+                            <th class="text-secondary opacity-7 w-10">QR Code</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php foreach ($invoiceout as $io) : ?>
+                            <tr>
+                              <td class="align-middle">
+                                <h6 class="text-sm"><?= $io['invoice_no']; ?></h6>
+                              </td>
+                              <td class="align-middle">
+                                <p class="text-xs font-weight-bold mb-0"><?= $io['invoice_date']; ?></p>
+                              </td>
+                              <td class="align-middle">
+                                <p class="text-xs font-weight-bold mb-0"><?= $io['staff_in_charge_name']; ?></p>
+                              </td>
+                              <td class="align-middle">
+                                <p class="text-xs mb-0"><?= $io['alasan_keluar']; ?></p>
+                              </td>
+                              <td class="align-middle w-10"><img src="<?= base_url('asset/pict/qrcode_invoice/') . $io['invoice_qrcode']; ?>" alt="QR Code" width="70%"></td>
+                            </tr>
+                          <?php endforeach; ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              <?php endif; ?>
 
             </div>
           </div>

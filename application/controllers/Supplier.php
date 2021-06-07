@@ -38,10 +38,10 @@ class Supplier extends CI_Controller
 		redirect('Supplier');
 	}
 
-	public function remove()
-	{
-		$this->data_model->deleteSupplier();
-		$this->session->set_flashdata('message', 'Data supplier berhasil dihapus');
-		redirect('Supplier');
-	}
+	// public function remove()
+	// {
+	// 	$this->data_model->deleteSupplier();
+	// 	$this->session->set_flashdata('message', 'Data supplier berhasil dihapus');
+	// 	redirect('Supplier');
+	// }
 }

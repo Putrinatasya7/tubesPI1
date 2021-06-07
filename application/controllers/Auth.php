@@ -12,7 +12,7 @@ class Auth extends CI_Controller {
 			'title' => "Dashboard",
 			'subtitle' => "Dashboard",
 			'totalSupplier' => count($this->data_model->getSupplier()),
-			'totalItem' => count($this->data_model->getBarang())
+			'totalItem' => count($this->data_model->getBarang()),
 		);
 		
 	}		//END __construct()
@@ -26,6 +26,7 @@ class Auth extends CI_Controller {
 		$data['totalUser'] = count($this->Admin_model->getUser());
 		$data['requestIn'] = $this->data_model->getRequestInCurrMonth(1)->num_rows();
 		$data['requestOut'] = $this->data_model->getRequestOutCurrMonth(1)->num_rows();
+		$data['minimum_stock'] = $this->data_model->getMinimumStock()->result_array();
 		
 		$this->load->view('templates/header', $data);
 		$this->load->view('dashboard');
@@ -42,6 +43,7 @@ class Auth extends CI_Controller {
 		$data['requestOut'] = $this->data_model->getRequestOutCurrMonth(0,1)->num_rows();
 		$data['todayRequestIn'] = $this->data_model->getTodayRequestIn(0,1)->result_array();
 		$data['todayRequestOut'] = $this->data_model->getTodayRequestOut(0,1)->result_array();
+		$data['minimum_stock'] = $this->data_model->getMinimumStock()->result_array();
 		
 		$this->load->view('templates/header', $data);
 		$this->load->view('staff');

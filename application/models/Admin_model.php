@@ -50,7 +50,9 @@ class Admin_model extends CI_Model {
     $uid = $this->input->post('uid');
 
     $this->db->where('uid', $uid);
-    $this->db->delete('user');
+    // $this->db->delete('user');
+    $this->db->set('is_active','Inactive');
+    $this->db->update('user');
   }
 
 }
