@@ -103,15 +103,21 @@ class Request extends CI_Controller {
   }
 
   public function respondRequest() {
-    $img = $this->input->post('image');
-    $img = str_replace('data:image/png;base64,', '', $img);
-    $img = str_replace(' ', '+', $img);
-    $data = base64_decode($img);
-    $file = './asset/signature/' . uniqid() . '.png';
-    $success = file_put_contents($file, $data);
-    $image=str_replace('./asset/signature/','',$file);
+    if($this->input->post('status') == "Accepted") {
+      $img = $this->input->post('image');
+      $img = str_replace('data:image/png;base64,', '', $img);
+      $img = str_replace(' ', '+', $img);
+      $data = base64_decode($img);
+      $file = './asset/signature/' . uniqid() . '.png';
+      $success = file_put_contents($file, $data);
+      $image=str_replace('./asset/signature/','',$file);
+      $this->data_model->updateRespondRequest($image);
+    }
+    else {
+      $this->data_model->updateRespondRequest("");
+    }
+    
 
-    $this->data_model->updateRespondRequest($image);
     $this->session->set_flashdata('message','Request successfully responded');
     if(strpos($this->input->post('request_no'), "In")) {
       redirect('Request/addIn');

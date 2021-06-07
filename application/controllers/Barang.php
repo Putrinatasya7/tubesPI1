@@ -52,7 +52,7 @@ class Barang extends CI_Controller {
 
 		$image_name=$barang_id.'.png'; //buat name dari qr code sesuai dengan barang_id
 
-		$params['data'] = 'http://localhost/tubesPI1/Qrcode/detailBarang/'.$barang_id; //data yang akan di jadikan QR CODE
+		$params['data'] = site_url('Qrcode/detailBarang/').$barang_id; //data yang akan di jadikan QR CODE
 		$params['level'] = 'H'; //H=High
 		$params['size'] = 10;
 		$params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
@@ -77,7 +77,7 @@ class Barang extends CI_Controller {
 		$new_pict = '';
 
 		if($upload_image) {
-			$config['upload_path']          = './asset/pict/user/';
+			$config['upload_path']          = './asset/pict/barang/';
 			$config['allowed_types']        = 'jpg|png|jpeg';
 			$config['max_size']             = 5120;
 

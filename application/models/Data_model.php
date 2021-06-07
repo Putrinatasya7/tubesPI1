@@ -294,54 +294,57 @@ class Data_model extends CI_Model {
       'responded_at' => $timestamp,
       'status' => $status
     ];
-    
-    $invoicedata = [
-      'request_no' => $request_no,
-      'created_at' => $timestamp,
-      'sign-img' => $image
-    ];
-    
-    if(strpos($request_no, "In") != false){
-      $invoicedata['invoice_no'] = generateInvoiceNo("In");
-      $status = "In";
+
+    if($status == "Accepted") {
+
+      $invoicedata = [
+        'request_no' => $request_no,
+        'created_at' => $timestamp,
+        'sign-img' => $image
+      ];
+      
+      if(strpos($request_no, "In") != false){
+        $invoicedata['invoice_no'] = generateInvoiceNo("In");
+      }
+      else {
+        $invoicedata['invoice_no'] = generateInvoiceNo("Out");
+      }
+
+      // GENERATE QR CODE INVOICE
+      $this->load->library('ciqrcode'); //pemanggilan library QR CODE
+
+      $config['cacheable']    = true; //boolean, the default is true
+      $config['cachedir']     = './asset/'; //string, the default is application/cache/
+      $config['errorlog']     = './asset/'; //string, the default is application/logs/
+      $config['imagedir']     = './asset/pict/qrcode_invoice/'; //direktori penyimpanan qr code
+      $config['quality']      = true; //boolean, the default is true
+      $config['size']         = '1024'; //interger, the default is 1024
+      $config['black']        = array(224,255,255); // array, default is array(255,255,255)
+      $config['white']        = array(70,130,180); // array, default is array(0,0,0)
+      $this->ciqrcode->initialize($config);
+
+      $image_name=$invoicedata['invoice_no'].'.png'; //buat name dari qr code sesuai dengan invoice$invoicedata['invoice_no']
+
+      $params['data'] = site_url('Qrcode/detailInvoice/').$invoicedata['invoice_no']; //data yang akan di jadikan QR CODE
+      $params['level'] = 'H'; //H=High
+      $params['size'] = 10;
+      $params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
+      $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+
+      $invoicedata['invoice_qrcode'] = $image_name;
     }
-    else {
-      $invoicedata['invoice_no'] = generateInvoiceNo("Out");
-      $status = "Out";
-    }
-
-    // GENERATE QR CODE INVOICE
-    $this->load->library('ciqrcode'); //pemanggilan library QR CODE
-
-		$config['cacheable']    = true; //boolean, the default is true
-		$config['cachedir']     = './asset/'; //string, the default is application/cache/
-		$config['errorlog']     = './asset/'; //string, the default is application/logs/
-		$config['imagedir']     = './asset/pict/qrcode_invoice/'; //direktori penyimpanan qr code
-		$config['quality']      = true; //boolean, the default is true
-		$config['size']         = '1024'; //interger, the default is 1024
-		$config['black']        = array(224,255,255); // array, default is array(255,255,255)
-		$config['white']        = array(70,130,180); // array, default is array(0,0,0)
-		$this->ciqrcode->initialize($config);
-
-		$image_name=$invoicedata['invoice_no'].'.png'; //buat name dari qr code sesuai dengan invoice$invoicedata['invoice_no']
-
-		$params['data'] = 'http://localhost/tubesPI1/Qrcode/detailInvoice/'.$invoicedata['invoice_no']; //data yang akan di jadikan QR CODE
-		$params['level'] = 'H'; //H=High
-		$params['size'] = 10;
-		$params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
-		$this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
-
-    $invoicedata['invoice_qrcode'] = $image_name;
     
     $this->db->where('request_no',$request_no)->update('request',$data);
-    $this->db->insert('invoice',$invoicedata);
-    if(strpos($request_no, "In") != false){
-      $this->db->insert('invoice_in_component',['invoice_no' => $invoicedata['invoice_no']]);
+    if($status == "Accepted") {
+      $this->db->insert('invoice',$invoicedata);
+      if(strpos($request_no, "In") != false){
+        $this->db->insert('invoice_in_component',['invoice_no' => $invoicedata['invoice_no']]);
+      }
+      elseif(strpos($request_no, "Out") != false) {
+        $this->updateStock($request_no, "Out");
+      }
     }
-    elseif(strpos($request_no, "Out") != false) {
-      $this->updateStock($request_no, $status);
-    }
-    if($data['status'] == "Rejected") {
+    else if($data['status'] == "Rejected") {
       $this->insertRejectNote($request_no);
     }
   }
