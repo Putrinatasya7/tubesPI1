@@ -3,9 +3,9 @@
   <div class="row">
     <div class="col-12">
       <div class="card mb-4">
-        <div class="card-body px-0 pt-0 pb-2">
-          <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0">
+        <div class="card-body px-2 pt-2">
+            <div class="table-responsive p-0">
+              <table id="example" class="table table-striped">
               <thead>
                 <tr>
                   <th class="text-secondary text-s ps-">No</th>
@@ -168,3 +168,9 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+
+  <script>
+      $(document).ready(function() {
+      $('#example').DataTable();
+      } );
+    </script>

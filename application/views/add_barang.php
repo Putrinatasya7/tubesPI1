@@ -26,8 +26,9 @@
             <?php $this->session->unset_userdata('message'); ?>
             <!-- alert -->
           </div>
-          <div class="table-responsive p-4">
-            <table class="table align-items-center mb-0">
+          <div class="card-body px-2 pt-0">
+            <div class="table-responsive p-0">
+              <table id="example" class="table table-striped">
               <thead>
                 <tr>
                   <th class="text-secondary text-s">Item Name</th>
@@ -264,6 +265,12 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+
+  <script>
+      $(document).ready(function() {
+      $('#example').DataTable();
+      } );
+    </script>
 
 
   <script>

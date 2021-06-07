@@ -22,8 +22,15 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="<?php echo base_url('asset/bootstrap/css/soft-ui-dashboard.css?v=1.0.2') ?>" rel="stylesheet" />
   <!-- for Modal -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+  <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+  <!-- <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"> -->
+  <!-- Coba -->
+  <!-- <link href="<?php echo base_url('asset/datatables/bootstrap.min.css') ?>" rel="stylesheet" /> -->
+  <link href="<?php echo base_url('asset/datatables/dataTables.bootstrap5.min.css') ?>" rel="stylesheet" />
+  <script src="<?php echo base_url(); ?>asset/datatables/jquery-3.5.1.js"></script>
+  <script src="<?php echo base_url(); ?>asset/datatables/jquery.dataTables.min.js"></script>
+  <script src="<?php echo base_url(); ?>asset/datatables/dataTables.bootstrap5.min.js"></script>
+
   <script src="<?= base_url('assets\js\signature-pad.js'); ?>"></script>
 
 </head>

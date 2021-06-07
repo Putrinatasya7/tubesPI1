@@ -21,8 +21,9 @@
           <?php if ($request_out == null) : ?>
             <!-- tambahkan di bagian ini pemberitahuan bahwa data request keluar masih belum ada -->
           <?php else : ?>
+            <div class="card-body px-2 pt-0">
             <div class="table-responsive p-0">
-              <table class="table align-items-center mb-0">
+              <table id="example" class="table table-striped">
                 <thead>
                   <tr>
                     <th class="align-middle text-center text-secondary text-s ps-2">Request No</th>
@@ -202,6 +203,12 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+
+  <script>
+      $(document).ready(function() {
+      $('#example').DataTable();
+      } );
+    </script>
 
 
   <script>
