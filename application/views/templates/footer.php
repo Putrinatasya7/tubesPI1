@@ -1,4 +1,4 @@
-  <footer class="footer pt-3">
+<footer class="footer pt-3">
     <div class="container-fluid">
       <div class="row align-items-center justify-content-lg-between">
         <div class="col-lg-6 mb-lg-0 mb-4">
@@ -36,8 +36,8 @@
   <script src="<?php echo base_url(); ?>asset/bootstrap/js/core/popper.min.js"></script>
   <script src="<?php echo base_url(); ?>asset/bootstrap/js/core/bootstrap.min.js"></script>
   <script src="<?php echo base_url(); ?>asset/bootstrap/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="<?php echo base_url(); ?>asset/bootstrap/js/plugins/chartjs.min.js"></script>
-  <script src="<?php echo base_url(); ?>asset/bootstrap/js/plugins/Chart.extension.js"></script>
+  <!-- <script src="<?php echo base_url(); ?>asset/bootstrap/js/plugins/chartjs.min.js"></script>
+  <script src="<?php echo base_url(); ?>asset/bootstrap/js/plugins/Chart.extension.js"></script> -->
 
   <script>
     function goBack() {
@@ -57,9 +57,8 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="<?php echo base_url(); ?>asset/bootstrap/js/soft-ui-dashboard.min.js?v=1.0.2"></script>
-
-  <!--===============================================================================================-->
-  <script type="text/javascript" src="<?php echo base_url(); ?>/asset/bootstrap/css/jquery-3.2.1.min.js"></script>
+    <!-- coba -->
+    
   <!--===============================================================================================-->
   <script type="text/javascript" src="<?php echo base_url(); ?>/asset/bootstrap/css/animsition.min.js"></script>
   <!--===============================================================================================-->

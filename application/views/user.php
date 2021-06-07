@@ -5,9 +5,9 @@
           <div class="card-header pb-0">
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add User</button>
           </div>
-          <div class="card-body px-0 pt-0 pb-2">
+          <div class="card-body px-2 pt-0">
             <div class="table-responsive p-0">
-              <table class="table align-items-center mb-0">
+              <table id="example" class="table table-striped">
                 <thead>
                   <tr>
                     <th class="text-secondary text-s">Username</th>
@@ -207,6 +207,12 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <script>
+      $(document).ready(function() {
+      $('#example').DataTable();
+      } );
+    </script>
 
     <script>
       // untuk menampilkan data pada form edit
